@@ -1,12 +1,21 @@
-# Dependency directories
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
 node_modules/
 
-# Optional npm cache directory
-.npm
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# dotenv environment variables file
+
+# environment variables
 .env
-.env.test
+.env.production
 
-# Build output
-build
+# macOS-specific files
+.DS_Store
