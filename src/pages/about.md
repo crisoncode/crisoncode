@@ -3,34 +3,23 @@ layout: ../layouts/AboutLayout.astro
 title: "About"
 ---
 
-AstroPaper is a minimal, responsive and SEO-friendly Astro blog theme. I designed and crafted this based on [my personal blog](https://satnaing.dev/blog).
+👋🏻 Hello world, This is Cristian a 29 years old developer!
 
-This theme is aimed to be accessible out of the box. Light and dark mode are supported by
-default and additional color schemes can also be configured.
+Since I was very little I have been interested by the technology 🧑🏻‍💻 in general, my first introduction to this world was with videogames in a Sega console. After some years playing games finally my fathers bought a computer and I was excited with this new machine in my home. I started to discover how a computer works and I had a lot of questions in my head.
 
-This theme is self-documented \_ which means articles/posts in this theme can also be considered as documentations. So, see the documentation for more info.
+🤔 What means this black screen when I press the powe on button?
 
-<div>
-  <img src="/assets/dev.svg" class="sm:w-1/2 mx-auto" alt="coding dev illustration">
-</div>
+🏴‍☠️ What exactly happens when I’m uninstalling a program from the control panel in a Windows 98?
 
-## Tech Stack
+🤘🏻 How I can install windows XP on my computer?
 
-This theme is written in vanilla JavaScript (+ TypeScript for type checking) and a little bit of ReactJS for some interactions. TailwindCSS is used for styling; and Markdown is used for blog contents.
+After years, hours of gaming and hours of learning I started to study the computer science in the institute of my hometown. It was a really exciting journey, I learned how the computer works in terms of hardware, how the networks works in our houses, in a world scale (more or less, to be honest I hate this part of the computer science 🤣)
 
-## Features
+In my third year of study I discovered the art of coding, this was the biggest change of my whole life and I felt in love with that.
 
-Here are certain features of this site.
+Today, after 10 years working as a developer I’m a Javascript senior developer working in Salesforce Commerce Cloud a private software platform focused on digital commerce for big companies.
 
-- fully responsive and accessible
-- SEO-friendly
-- light & dark mode
-- fuzzy search
-- super fast performance
-- draft posts
-- pagination
-- sitemap & rss feed
-- highly customizable
+If you have spent these two minutes of your live reading this, thanks a lot!
 
-If you like this theme, you can star/contribute to the [repo](https://github.com/satnaing/astro-paper).  
-Or you can even give any feedback via my [email](mailto:contact@satnaing.dev).
+You can reach me on my email. [email](mailto:cestarlich.dev@gmail.com).
+

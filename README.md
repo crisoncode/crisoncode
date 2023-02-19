@@ -2,7 +2,7 @@
 
 Since I was very little I have been interested by the technology 🧑🏻‍💻 in general, my first introduction to this world was with videogames in a Sega console. After some years playing games finally my fathers bought a computer and I was excited with this new machine in my home. I started to discover how a computer works and I had a lot of questions in my head. 
 
-🤔 What means is this black screen when I press the powe on button? 
+🤔 What means this black screen when I press the power on button? 
 
 🏴‍☠️ What exactly happens when I’m uninstalling a program from the control panel in a Windows 98?
 

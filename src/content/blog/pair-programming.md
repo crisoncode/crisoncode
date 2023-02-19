@@ -13,7 +13,7 @@ tags:
   - Pair programming
 ogImage: ""
 description:
-  Which is pair programming? How we can apply in our daily work? Pair programming can give a lot of value to a software development team.
+  What is pair programming? How can we apply it in our daily work? Pair programming can give a lot of value to a software development team.
 ---
 
 
@@ -62,6 +62,8 @@ On our daily work can be stresfull to work with a workmate for the whole day bec
 ### 🚖 **Driver / Navigator**
 &nbsp;<br>
 
+The most famous way, one dev (The driver) is coding and the other dev (The navigator) is in the background.
+From my point of view the easiest way to start.
 
 *🚗 **The driver:*** 
 
@@ -84,6 +86,8 @@ On our daily work can be stresfull to work with a workmate for the whole day bec
 
 
 ### 🏓  PingPong
+
+Can remember test driven development but in this case with a workmate.	
 
 1. 🧪 One dev writes the test
 2. 👩🏻‍💻 One dev writes the implementation
