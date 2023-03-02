@@ -25,9 +25,6 @@ What exactly means Pair Programming?
 > 
 > Kent Beck , eXtreme Programming 2004
 
-
-Pair programming is a social activity, and it is important to be empathetic with your colleagues. The first attempt may be a complete disaster.
- 
 The first thing to keep in mind is our current mindset as developers. 
 Our daily work is a team effort, meaning that 90% of the code we work with was made by another developer. If our work is a team effort, why do we work in isolation when coding?
 
@@ -190,3 +187,6 @@ The Management of time here is important for not loose the focus and improve the
     - Maybe your coworker is introverted. Take care of that and understand their character.
 - **Don't have in mind the skills and levels 🎚️**
     - For example, if you're the navigator and you're working with a junior developer, speak a bit slower, and ask if they understand what they're doing, and so on.
+
+
+> Pair programming is a social activity, and it is important to be empathetic with your colleagues.
