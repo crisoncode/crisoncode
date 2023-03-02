@@ -1,7 +1,7 @@
 ---
 author: Cristian Estarlich
 pubDatetime: 2023-02-11T11:56:00Z
-title: What means pair programming?
+title: 'What means pair programming'
 postSlug: pair-programming-in-2023
 featured: true
 draft: false
