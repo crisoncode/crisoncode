@@ -11,13 +11,15 @@ tags:
   - Programming
   - Programming technics
   - Pair programming
-ogImage: ""
+ogImage: "assets/work-pair.png"
 description:
   What is pair programming? How can we apply it in our daily work? Pair programming can give a lot of value to a software development team.
 ---
 
 
 What exactly means Pair Programming?
+
+![Pair programming - Sherlock Holmes and John Watson](/assets/work-pair.png)
 
 > *Write **all** the production code with two devs only in one machine*
 > 
