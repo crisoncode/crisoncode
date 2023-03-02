@@ -1,7 +1,7 @@
 ---
 author: Cristian Estarlich
 pubDatetime: 2023-02-11T11:56:00Z
-title: Pair programming
+title: What means pair programming?
 postSlug: pair-programming-in-2023
 featured: true
 draft: false
@@ -16,8 +16,6 @@ description:
   What is pair programming? How can we apply it in our daily work? Pair programming can give a lot of value to a software development team.
 ---
 
-
-## 〽️ Pair programming
 
 What exactly means Pair Programming?
 
