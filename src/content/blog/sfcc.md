@@ -18,7 +18,7 @@ description:
 
 # How I started to work in Salesforce Commerce Cloud
 
-A few years ago, I started working at an eCommerce consultancy company in Barcelona due to a high number of layoffs in my previous job. My entire career as a developer had been focused on this sector, so when they offered me the opportunity to work with another platform/technology called Salesforce Commerce Cloud, I decided to join the company.
+A few years ago, I started working at an eCommerce consultancy company in Barcelona. My entire career as a developer had been focused on this sector, so when they offered me the opportunity to work with another platform/technology called Salesforce Commerce Cloud, I decided to join the company.
 
 At first, Commerce Cloud was unfamiliar territory for me. There were a lot of new concepts to learn, and I had to shift from PHP to Javascript. The learning curve in this platform is not easy. In other words, during my first three months, I faced challenges without any concrete understanding 🤣. Fortunately, the work environment at this company was excellent, and my colleagues were always willing to lend a hand. 
 
