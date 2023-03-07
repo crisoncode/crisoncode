@@ -54,7 +54,7 @@ Salesforce Commerce Cloud uses JavaScript for its backend. As for the frontend, 
     - This is the older option, which is no longer supported by Salesforce.
 2. Storefront Reference Architecture (SFRA):
     - This option features a mobile-first design and integrates with Bootstrap.
-    - It is built with Webpack and has taesting using Mocha/Chai.
+    - It is built with Webpack and has testing using Mocha/Chai.
 3. Headless Commerce:
     - This is the future architecture that Salesforce is currently developing.
     - It allows for a separation of the backend and frontend using Progressive Web Apps (PWA) or a custom frontend like Vue or React.
