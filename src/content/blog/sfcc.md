@@ -65,8 +65,8 @@ One of the most important things I've experienced in Commerce Cloud is the scale
 
 The license costs that Salesforce puts on each project act as a filter, allowing developers to see how their features will be used by a greater number of customers.
 
-However, there are downsides to working with Commerce Cloud. The biggest issue, for me, is the isolation from other technologies like React, Scala, Symfony, and Kotlin.
+However, there are downsides to working with Commerce Cloud. The biggest issue, for me, is the isolation from other technologies like React, Scala, Symfony, and Kotlin. These technologies have bigger communities of people trying to push them to the next level, I missed a lot this kind of communities in Salesforce CC.
 
 Fun and trendy ways of working in the software industry, such as TDD and continuous integration, are difficult to implement in Salesforce CC because the "real logic" is a black box. The platform's main objective is to create solutions, so you will not loose time improving quieries or refactoring big classes, all of this stuff is already made by salesforce so you'll be focused only in business solutions avoiding a bit the full technical part of the problem/improvement. For example, if you need a specific data query, you don't need to figure out how to write it - Commerce Cloud already has the data you need bound to an object. From the business perspective this approach can be positive but from the technical point of view can be less atractive.
 
-In the near future I have planned to write more posts on this blog, if you have any idea that will be welcomed, reach me out on my email cestarlich.dev@gmail.com
+In the near future I have planned to write more posts about Saleforce Commerce Cloud on this blog, if you have any idea that will be welcomed, reach me out on my email cestarlich.dev@gmail.com
