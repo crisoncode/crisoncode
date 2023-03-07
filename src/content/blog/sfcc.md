@@ -36,7 +36,7 @@ You will also have three more instances:
 
 - 🧑🏻‍💻 Development
     - This instance is for testing and quality assurance purposes.
-    - It should have the same hardware resources as the production environment, so that performance tasks and cache issues can be tested here before going live.
+    - It should have similar hardware resources as the production environment, so that performance tasks and cache issues can be tested here before going live.
 - ✅ Staging
     - This instance acts as a funnel for all connections and sends data to production.
         - For example, catalogs from other platforms are uploaded to this instance and then replicated to the production instances.
