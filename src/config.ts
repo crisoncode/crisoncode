@@ -1,11 +1,11 @@
 import type { SocialObjects } from "./types";
 
 export const SITE = {
-  website: "https://crisoncode.vercel.com/",
+  website: "https://crisoncode.com/",
   author: "Cristian Estarlich",
-  desc: "Cristian Estarlich personal blogsite",
+  desc: "Blog dedicated to learn things about Software development, methodologies, salesforce commerce cloud, and other things that I can consider interesting.",
   title: "#CrisOnCode",
-  ogImage: "astropaper-og.jpg",
+  ogImage: "assets/profile.jpg",
   lightAndDarkMode: true,
   postPerPage: 3,
 };
