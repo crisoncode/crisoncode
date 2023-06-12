@@ -122,7 +122,7 @@ Here I can list the guidelines that I followed on my daily-basis work:
 - Prepare the meetings, use tools like miro, canva,etc.. for explain your thoughts and ask for feedback about it.
 - Before schedule a meeting explain to all the people which is the goal of the meeting and explain which things they should prepare.
 
-### 💭 Conclusions
+## 💭 Conclusions
 
 Work from home or in a cowork, etc.. Has a lot of benefits in our life, a lot of people started to work in this way by the covid crysis, but  I thought in this question a lot of times “which things we changed in our work for adapt ourselves to this big change?”.  
 
