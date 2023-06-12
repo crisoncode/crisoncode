@@ -1,10 +1,11 @@
 ---
 author: Cristian Estarlich
 pubDatetime: 2023-06-11T17:00:00Z
-title: 'How to work in remote?'
+title: How to work in remote? - PART I
 postSlug: how-to-work-remote
 featured: true
 draft: false
+ogImage: "assets/remote-work.png"
 tags:
   - Software development
   - Software
