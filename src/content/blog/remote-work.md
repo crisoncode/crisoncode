@@ -2,7 +2,7 @@
 author: Cristian Estarlich
 pubDatetime: 2023-06-11T17:00:00Z
 title: How to work in remote? - PART I
-postSlug: how-to-work-remote
+postSlug: how-to-work-in-remote
 featured: true
 draft: false
 ogImage: "assets/remote-work.png"
@@ -16,6 +16,7 @@ tags:
 description:
   What is pair programming? How can we apply it in our daily work? Pair programming can give a lot of value to a software development team.
 ---
+![Work in remote](/assets/remote-work.png)
 
 # How to work in remote? - PART I
 
