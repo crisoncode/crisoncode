@@ -18,7 +18,7 @@ description:
 
 # How I started to work in Salesforce Commerce Cloud
 
-A few years ago, I started working at an eCommerce consultancy company in Barcelona due to a high number of layoffs in my previous job. My entire career as a developer had been focused on this sector, so when they offered me the opportunity to work with another platform/technology called Salesforce Commerce Cloud, I decided to join the company.
+A few years ago, I started working at an eCommerce consultancy company in Barcelona. My entire career as a developer had been focused on this sector, so when they offered me the opportunity to work with another platform/technology called Salesforce Commerce Cloud, I decided to join the company.
 
 At first, Commerce Cloud was unfamiliar territory for me. There were a lot of new concepts to learn, and I had to shift from PHP to Javascript. The learning curve in this platform is not easy. In other words, during my first three months, I faced challenges without any concrete understanding 🤣. Fortunately, the work environment at this company was excellent, and my colleagues were always willing to lend a hand. 
 
@@ -36,7 +36,7 @@ You will also have three more instances:
 
 - 🧑🏻‍💻 Development
     - This instance is for testing and quality assurance purposes.
-    - It should have the same hardware resources as the production environment, so that performance tasks and cache issues can be tested here before going live.
+    - It should have similar hardware resources as the production environment, so that performance tasks and cache issues can be tested here before going live.
 - ✅ Staging
     - This instance acts as a funnel for all connections and sends data to production.
         - For example, catalogs from other platforms are uploaded to this instance and then replicated to the production instances.
@@ -54,7 +54,7 @@ Salesforce Commerce Cloud uses JavaScript for its backend. As for the frontend, 
     - This is the older option, which is no longer supported by Salesforce.
 2. Storefront Reference Architecture (SFRA):
     - This option features a mobile-first design and integrates with Bootstrap.
-    - It is built with Webpack and has taesting using Mocha/Chai.
+    - It is built with Webpack and has testing using Mocha/Chai.
 3. Headless Commerce:
     - This is the future architecture that Salesforce is currently developing.
     - It allows for a separation of the backend and frontend using Progressive Web Apps (PWA) or a custom frontend like Vue or React.
@@ -65,6 +65,8 @@ One of the most important things I've experienced in Commerce Cloud is the scale
 
 The license costs that Salesforce puts on each project act as a filter, allowing developers to see how their features will be used by a greater number of customers.
 
-However, there are downsides to working with Commerce Cloud. The biggest issue, for me, is the isolation from other technologies like React, Scala, Symfony, and Kotlin.
+However, there are downsides to working with Commerce Cloud. The biggest issue, for me, is the isolation from other technologies like React, Scala, Symfony, and Kotlin. These technologies have bigger communities of people trying to push them to the next level, I missed a lot this kind of communities in Salesforce CC.
 
-Fun and trendy ways of working in the software industry, such as TDD and continuous integration, are difficult to implement in Salesforce. The platform's main objective is to create solutions, not build infrastructure or write complex queries. For example, if you need a specific data query, you don't need to figure out how to write it - Commerce Cloud already has the data you need bound to an object.
+Fun and trendy ways of working in the software industry, such as TDD and continuous integration, are difficult to implement in Salesforce CC because the "real logic" is a black box. The platform's main objective is to create solutions, so you will not loose time improving quieries or refactoring big classes, all of this stuff is already made by salesforce so you'll be focused only in business solutions avoiding a bit the full technical part of the problem/improvement. For example, if you need a specific data query, you don't need to figure out how to write it - Commerce Cloud already has the data you need bound to an object. From the business perspective this approach can be positive but from the technical point of view can be less atractive.
+
+In the near future I have planned to write more posts about Saleforce Commerce Cloud on this blog, if you have any idea that will be welcomed, reach me out on my email cestarlich.dev@gmail.com
