@@ -14,7 +14,7 @@ tags:
   - Pair programming
   - work in remote
 description:
-  What is pair programming? How can we apply it in our daily work? Pair programming can give a lot of value to a software development team.
+  I started to work from home on 2020, during this time I created some methodologies and habits, in this new post I will try to explain how to apply them to your daily-basis.
 ---
 ![Work in remote](/assets/remote-work.png)
 
