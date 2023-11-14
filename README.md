@@ -1,8 +1,8 @@
-👋🏻 Hello world, This is Cristian a 29 years old developer!
+👋🏻 Hello world, This is Cristian a 30 years old developer!
 
-Since I was very little I have been interested by the technology 🧑🏻‍💻 in general, my first introduction to this world was with videogames in a Sega console. After some years playing games finally my fathers bought a computer and I was excited with this new machine in my home. I started to discover how a computer works and I had a lot of questions in my head. 
+Since I was very young I have been interested by the technology 🧑🏻‍💻 in general. My first introduction to this world was with videogames in a Sega console. After some years playing games finally my fathers bought a computer and I was excited with this new machine in my home. I started to discover how a computer works and I had a lot of questions in my head. 
 
-🤔 What means this black screen when I press the power on button? 
+🤔 What means this black screen with white letters when I press the power on button? 
 
 🏴‍☠️ What exactly happens when I’m uninstalling a program from the control panel in a Windows 98?
 
