@@ -1,4 +1,4 @@
-👋🏻 Hello world, This is Cristian a 30 years old developer!
+👋🏻 Hello world, This is Cristian a 31 years old developer!
 
 Since I was very young I have been interested by the technology 🧑🏻‍💻 in general. My first introduction to this world was with videogames in a Sega console. After some years playing games finally my fathers bought a computer and I was excited with this new machine in my home. I started to discover how a computer works and I had a lot of questions in my head. 
 
