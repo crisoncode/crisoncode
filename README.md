@@ -12,7 +12,7 @@ After years, hours of gaming and hours of learning I started to study the comput
 
 In my third year of study I discovered the art of coding, this was the biggest change of my whole life and I felt in love with that.
 
-Today, after 10 years working as a developer I’m a Javascript senior developer working in Salesforce Commerce Cloud a private software platform focused on digital commerce for big companies.
+Today, after 10 years working in many roles I'm Working in TennisPoint as a technical lead.
 
 If you have spent these two minutes of your live reading this, thanks a lot!
 
