@@ -7,45 +7,50 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
 <section
 	id="hero"
-	class="md:grid-cols-2 md:items-start mb-12 grid grid-cols-2 items-center gap-8"
+	class="md:grid-cols-2 md:items-start mb-16 grid grid-cols-2 items-center gap-10"
 >
 	<div class="profile-picture">
 		<img
 			src="/assets/profile.jpg"
 			alt="Cristian Estarlich"
-			class="shadow-accent-500/50 rounded-xl object-cover shadow-xl"
+			class="rounded-2xl object-cover shadow-lg transition-all duration-300 hover:shadow-xl"
 		/>
 	</div>
 	<div class="profile-text">
-		<h2 class="mb-12 text-4xl font-bold text-skin-accent">
+		<h2 class="mb-8 text-4xl font-bold tracking-tight text-skin-accent">
 			Cristian Estarlich
 		</h2>
 
-		<p>Hi there, I’m Cristian! A 32 years old guy based in Barcelona.</p>
+		<p class="leading-relaxed">
+			Hi there, I'm Cristian! A 32 years old guy based in Barcelona.
+		</p>
 
-		<p>This is my place to write things that I have in my mind.</p>
+		<p class="leading-relaxed">
+			This is my place to write things that I have in my mind.
+		</p>
 
-		<p>
+		<p class="leading-relaxed">
 			Probably you can expect a bit of chaos, technical things, techniques to be
 			more productive and my thoughts in general.
 		</p>
 
-		<p>
-			Currently I’m working at TennisPoint as a technical lead, an ecommerce
+		<p class="leading-relaxed">
+			Currently I'm working at TennisPoint as a technical lead, an ecommerce
 			that sells tennis material and tennis clothes worldwide.
 		</p>
 
-		<p>
+		<p class="leading-relaxed">
 			Coding is my passion. I started earning money as a programmer when I was
-			just 19. My main tech stack is JavaScript and TypeScript, but I’ve worked
-			with many other technologies, and I’m definitely not someone who’s rigid
+			just 19. My main tech stack is JavaScript and TypeScript, but I've worked
+			with many other technologies, and I'm definitely not someone who's rigid
 			about trying new things.
 		</p>
 
-		<p>
-			Don’t doubt to reach me out via <a
+		<p class="leading-relaxed">
+			Don't doubt to reach me out via <a
 				href="mailto:cestarlich.dev@gmail.com"
-				class="text-skin-accent">cestarlich.dev@gmail.com</a
+				class="text-skin-accent transition-colors hover:underline"
+				>cestarlich.dev@gmail.com</a
 			> for grab an online coffee and have a talk!
 		</p>
 
@@ -76,12 +81,15 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 		@apply mb-2 h-6 w-6 scale-110 fill-skin-accent sm:mb-3 sm:scale-125;
 	}
 	#hero p {
-		@apply my-2;
+		@apply my-3 text-skin-base/90;
+	}
+	.profile-picture img {
+		@apply w-full;
 	}
 	.social-wrapper {
-		@apply mt-4 flex flex-col sm:flex-row sm:items-center;
+		@apply mt-6 flex flex-col sm:flex-row sm:items-center;
 	}
 	.social-links {
-		@apply mb-1 mr-2 whitespace-nowrap sm:mb-0;
+		@apply mb-1 mr-2 whitespace-nowrap text-sm text-skin-base/70 sm:mb-0;
 	}
 </style>

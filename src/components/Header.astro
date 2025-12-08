@@ -118,7 +118,7 @@ const { activeNav } = Astro.props;
 		@apply flex flex-1 items-center justify-center;
 	}
 	nav ul li a {
-		@apply w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1;
+		@apply w-full px-4 py-3 text-center font-medium transition-colors duration-200 hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1;
 	}
 	nav ul li:nth-child(4) a {
 		@apply w-auto;
@@ -128,7 +128,7 @@ const { activeNav } = Astro.props;
 		@apply flex-none;
 	}
 	nav a.active {
-		@apply underline decoration-wavy decoration-2 underline-offset-4;
+		@apply text-skin-accent underline decoration-wavy decoration-2 underline-offset-4;
 	}
 	nav a.active svg {
 		@apply fill-skin-accent;
