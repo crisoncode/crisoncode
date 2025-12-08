@@ -6,127 +6,65 @@ import Footer from "@components/Footer.astro";
 import LinkButton from "@components/LinkButton.astro";
 import Hr from "@components/Hr.astro";
 import Card from "@components/Card";
-import Socials from "@components/Socials.astro";
+import Hero from "@components/Hero.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import slugify from "@utils/slugify";
-import { SOCIALS } from "@config";
 
 const posts = await getCollection("blog");
 
 const sortedPosts = getSortedPosts(posts);
-
-
-const socialCount = SOCIALS.filter(social => social.active).length;
 ---
 
 <Layout>
-  <Header />
-  <main id="main-content">
-    <section id="hero">
-      <p>
-				👋🏻 Hello!
-				<br><br>
-				My name is Cristian Estarlich, I'm a software developer living in Barcelona. Since I was very young, technology has been a passion of mine and programming became my job.
-				<br><br>
-				On the other hand, I'm a big fan of reading, I love to read, whether it be technical books, suspense novels, or fantasy books. I've been writing short stories, poetry, and more for years.
-				<br><br>
-				In this small space I've created, my goal is to share with you things from my daily life that I encounter in my work as a software developer, book reviews, and anything else useful that I think of sharing.
-				<br><br>
-				So without further ado, welcome to my world 🌍 🖤
-      </p>
-			<br><br>
-			<hr>
-			<br><br>
-			<p>
-				👋🏻Hola mundo!
-				<br><br>
-				Me llamo Cristian Estarlich,  soy un desarrollador de software que vive en Barcelona. Desde muy pequeño la tecnología me ha apasionado y la programación se convirtió en mi trabajo.
-				<br><br>
-				Por otra parte soy gran fan de la lectura, me encanta leer, ya sean libros técnicos,  novelas de suspense o libros de fantasía. Llevo años escribiendo pequeños relatos, poesía y mucho más.
-				<br><br>
-				En este pequeño espacio que he creado mi objetivo es compartir con vosotros cosas de mi día a día que planteo en mi trabajo como desarrollador de software, reviews sobre mis libros y cualquier cosa útil que se me ocurra compartir.
-				<br><br>
-				Así que sin mas dilación, bienvenidos a mi mundo.
-			</p>
-      {
-        // only display if at least one social link is enabled
-        socialCount > 0 && (
-          <div class="social-wrapper">
-            <div class="social-links">Social Links:</div>
-            <Socials />
-          </div>
-        )
-      }
-    </section>
+	<Header />
+	<main id="main-content">
+		<Hero />
 
-    <Hr />
+		<Hr />
 
-    <section id="recent-posts">
-      <h2>Recent Posts</h2>
-      <ul>
-        {
-          sortedPosts.map(
-            ({ data }, index) =>
-              index < 4 && (
-                <Card
-                  href={`/posts/${slugify(data)}`}
-                  frontmatter={data}
-                  secHeading={false}
-                />
-              )
-          )
-        }
-      </ul>
-      <div class="all-posts-btn-wrapper">
-        <LinkButton href="/posts">
-          All Posts
-          <svg xmlns="http://www.w3.org/2000/svg"
-            ><path
-              d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
-            ></path>
-          </svg>
-        </LinkButton>
-      </div>
-    </section>
-  </main>
+		<section id="recent-posts">
+			<h2>Recent Posts</h2>
+			<ul>
+				{
+					sortedPosts.map(
+						({ data }, index) =>
+							index < 4 && (
+								<Card
+									href={`/posts/${slugify(data)}`}
+									frontmatter={data}
+									secHeading={false}
+								/>
+							)
+					)
+				}
+			</ul>
+			<div class="all-posts-btn-wrapper">
+				<LinkButton href="/posts">
+					All Posts
+					<svg xmlns="http://www.w3.org/2000/svg"
+						><path
+							d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
+						></path>
+					</svg>
+				</LinkButton>
+			</div>
+		</section>
+	</main>
 
-  <Footer />
+	<Footer />
 </Layout>
 
 <style>
-  /* ===== Hero Section ===== */
-  #hero {
-    @apply pt-8 pb-6;
-  }
-  #hero h1 {
-    @apply my-4 inline-block text-3xl font-bold sm:my-8 sm:text-5xl;
-  }
-  #hero .rss-link {
-    @apply mb-6;
-  }
-  #hero .rss-icon {
-    @apply mb-2 h-6 w-6 scale-110 fill-skin-accent sm:mb-3 sm:scale-125;
-  }
-  #hero p {
-    @apply my-2;
-  }
-  .social-wrapper {
-    @apply mt-4 flex flex-col sm:flex-row sm:items-center;
-  }
-  .social-links {
-    @apply mr-2 mb-1 whitespace-nowrap sm:mb-0;
-  }
-
-  /* ===== Featured & Recent Posts Sections ===== */
-  #featured,
-  #recent-posts {
-    @apply pt-12 pb-6;
-  }
-  #featured h2,
-  #recent-posts h2 {
-    @apply text-2xl font-semibold tracking-wide;
-  }
-  .all-posts-btn-wrapper {
-    @apply my-8 text-center;
-  }
+	/* ===== Featured & Recent Posts Sections ===== */
+	#featured,
+	#recent-posts {
+		@apply pb-6 pt-12;
+	}
+	#featured h2,
+	#recent-posts h2 {
+		@apply text-2xl font-semibold tracking-wide;
+	}
+	.all-posts-btn-wrapper {
+		@apply my-8 text-center;
+	}
 </style>
