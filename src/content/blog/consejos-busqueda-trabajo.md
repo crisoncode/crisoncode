@@ -69,21 +69,21 @@ En estos casos también depende de como has cuidado tus amistades laborales, si 
 
 ## Tips sobre el Curriculum
 
-<div class="columns-2 mb-16">
+<div class="md:grid-cols-2 md:items-start mb-20 grid grid-cols-2 items-center gap-10 columns-2 mb-16">
 
 <div>
-<img src="/assets/consejos-busqueda-trabajo-2.png" alt="Ejemplo de CV con zonas roja y naranja marcadas" class="h-60" />
+<img src="/assets/consejos-busqueda-trabajo-2.png" alt="Ejemplo de CV con zonas roja y naranja marcadas" class="h-full" />
 </div>
 
 <div >
 
-**Zona roja**
+<span style="color: red; font-weight: bold;">Zona roja</span>
 
 Esta zona es variable, es tu título, como te van a identificar los recruiters o HR, si aplicas a una oferta para fullstack, no pongas que eres software engineer o backend developer, pon en el título que eres fullstack developer, por lo contrario si en la siguiente, es backend developer, pon que eres backend developer.
 
 _Obviamente no mientas, si no sabes de backend no lo pongas._
 
-**Zona Naranja**
+<span style="color: orange; font-weight: bold;">Zona naranja</span>
 
 Lo mismo, zona variable, si vas a aplicar a una empresa de PHP y React, no pongas primero tu experiencia en Node por más años que tengas en ella, intenta adaptar un poco tu CV a lo que ellos piden sin llegar a mentir.
 
