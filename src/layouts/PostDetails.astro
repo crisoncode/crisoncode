@@ -22,18 +22,6 @@ const ogUrl = new URL(ogImage ? ogImage : `${title}.svg`, Astro.url.origin)
 
 <Layout title={title} author={author} description={description} ogImage={ogUrl}>
 	<Header />
-	<div class="mx-auto flex w-full max-w-5xl justify-start px-4">
-		<button
-			class="focus-outline mb-2 mt-8 flex hover:opacity-75"
-			onclick="history.back()"
-		>
-			<svg xmlns="http://www.w3.org/2000/svg"
-				><path
-					d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
-				></path>
-			</svg><span>Go back</span>
-		</button>
-	</div>
 	<main id="main-content">
 		<Datetime datetime={pubDatetime} size="lg" className="my-2" />
 		<article id="article" role="article" class="prose mx-auto mt-8 max-w-5xl">
@@ -43,6 +31,19 @@ const ogUrl = new URL(ogImage ? ogImage : `${title}.svg`, Astro.url.origin)
 		<ul class="tags-container">
 			{tags.map(tag => <Tag name={tag} />)}
 		</ul>
+
+		<div class="mx-auto mt-8 flex w-full max-w-5xl justify-start px-4">
+			<button
+				class="go-back-button focus-outline flex items-center gap-2 rounded px-4 py-2 transition-opacity hover:opacity-90"
+				onclick="history.back()"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+					><path
+						d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
+						fill="currentColor"></path>
+				</svg><span>Go back</span>
+			</button>
+		</div>
 	</main>
 	<Footer />
 </Layout>
@@ -131,5 +132,22 @@ const ogUrl = new URL(ogImage ? ogImage : `${title}.svg`, Astro.url.origin)
 	}
 	.prose > h1:not(:first-of-type) {
 		margin-top: 6rem !important;
+	}
+	.go-back-button {
+		background-color: rgb(124, 58, 237);
+		color: white !important;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		vertical-align: middle;
+	}
+	.go-back-button span {
+		display: inline-flex;
+		align-items: center;
+		vertical-align: middle;
+	}
+	.go-back-button svg {
+		height: 22px !important;
 	}
 </style>
