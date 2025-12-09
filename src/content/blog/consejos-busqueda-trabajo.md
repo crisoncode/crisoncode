@@ -14,7 +14,9 @@ description: Consejos prácticos y experiencias personales sobre cómo afrontar 
 
 # Consejos para procesos de búsqueda de trabajo
 
-Antes de empezar con las secciones que tengo en la cabeza me gustaría decir que tienes que adaptarte a ellas a tu manera, cada persona es un mundo y se siente de una forma u otra cuando trabaja, esto tienes que tomártelo también como tal, cada día invertir X tiempo.
+Antes de empezar con las secciones que tengo en la cabeza me gustaría decir que tienes que adaptarte a ellas a tu manera, cada persona es un mundo y se siente de una forma u otra cuando trabaja, esto tienes que tomártelo también como tal, buscar trabajo, en sí es como trabajar, deberás invertir X horas al día en buscar y organizarte, en entrenar tus skills para las pruebas técnicas, etc... Aquí a diferencia de trabajando como tal no hay normas, por lo tanto la disciplina es importantísima, no puedes parar porque en la primera te rechazan o en la tercera no te contestan, es un proceso hasta llegar a tu objetivo y día a día tienes que esforzarte.
+
+> Te aconsejo que te montes una base de datos sencilla en notion sobre donde has hecho apply, que evalues las empresas de forma numérica (puntuando entre 0 y 5 por ejemplo) y decidas donde invertir más esfuerzos.
 
 # 🏗️ Como encontrar empresas
 
