@@ -1,6 +1,6 @@
 ---
 author: Cristian Estarlich
-pubDatetime: 2024-12-08T15:00:00Z
+pubDatetime: 2025-12-08T15:00:00Z
 title: Consejos para procesos de búsqueda de trabajo
 postSlug: consejos-para-procesos-de-busqueda-de-trabajo
 featured: false
@@ -155,6 +155,7 @@ Normalmente te mandan un repo de github con un _tiny-project_ y un readme de lo 
    4. El readme o documento donde explicas que has hecho (puedes crear un documento rollo, [task.md](http://task.md) y allí lo metes todo, da igual el formato, aunque markdown suele ser lo normal)
       1. Esto aunque parezca una tontería es **SUPER MEGA IMPORTANTE,** en este documento tienes voz para explicar porque has hecho X o Y, que decisiones has tomado, lo que decía de iterar en el punto 1, aqui lo tienes que escribir, porque has iterado y has mejorado algo, cualquier decision o cosa que hayas visto escribela, e incluso aunque no lo hayas hecho puedes decir algo tipo: "he visto que en el front tenéis un poco de caos en el CSS; no he llegado a tocarlo porque no lo veía una prioridad, pero esta claro que se puede mejorar"
       2. Si no tienes muy claro como estructurar el doc, tira de AI para montarlo, te ayudara mucho.
+
 2. Uso de inteligencia artificial en las pruebas
    1. Desde mi punto de vista, se puede usar sin problemas, pero no hagamos el paleto, por ejemplo:
       1. La AI tiene por costumbre comentar todo el código, borra los comentarios o pegará el canteo (pídele que los borre o apoyate en [agents.md](http://agents.md) con rules para no tener ni que pedirlo)
