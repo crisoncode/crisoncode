@@ -65,8 +65,17 @@ const ogUrl = new URL(ogImage ? ogImage : `${title}.svg`, Astro.url.origin)
 		margin: 2rem 0 !important;
 		align-items: start !important;
 	}
+	.prose .cv-tips-grid {
+		display: grid !important;
+		grid-template-columns: 1fr !important;
+		gap: 2.5rem !important;
+		align-items: start !important;
+	}
 	@media (min-width: 768px) {
 		.prose .cv-tips-wrapper {
+			grid-template-columns: 1fr 1fr !important;
+		}
+		.prose .cv-tips-grid {
 			grid-template-columns: 1fr 1fr !important;
 		}
 	}

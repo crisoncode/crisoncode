@@ -22,9 +22,11 @@ Antes de empezar con las secciones que tengo en la cabeza me gustaría decir que
 
 ✅ No te cierres a un solo canal
 
-Hay muchos canales y comunidades donde puedes encontrar trabajo. Te dejo aqui mis favoritas:
+Hay muchos canales y comunidades donde puedes encontrar trabajo y al final esto es un juego de probabilidades, si amplías tu espectro de bússqueda augmentas la probabilidad de dar con algo interesante.
 
-## Barcelona engineers
+Te dejo aqui mis favoritas:
+
+### Barcelona engineers
 
 Es una comunidad de slack de Barcelona
 [https://slack.bcneng.org](https://slack.bcneng.org/)
@@ -33,7 +35,7 @@ En esta comunidad hay un canal que se llama Hiring Job Board, donde puedes ver o
 
 ![image.png](/assets/consejos-busqueda-trabajo-1.png)
 
-Este slack desde mi punto de vista te da la posibilidad de entablar una conversación con la persona al cargo del proceso o alguien cercano al mismo. Esto es una ventaja competitiva si sabes como hacerlo. Puedes hacer alguna pregunta a esa persona (etiquetada al final), alguans preguntas que se me ocurren son:
+Este slack desde mi punto de vista te da la posibilidad de entablar una conversación con la persona al cargo del proceso o alguien cercano al mismo. Esto es una ventaja competitiva si sabes como hacerlo. Puedes hacer alguna pregunta a esa persona (etiquetada al final), algunas preguntas que se me ocurren son:
 
 > Hola Radu, como funciona el proceso de entrevista, que fases hay?
 
@@ -63,27 +65,21 @@ Si, no estoy de broma, infojobs con los años ha mejorado mucho y ya no es un po
 
 Funciona bastante bien, tiene un modo en el cual creas tu perfil y te relacionan con ofertas al más puro estilo tinder
 
-# 🫂 Networking
+### 🫂 Networking
 
 Tratad de hablar con gente con la que habéis trabajado o habéis tenido algún tipo de relación laboral, esto suele funcionar bastante bien, los referals son una de las formas más rápidas de encontrar trabajo.
 
 En estos casos también depende de como has cuidado tus amistades laborales, si no has vuelto a hablar con amigos de tu anterior trabajo en los últimos 3 años igual queda un poco raro.
 
-## Tips sobre el Curriculum
+# Tips sobre el Curriculum
 
-<div class="md:grid-cols-2 md:items-start mb-20 grid grid-cols-2 items-center gap-10 columns-2 mb-16">
-
-<div>
 <img src="/assets/consejos-busqueda-trabajo-2.png" alt="Ejemplo de CV con zonas roja y naranja marcadas" class="h-full" />
-</div>
-
-<div >
 
 <span style="color: red; font-weight: bold;">Zona roja</span>
 
 Esta zona es variable, es tu título, como te van a identificar los recruiters o HR, si aplicas a una oferta para fullstack, no pongas que eres software engineer o backend developer, pon en el título que eres fullstack developer, por lo contrario si en la siguiente, es backend developer, pon que eres backend developer.
 
-_Obviamente no mientas, si no sabes de backend no lo pongas._
+_🚩 Obviamente no mientas, si no sabes de backend no lo pongas._
 
 <span style="color: orange; font-weight: bold;">Zona naranja</span>
 
@@ -91,30 +87,36 @@ Lo mismo, zona variable, si vas a aplicar a una empresa de PHP y React, no ponga
 
 Debéis entender que el Curriculum es solo un papel para aplicar un filtro previo, si tu te ves con skills para afrontar ese trabajo, lo que tienes que hacer es usar el documento para pasar el filtrado y luego en las fases de la entrevista ya podrás demostrar tus skills.
 
-</div>
-
-</div>
-
 # Tips cuando ya te han contactado para hacer entrevista.
 
 Normalmente las entrevistas se dividen de esta forma:
 
-## 🗣️ **Entrevista con HR - Cultural fit.**
+0. Entrevista con recruiters.
+   A veces antes de contactar con la empresa directamente pasas por recruiters, van a hacerte ciertas preguntas que tu puedes intuir por la oferta a la que has aplicado o por la que ellos te están contactando via linkedin.
+1. Entrevista con HR - Cultural fit
+2. Entrevista técnica con developers y/o leads.
+   2.1 Prueba técnica
+3. Review prueba técnica.
+4. Última fase que puede ser con C levels o con leads donde ya te darán una oferta. (alguna vez es para decirte que no has pasado el proceso pero rara vez llegas hasta aquí sin ser un claro candidato).
+
+## 🗣️ **1. Entrevista con HR - Cultural fit.**
 
 Aqui ven que te adaptas a como es la empresa, te preguntan por tu experiencia, que has hecho en otras empresas, que objetivos tienes, etc…
 
 Aquí mis consejos son:
 
-✔️ Preparate un listado de goals de cosas que hayas hecho de las cuales te sientas orgullos@ y cuando digo preparar es que los escribas en algún sitio, para que cuando te toque explicarlo lo tengas memorizado y lo expliques transmitiendo seguridad, es vital ensayar un poquito estas cosas, a veces los nervios o hacer las entrevistas en un idioma que no es el nuestro nativo, nos juegan malas pasadas y ten claro una cosa: transmitir seguridad es vital.
+✔️ Preparate un listado de goals de cosas que hayas hecho de las cuales te sientas orgullos@ y cuando digo preparar es que los escribas en algún sitio, para que cuando te toque explicarlo lo tengas memorizado y lo expliques transmitiendo seguridad, es vital ensayar un poquito estas cosas, a veces los nervios o hacer las entrevistas en un idioma que no es el nuestro nativo, nos juegan malas pasadas y ten claro una cosa: transmitir seguridad es vital. Este tip **te va a servir también para la entrevista técnica que tendrás después**.
 
-✔️ Si no se te ocurre nada, habla con tus compañeros de trabajo, igual ellos te saben decir, ostras pues mira esto que hiciste nos encantó y tu quizás ni lo valoras.
+❌ No caigas en ser demasiado técnico, este es un espacio para demostrar quien eres pero al otro lado es casi seguro que la otra persona no es técnica, analizará tus dotes de comunicación, de resolución de problemas, etc...
+
+✔️ Si no se te ocurre nada, habla con tus compañeros o excompañeros de otros trabajos, igual ellos te saben decir, ostras pues mira esto que hiciste nos encantó y tu quizás ni lo valoras.
 
 Estas fases suelen ser bastante fáciles de superar, a veces te preguntan por hobbies, o que describas alguna situación rara o mala y como saliste de ella, pero en general no son muy duras.
 
 > **💡❕Tip:**
-> Estudia la empresa para la que vas a empezar el proceso, les dices que has mirado la web, que has visto sus videos en youtube (obviamente miralo, no te inventes las cosas) e incluso de lo que has visto apuntate alguna duda, eso a HR le va a encantar, porque veran ya una proactividad muy buena de primeras.
+> Estudia la empresa para la que vas a empezar el proceso, explícales la idea que tienes de su producto o servicio sin miedo a equivocarte, haz búsquedas sobre la misma, en google, en youtube, donde sea, te sorprenderás de la de información que sacarás de la misma.
 
-## 🧪 Entrevista técnica
+## 🧪 2.Entrevista técnica
 
 Aqui es donde viene la salsa, yo he visto de todos los colores:
 
@@ -124,6 +126,8 @@ Aqui es donde viene la salsa, yo he visto de todos los colores:
 Voy a dividir esta parte en 2, primero la charla o entrevista y luego la prueba técnica:
 
 ### Charla:
+
+Vuelve a repasar tus goals en proyectos previos. Ensaya como explicarlos, y estudia muy bien en que parte es mejor tener enfasis. Por ejemplo: Si has integrado una plataforma, haz enfasis en como fue la comunicación, que challenges tuviste, no te pongas a hablar de que X tecnología es muy molona y que aprendiste mucho con ella, esto no le aporta nada al entrevistador, le aporta saber como solucionaste los problemas.
 
 Estudiate muy bien su stack tecnológico, en la oferta a la que has hecho apply debería estar:
 
@@ -179,3 +183,10 @@ Tips para negociar:
 ✅ En mi caso cuando me preguntan que expectativas salariales tengo, digo lo que cobro y a partir de alli que ellos decidan.
 
 ✅ No dudes en preguntar todo lo relativo a esto, sera tu mejor oportunidad para hacerlo, por ejemplo si te dicen que el trabajo es 100% remoto, pregunta si esta escrito por contrato o puede cambiar en un futuro. Lo mismo para seguros médicos, etc..
+
+# Conclusiones
+
+Si has leído todo el post, primero que todo: **Muchas gracias!**
+Estas son cosas que he venido aprendiendo en mis 12 años de carrera profesional, donde me las he visto de todos los colores, he sido freelance, he trabajado en varias empresas, he hecho entrevistas a programadores y me han entrevistado programadores, al final es una aglutinación de mis vivencias y como yo creo que debo preparar las entrevistas, esto no significa que esto sea todo lo que hay que hacer, ni si quiera que sea lo correcto, es mi forma de verlo y os lo quería compartir con todo el ❤️ del mundo mundial.
+Cualquier feedback aquí es bienvenido 🙂
+Podéis contactarme por email: cestarlich.dev@gmail.com
