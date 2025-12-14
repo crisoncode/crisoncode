@@ -9,6 +9,7 @@ import Card from "@components/Card";
 import Hero from "@components/Hero.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import slugify from "@utils/slugify";
+import { getReadingTime } from "@utils/getReadingTime";
 
 const posts = await getCollection("blog");
 
@@ -27,12 +28,13 @@ const sortedPosts = getSortedPosts(posts);
 			<ul>
 				{
 					sortedPosts.map(
-						({ data }, index) =>
+						(post, index) =>
 							index < 4 && (
 								<Card
-									href={`/posts/${slugify(data)}`}
-									frontmatter={data}
+									href={`/posts/${slugify(post.data)}`}
+									frontmatter={post.data}
 									secHeading={false}
+									readingTime={getReadingTime(post.body)}
 								/>
 							)
 					)

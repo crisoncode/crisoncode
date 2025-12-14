@@ -5,9 +5,15 @@ export interface Props {
 	href?: string;
 	frontmatter: BlogFrontmatter;
 	secHeading?: boolean;
+	readingTime?: number;
 }
 
-export default function Card({ href, frontmatter, secHeading = true }: Props) {
+export default function Card({
+	href,
+	frontmatter,
+	secHeading = true,
+	readingTime,
+}: Props) {
 	const { title, pubDatetime, description } = frontmatter;
 	return (
 		<li className="group my-8 mb-20">
@@ -25,7 +31,7 @@ export default function Card({ href, frontmatter, secHeading = true }: Props) {
 					</h3>
 				)}
 			</a>
-			<Datetime datetime={pubDatetime} />
+			<Datetime datetime={pubDatetime} readingTime={readingTime} />
 			<p className="mt-2 leading-relaxed text-skin-base/80">{description}</p>
 		</li>
 	);
