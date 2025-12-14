@@ -1,6 +1,6 @@
 ---
 author: Cristian Estarlich
-pubDatetime: 2025-12-15T15:00:00Z
+pubDatetime: 2025-12-14T10:00:00Z
 title: Comunicación efectiva trabajando en remoto
 postSlug: comunicacion-efectiva-trabajando-en-remoto
 featured: false
