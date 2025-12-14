@@ -61,7 +61,7 @@ que obviamente complica la comunicación **un poquito**.
 
 ![Comunicación trabajando en remoto](/assets/comunicacion.jpg)
 
-# Decide cómo comunicarte
+# Decide como comunicarte
 
 > Más vale pensar dos veces que arrepentirse una
 
