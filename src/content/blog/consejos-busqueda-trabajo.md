@@ -99,7 +99,7 @@ Normalmente las entrevistas se dividen de esta forma:
 3. Review prueba técnica.
 4. Última fase que puede ser con C levels o con leads donde ya te darán una oferta. (alguna vez es para decirte que no has pasado el proceso pero rara vez llegas hasta aquí sin ser un claro candidato).
 
-## 🗣️ **1. Entrevista con HR - Cultural fit.**
+## 🗣️ Entrevista con HR
 
 Aqui ven que te adaptas a como es la empresa, te preguntan por tu experiencia, que has hecho en otras empresas, que objetivos tienes, etc…
 
@@ -116,7 +116,7 @@ Estas fases suelen ser bastante fáciles de superar, a veces te preguntan por ho
 > **💡❕Tip:**
 > Estudia la empresa para la que vas a empezar el proceso, explícales la idea que tienes de su producto o servicio sin miedo a equivocarte, haz búsquedas sobre la misma, en google, en youtube, donde sea, te sorprenderás de la de información que sacarás de la misma.
 
-## 🧪 2.Entrevista técnica
+## 🧪 Entrevista técnica
 
 Aqui es donde viene la salsa, yo he visto de todos los colores:
 

@@ -22,6 +22,18 @@ const ogUrl = new URL(ogImage ? ogImage : `${title}.svg`, Astro.url.origin)
 
 <Layout title={title} author={author} description={description} ogImage={ogUrl}>
 	<Header />
+	<div class="mx-auto flex w-full max-w-5xl justify-start px-4">
+		<button
+			class="focus-outline mb-2 mt-8 flex hover:opacity-75"
+			onclick="history.back()"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg"
+				><path
+					d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
+				></path>
+			</svg><span>Go back</span>
+		</button>
+	</div>
 	<main id="main-content">
 		<Datetime datetime={pubDatetime} size="lg" className="my-2" />
 		<article id="article" role="article" class="prose mx-auto mt-8 max-w-5xl">
@@ -31,19 +43,6 @@ const ogUrl = new URL(ogImage ? ogImage : `${title}.svg`, Astro.url.origin)
 		<ul class="tags-container">
 			{tags.map(tag => <Tag name={tag} />)}
 		</ul>
-
-		<div class="mx-auto mt-8 flex w-full max-w-5xl justify-start px-4">
-			<button
-				class="go-back-button focus-outline flex items-center gap-2 rounded px-4 py-2 transition-opacity hover:opacity-90"
-				onclick="history.back()"
-			>
-				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-					><path
-						d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
-						fill="currentColor"></path>
-				</svg><span>Go back</span>
-			</button>
-		</div>
 	</main>
 	<Footer />
 </Layout>
@@ -58,105 +57,25 @@ const ogUrl = new URL(ogImage ? ogImage : `${title}.svg`, Astro.url.origin)
 	.tags-container {
 		@apply my-10 flex flex-wrap gap-2;
 	}
-	.prose .cv-tips-wrapper {
+	.prose .grid {
 		display: grid !important;
-		grid-template-columns: 1fr !important;
-		gap: 2rem !important;
-		margin: 2rem 0 !important;
-		align-items: start !important;
-	}
-	.prose .cv-tips-grid {
-		display: grid !important;
-		grid-template-columns: 1fr !important;
-		gap: 2.5rem !important;
-		align-items: start !important;
+		grid-template-columns: 1fr;
+		gap: 2rem;
+		margin: 2rem 0;
+		align-items: start;
 	}
 	@media (min-width: 768px) {
-		.prose .cv-tips-wrapper {
-			grid-template-columns: 1fr 1fr !important;
-		}
-		.prose .cv-tips-grid {
+		.prose .grid {
 			grid-template-columns: 1fr 1fr !important;
 		}
 	}
-	.prose .cv-image-wrapper {
+	.prose .grid > div:first-child {
 		position: sticky;
 		top: 2rem;
 	}
-	.prose .cv-image-wrapper img {
-		width: 100% !important;
-		height: auto !important;
-		border-radius: 0.5rem !important;
-		margin: 0 !important;
-	}
-	.prose .cv-text-wrapper {
-		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
-	}
-	.prose h1 {
-		color: rgb(var(--color-accent)) !important;
-		margin-top: 6rem !important;
-		margin-bottom: 3rem !important;
-		padding-top: 3rem !important;
-		padding-bottom: 1.5rem !important;
-		border-bottom: 3px solid rgba(var(--color-accent), 0.4) !important;
-		font-size: 2rem !important;
-		font-weight: 700 !important;
-		line-height: 1.3 !important;
-	}
-	.prose h1:first-of-type {
-		margin-top: 0 !important;
-		padding-top: 0 !important;
-		border-bottom: none !important;
-		color: inherit !important;
-	}
-	.prose h1:not(:first-of-type) {
-		position: relative;
-		border-top: 3px solid transparent;
-	}
-	.prose h1:not(:first-of-type)::before {
-		content: "";
-		display: block;
-		height: 4px;
-		background: linear-gradient(
-			to right,
-			transparent,
-			rgba(var(--color-accent), 0.5),
-			transparent
-		);
-		margin-bottom: 3rem;
-		margin-top: -3rem;
+	.prose .grid img {
 		width: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
-	.prose h2 {
-		margin-top: 3rem !important;
-		margin-bottom: 1.5rem !important;
-	}
-	.prose > * {
-		margin-bottom: 1.5rem !important;
-	}
-	.prose > h1:not(:first-of-type) {
-		margin-top: 6rem !important;
-	}
-	.go-back-button {
-		background-color: rgb(124, 58, 237);
-		color: white !important;
-		text-align: center;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		vertical-align: middle;
-	}
-	.go-back-button span {
-		display: inline-flex;
-		align-items: center;
-		vertical-align: middle;
-	}
-	.go-back-button svg {
-		height: 22px !important;
+		height: auto;
+		border-radius: 0.5rem;
 	}
 </style>
