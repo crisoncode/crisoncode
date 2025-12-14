@@ -101,7 +101,8 @@ Esto está genial Cristian, ¡qué guay! Hemos destripado la comunicación un po
 
 Cuando debas comunicar algo fíjate en esta enumeración e identifica cuál va a ser la forma más efectiva.
 
-Para enseñaros un poco como funciona esto, vamos a crear tres situaciones típicas:
+Para enseñaros un poco como funciona esto, vamos a recrear tres situaciones hipoteticas muy típicas
+en los equipos de desarrollo de software:
 
 ### **Situación A:**
 
