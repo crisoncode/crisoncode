@@ -57,7 +57,7 @@ Voy a tratar de daros mi visión de cómo la comunicación debe ser para que sea
 lo vamos a complicar un poquito dado que este post va a estar enfocado en comunicarse en remoto,
 que obviamente complica la comunicación **un poquito**.
 
-> "La mayoría de la gente no escucha con la intención de entender, escuchan con el objetivo de contestar" -Stephen Covey
+> La mayoría de la gente no escucha con la intención de entender, escuchan con el objetivo de contestar -Stephen Covey
 
 ![Comunicación trabajando en remoto](/assets/comunicacion.jpg)
 
