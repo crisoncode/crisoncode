@@ -68,6 +68,17 @@
 	html[data-theme="dark"] #sun-svg {
 		display: block;
 	}
+	pre,
+	pre.astro-code {
+		background-color: #1a1a1a !important;
+		color: #ffffff !important;
+	}
+	pre code {
+		color: #ffffff !important;
+	}
+	pre code span {
+		color: #ffffff !important;
+	}
 	body {
 		@apply flex min-h-screen flex-col bg-skin-fill font-sans text-base font-light text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted;
 		transition:
