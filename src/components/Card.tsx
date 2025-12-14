@@ -22,17 +22,19 @@ export default function Card({
 				className="inline-block text-lg font-medium text-skin-accent decoration-dashed underline-offset-4 transition-all duration-200 hover:text-skin-accent/80 focus-visible:no-underline focus-visible:underline-offset-0"
 			>
 				{secHeading ? (
-					<h2 className="mb-5font-medium text-3xl decoration-dashed transition-all hover:underline">
+					<h2 className="mb-5 text-3xl font-medium decoration-dashed transition-all hover:underline md:text-4xl">
 						{title}
 					</h2>
 				) : (
-					<h3 className="mb-5 text-3xl font-medium decoration-dashed transition-all hover:underline">
+					<h3 className="mb-5 text-3xl font-medium decoration-dashed transition-all hover:underline md:text-4xl">
 						{title}
 					</h3>
 				)}
 			</a>
 			<Datetime datetime={pubDatetime} readingTime={readingTime} />
-			<p className="mt-2 leading-relaxed text-skin-base/80">{description}</p>
+			<p className="mt-2 text-lg leading-relaxed text-skin-base/80 md:text-xl">
+				{description}
+			</p>
 		</li>
 	);
 }

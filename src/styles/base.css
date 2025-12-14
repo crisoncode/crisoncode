@@ -2,6 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+	font-family: "Bookerly";
+	src: url("/fonts/Bookerly.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Bookerly";
+	src: url("/fonts/Bookerly Italic.ttf") format("truetype");
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Bookerly";
+	src: url("/fonts/Bookerly Bold.ttf") format("truetype");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Bookerly";
+	src: url("/fonts/Bookerly Bold Italic.ttf") format("truetype");
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Bookerly";
+	src: url("/fonts/Bookerly Light.ttf") format("truetype");
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
 @layer base {
 	:root,
 	html[data-theme="light"] {
@@ -29,7 +69,7 @@
 		display: block;
 	}
 	body {
-		@apply flex min-h-screen flex-col bg-skin-fill font-mono text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted;
+		@apply flex min-h-screen flex-col bg-skin-fill font-sans text-base font-light text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted;
 		transition:
 			background-color 0.3s ease,
 			color 0.3s ease;
@@ -48,7 +88,7 @@
 		@apply inline-block h-6 w-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110;
 	}
 	.prose {
-		@apply prose-headings:!mb-4 prose-headings:tracking-tight prose-headings:!text-skin-base prose-h1:mb-4 prose-h1:mt-8 prose-h1:!text-3xl prose-h1:font-bold prose-h2:mb-4 prose-h2:mt-8 prose-h2:border-b prose-h2:border-skin-line prose-h2:border-opacity-30 prose-h2:pb-2 prose-h2:!text-2xl prose-h2:font-semibold prose-h3:mb-3 prose-h3:mt-6 prose-h3:!text-xl prose-h3:italic prose-p:mb-4 prose-p:leading-relaxed prose-p:!text-skin-base prose-a:!text-skin-base prose-a:!decoration-dashed prose-a:underline-offset-4 prose-a:transition-colors prose-a:duration-200 hover:prose-a:text-skin-accent prose-blockquote:!border-l-skin-accent prose-blockquote:border-opacity-50 prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:opacity-80 prose-figcaption:text-sm prose-figcaption:!text-skin-base prose-figcaption:opacity-70 prose-strong:font-semibold prose-strong:!text-skin-base prose-code:rounded prose-code:bg-skin-card prose-code:bg-opacity-75 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-sm prose-code:!text-skin-base prose-code:before:!content-[''] prose-code:after:!content-[''] prose-pre:rounded-lg prose-pre:border prose-pre:border-skin-line prose-pre:!text-skin-base prose-ol:space-y-2 prose-ol:!text-skin-base prose-ul:space-y-2 prose-ul:overflow-x-clip prose-ul:!text-skin-base prose-li:marker:font-semibold prose-li:marker:!text-skin-accent prose-table:text-skin-base prose-th:border prose-th:border-skin-line prose-td:border prose-td:border-skin-line prose-td:border-opacity-50 prose-img:mx-auto prose-img:!mb-4 prose-img:!mt-4 prose-img:rounded-lg prose-img:border prose-img:border-skin-line prose-img:border-opacity-30 prose-img:shadow-sm prose-hr:!border-skin-line prose-hr:border-opacity-30;
+		@apply prose-headings:!mb-4 prose-headings:tracking-tight prose-headings:!text-skin-base prose-h1:mb-4 prose-h1:mt-8 prose-h1:!text-4xl prose-h1:font-bold prose-h2:mb-4 prose-h2:mt-8 prose-h2:border-b prose-h2:border-skin-line prose-h2:border-opacity-30 prose-h2:pb-2 prose-h2:!text-3xl prose-h2:font-semibold prose-h3:mb-3 prose-h3:mt-6 prose-h3:!text-2xl prose-h3:font-semibold prose-p:mb-4 prose-p:!text-lg prose-p:font-light prose-p:!leading-relaxed prose-p:!text-skin-base prose-a:!text-skin-base prose-a:!decoration-dashed prose-a:underline-offset-4 prose-a:transition-colors prose-a:duration-200 hover:prose-a:text-skin-accent prose-blockquote:!border-l-skin-accent prose-blockquote:border-opacity-50 prose-blockquote:pl-4 prose-blockquote:!text-lg prose-blockquote:font-light prose-blockquote:italic prose-blockquote:opacity-80 prose-figcaption:text-base prose-figcaption:!text-skin-base prose-figcaption:opacity-70 prose-strong:font-semibold prose-strong:!text-skin-base prose-code:rounded prose-code:bg-skin-card prose-code:bg-opacity-75 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-base prose-code:!text-skin-base prose-code:before:!content-[''] prose-code:after:!content-[''] prose-pre:rounded-lg prose-pre:border prose-pre:border-skin-line prose-pre:!text-base prose-pre:!text-skin-base prose-ol:space-y-2 prose-ol:!text-lg prose-ol:font-light prose-ol:!text-skin-base prose-ul:space-y-2 prose-ul:overflow-x-clip prose-ul:!text-lg prose-ul:font-light prose-ul:!text-skin-base prose-li:marker:font-semibold prose-li:marker:!text-skin-accent prose-table:text-lg prose-table:font-light prose-table:text-skin-base prose-th:border prose-th:border-skin-line prose-td:border prose-td:border-skin-line prose-td:border-opacity-50 prose-img:mx-auto prose-img:!mb-4 prose-img:!mt-4 prose-img:rounded-lg prose-img:border prose-img:border-skin-line prose-img:border-opacity-30 prose-img:shadow-sm prose-hr:!border-skin-line prose-hr:border-opacity-30 md:prose-h1:!text-5xl md:prose-h2:!text-4xl md:prose-h3:!text-3xl md:prose-p:!text-xl md:prose-blockquote:!text-xl md:prose-pre:!text-lg md:prose-ol:!text-xl md:prose-ul:!text-xl md:prose-table:text-xl;
 	}
 	.prose a {
 		@apply hover:!text-skin-accent;

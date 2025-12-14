@@ -81,7 +81,10 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 		@apply mb-2 h-6 w-6 scale-110 fill-skin-accent sm:mb-3 sm:scale-125;
 	}
 	#hero p {
-		@apply my-3 text-skin-base/90;
+		@apply my-3 text-lg text-skin-base/90 md:text-xl;
+	}
+	#hero h2 {
+		@apply text-3xl md:text-4xl;
 	}
 	.profile-picture img {
 		@apply w-full;
