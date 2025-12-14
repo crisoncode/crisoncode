@@ -31,7 +31,7 @@ persuadir a las personas. No se trataba de tener simplemente la razón,
 sino de instrumentalizar la comunicación como un arma.<br><br>
 Córax de Siracusa y su discípulo Tisias (siglo V a. C.),
 vieron en esto un gran poder y a base de estudio + prueba/error crearon lo que hoy conocemos como **retórica**.
-Fue muchos años después cuando el grandísimo Aristóteles (siglo IV a. C.)
+Fue muchos años después cuando el gran Aristóteles (siglo IV a. C.)
 la convirtió en una disciplina formal que los intelectuales de la época estudiaban.
 
 Cuando descubrí esto me explotó la cabeza. Crearon un arte y un procedimiento comunicativo
@@ -42,8 +42,8 @@ puesto que hay muchas evoluciones de la retórica: política, marketing, etc.
 Pero todo tiene un procedimiento comunicativo muy muy definido.
 
 En nuestro mundo, el de la programación, comunicarse es fundamental y mucho más complicado de lo que
-pensamos al principio, los programadores tendemos a banalizar la comunicación por que siempre ponemos el foco en lo técnico.
-Muchas veces trabajamos con problemas superabstractos
+pensamos al principio, los programadores tendemos a banalizar la comunicación porque siempre ponemos el foco en lo técnico.
+Muchas veces trabajamos con problemas súper abstractos
 que hasta nos resulta difícil trasladar a otro ser humano,
 por eso usamos diagramas o como lo llamo yo: dibujitos de cajitas,
 básicamente porque nos resulta prácticamente imposible expresar lo que tenemos en la cabeza con palabras
@@ -83,7 +83,7 @@ así que vamos a hacer un poco de "cirugía" y disección sobre los distintos ti
 ## Los tipos de comunicación
 
 1. Por propósito y/o función
-   - **Operacional**: El día a día: standups, blockers, preguntas técnicas rápidas, coordinación de tareas.
+   - **Operacional**: El día a día: stand-ups, blockers, preguntas técnicas rápidas, coordinación de tareas.
    - **Decisiones técnicas**: RFCs, ADRs (Architecture Decision Records), debates sobre arquitectura o enfoque técnico.
    - **Conocimiento**: Documentación, knowledge sharing sessions, code reviews como herramienta de aprendizaje.
    - **Contexto**: Por qué estamos haciendo algo, objetivos de negocio, prioridades, roadmap.
