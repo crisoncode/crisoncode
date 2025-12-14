@@ -22,26 +22,28 @@ Por mencionar alguno de mis descubrimientos cuando empecé a investigar el tema:
 En la antigua Grecia a los delincuentes se les juzgaba de forma colectiva en una plaza.
 Una persona determinaba cuál era la condena frente al cargo por el que se le estaba juzgando
 y otra trataba de defenderle delante del pueblo.
-Era el pueblo quien decidía con base en quién hiciese mejor su papel.
+Era el pueblo quien decidía con base a quien fuese más convincente.
 Esas dos personas hoy en día son un abogado y un fiscal\
 Pero en esos **teatros**, porque no hay otra forma de llamarlos,
 eran teatros que decidían si una persona iba a ver el sol del mañana,
 la humanidad descubrió el poder de la comunicación: cómo se puede hablar bien, argumentar mejor,
 persuadir a las personas. No se trataba de tener simplemente la razón,
-sino de instrumentalizar la comunicación como un arma.
+sino de instrumentalizar la comunicación como un arma.<br><br>
 Córax de Siracusa y su discípulo Tisias (siglo V a. C.),
 vieron en esto un gran poder y a base de estudio + prueba/error crearon lo que hoy conocemos como **retórica**.
 Fue muchos años después cuando el grandísimo Aristóteles (siglo IV a. C.)
 la convirtió en una disciplina formal que los intelectuales de la época estudiaban.
 
 Cuando descubrí esto me explotó la cabeza. Crearon un arte y un procedimiento comunicativo
-para convencer a las personas de que tienen la razón y que es su forma la correcta de hacer las cosas.
+para convencer a las personas de que tienen la razón
+y que es su forma la correcta de hacer las cosas (que no significa que fuese la verdad y/o la realidad).
 Esto obviamente hoy en día es usado para muchas más cosas de las que creemos,
 puesto que hay muchas evoluciones de la retórica: política, marketing, etc.
 Pero todo tiene un procedimiento comunicativo muy muy definido.
 
 En nuestro mundo, el de la programación, comunicarse es fundamental y mucho más complicado de lo que
-pensamos al principio. Muchas veces trabajamos con problemas superabstractos
+pensamos al principio, los programadores tendemos a banalizar la comunicación por que siempre ponemos el foco en lo técnico.
+Muchas veces trabajamos con problemas superabstractos
 que hasta nos resulta difícil trasladar a otro ser humano,
 por eso usamos diagramas o como lo llamo yo: dibujitos de cajitas,
 básicamente porque nos resulta prácticamente imposible expresar lo que tenemos en la cabeza con palabras
