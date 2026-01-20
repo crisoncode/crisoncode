@@ -30,9 +30,21 @@ const { name, size = "sm" } = Astro.props;
 <style>
 	@reference "../styles/base.css";
 	a {
-		@apply text-skin-secondary hover:text-skin-accent relative underline decoration-dashed hover:-top-0.5 focus-visible:p-1;
+		@apply text-skin-secondary hover:text-skin-accent relative underline decoration-dashed focus-visible:p-1;
+		transition:
+			color 0.2s ease,
+			transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+	}
+	a:hover {
+		transform: translateY(-2px);
 	}
 	a svg {
 		@apply fill-skin-secondary group-hover:fill-skin-accent -mr-5 h-6 w-6 scale-95 opacity-90;
+		transition:
+			fill 0.2s ease,
+			transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+	}
+	a:hover svg {
+		transform: rotate(-8deg) scale(1.1);
 	}
 </style>

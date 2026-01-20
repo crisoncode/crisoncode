@@ -16,23 +16,23 @@ export default function Card({
 }: Props) {
 	const { title, pubDatetime, description } = frontmatter;
 	return (
-		<li className="group my-8 mb-20">
+		<li className="group my-8 mb-20 transition-transform duration-300 ease-out hover:-translate-y-1">
 			<a
 				href={href}
-				className="text-skin-accent hover:text-skin-accent-80 inline-block text-lg font-medium decoration-dashed underline-offset-4 transition-all duration-200 focus-visible:no-underline focus-visible:underline-offset-0"
+				className="text-skin-accent inline-block text-lg font-medium decoration-dashed underline-offset-4 transition-all duration-200 focus-visible:no-underline focus-visible:underline-offset-0"
 			>
 				{secHeading ? (
-					<h2 className="mb-5 text-3xl font-medium decoration-dashed transition-all hover:underline md:text-4xl">
+					<h2 className="mb-5 text-3xl font-medium decoration-dashed transition-all group-hover:underline md:text-4xl">
 						{title}
 					</h2>
 				) : (
-					<h3 className="mb-5 text-3xl font-medium decoration-dashed transition-all hover:underline md:text-4xl">
+					<h3 className="mb-5 text-3xl font-medium decoration-dashed transition-all group-hover:underline md:text-4xl">
 						{title}
 					</h3>
 				)}
 			</a>
 			<Datetime datetime={pubDatetime} readingTime={readingTime} />
-			<p className="text-skin-base-80 mt-2 text-lg leading-relaxed md:text-xl">
+			<p className="text-skin-base-80 group-hover:text-skin-base mt-2 text-lg leading-relaxed transition-colors duration-200 md:text-xl">
 				{description}
 			</p>
 		</li>

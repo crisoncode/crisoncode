@@ -30,6 +30,13 @@ const { centered = false } = Astro.props;
 		@apply flex-wrap justify-center gap-1;
 	}
 	.link-button {
-		@apply p-2 hover:rotate-6 sm:p-1;
+		@apply p-2 sm:p-1;
+		transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+	}
+	.link-button:hover {
+		transform: translateY(-3px) rotate(6deg);
+	}
+	.link-button:active {
+		transform: translateY(0) rotate(0deg) scale(0.95);
 	}
 </style>

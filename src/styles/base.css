@@ -328,3 +328,83 @@
 		}
 	}
 }
+
+/* ===== Delight: Micro-interactions ===== */
+
+/* Smooth page entrance */
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+main {
+	animation: fadeInUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+/* Satisfying link hover - subtle lift */
+.prose a,
+nav a,
+.group a {
+	transition:
+		color 0.2s ease,
+		transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.prose a:hover {
+	transform: translateY(-1px);
+}
+
+/* Theme toggle spin delight */
+#theme-btn svg {
+	transition:
+		transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+		fill 0.2s ease;
+}
+
+#theme-btn:hover svg {
+	transform: rotate(15deg) scale(1.1);
+}
+
+#theme-btn:active svg {
+	transform: rotate(-15deg) scale(0.95);
+}
+
+/* Logo hover pulse */
+.logo {
+	transition: color 0.2s ease;
+}
+
+.logo:hover {
+	animation: logoPulse 0.4s ease;
+}
+
+@keyframes logoPulse {
+	0%,
+	100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.02);
+	}
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	main {
+		animation: none;
+	}
+
+	.prose a:hover,
+	#theme-btn:hover svg,
+	#theme-btn:active svg,
+	.logo:hover {
+		transform: none;
+		animation: none;
+	}
+}
