@@ -17,7 +17,7 @@ export default function Datetime({
 				xmlns="http://www.w3.org/2000/svg"
 				className={`${
 					size === "sm" ? "scale-90" : "scale-100"
-				} inline-block h-6 w-6 fill-skin-base`}
+				} fill-skin-base inline-block h-6 w-6`}
 				aria-hidden="true"
 			>
 				<path d="M7 11h2v2H7zm0 4h2v2H7zm4-4h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2zm0 4h2v2h-2z"></path>
@@ -29,7 +29,7 @@ export default function Datetime({
 				{readingTime && (
 					<>
 						<span aria-hidden="true"> | </span>
-						<span>{readingTime} min read</span>
+						<span className="text-skin-secondary">{readingTime} min read</span>
 					</>
 				)}
 			</span>

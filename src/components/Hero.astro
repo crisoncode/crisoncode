@@ -22,16 +22,14 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 		</h2>
 
 		<p class="leading-relaxed">
-			Hi there, I'm Cristian! A 32 years old guy based in Barcelona.
+			Hi there, I'm Cristian! A 32-year-old developer based in Barcelona.
 		</p>
 
-		<p class="leading-relaxed">
-			This is my place to write things that I have in my mind.
-		</p>
+		<p class="leading-relaxed">This is my space to share what's on my mind.</p>
 
 		<p class="leading-relaxed">
-			Probably you can expect a bit of chaos, technical things, techniques to be
-			more productive and my thoughts in general.
+			Expect a bit of chaos, technical deep-dives, productivity tips, and my
+			thoughts in general.
 		</p>
 
 		<p class="leading-relaxed">
@@ -47,18 +45,18 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 		</p>
 
 		<p class="leading-relaxed">
-			Don't doubt to reach me out via <a
+			Feel free to reach out via <a
 				href="mailto:cestarlich.dev@gmail.com"
 				class="text-skin-accent transition-colors hover:underline"
 				>cestarlich.dev@gmail.com</a
-			> for grab an online coffee and have a talk!
+			> to grab a virtual coffee and chat!
 		</p>
 
 		{
 			// only display if at least one social link is enabled
 			socialCount > 0 && (
 				<div class="social-wrapper">
-					<div class="social-links">Social Links:</div>
+					<div class="social-links">Find me online:</div>
 					<Socials />
 				</div>
 			)
@@ -88,12 +86,14 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 		@apply text-3xl md:text-4xl;
 	}
 	.profile-picture img {
-		@apply w-full;
+		@apply w-full ring-2 ring-offset-4;
+		ring-color: rgba(var(--color-accent), 0.3);
+		ring-offset-color: rgb(var(--color-fill));
 	}
 	.social-wrapper {
 		@apply mt-6 flex flex-col sm:flex-row sm:items-center;
 	}
 	.social-links {
-		@apply text-skin-base-70 mr-2 mb-1 text-sm whitespace-nowrap sm:mb-0;
+		@apply text-skin-secondary mr-2 mb-1 text-sm font-medium whitespace-nowrap sm:mb-0;
 	}
 </style>

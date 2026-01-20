@@ -22,7 +22,7 @@ const searchList = posts.map(post => ({
 
 <Layout title={`Search | ${SITE.title}`}>
 	<Header activeNav="search" />
-	<Main pageTitle="Search" pageDesc="Search any article ...">
+	<Main pageTitle="Search" pageDesc="Find posts by title or description.">
 		<Search client:load searchList={searchList} />
 	</Main>
 	<Footer />

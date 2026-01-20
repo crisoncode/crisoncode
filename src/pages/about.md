@@ -3,23 +3,22 @@ layout: ../layouts/AboutLayout.astro
 title: "About"
 ---
 
-👋🏻 Hello world, This is Cristian a 29 years old developer!
+👋🏻 Hello world! I'm Cristian, a 32-year-old developer!
 
-Since I was very little I have been interested by the technology 🧑🏻‍💻 in general, my first introduction to this world was with videogames in a Sega console. After some years playing games finally my fathers bought a computer and I was excited with this new machine in my home. I started to discover how a computer works and I had a lot of questions in my head.
+Since I was very little I've been fascinated by technology 🧑🏻‍💻 in general. My first introduction to this world was with videogames on a Sega console. After some years of gaming, my parents finally bought a computer and I was thrilled with this new machine at home. I started to discover how a computer works and I had a lot of questions in my head.
 
-🤔 What means this black screen when I press the powe on button?
+🤔 What does this black screen mean when I press the power button?
 
-🏴‍☠️ What exactly happens when I’m uninstalling a program from the control panel in a Windows 98?
+🏴‍☠️ What exactly happens when I uninstall a program from the control panel in Windows 98?
 
-🤘🏻 How I can install windows XP on my computer?
+🤘🏻 How can I install Windows XP on my computer?
 
-After years, hours of gaming and hours of learning I started to study the computer science in the institute of my hometown. It was a really exciting journey, I learned how the computer works in terms of hardware, how the networks works in our houses, in a world scale (more or less, to be honest I hate this part of the computer science 🤣)
+After years of gaming and learning, I started studying computer science at the institute in my hometown. It was an exciting journey — I learned how computers work in terms of hardware, how networks function in our houses, and at a world scale (more or less, to be honest I hate this part of computer science 🤣).
 
-In my third year of study I discovered the art of coding, this was the biggest change of my whole life and I felt in love with that.
+In my third year of study I discovered the art of coding. This was the biggest change of my whole life and I fell in love with it.
 
-Today, after 10 years working as a developer I’m a Javascript senior developer working in Salesforce Commerce Cloud a private software platform focused on digital commerce for big companies.
+Today, after 10+ years working as a developer, I'm a senior JavaScript developer working on Salesforce Commerce Cloud, a platform focused on digital commerce for large companies.
 
-If you have spent these two minutes of your live reading this, thanks a lot!
+If you've spent these two minutes of your life reading this, thanks a lot!
 
-You can reach me on my email. [email](mailto:cestarlich.dev@gmail.com).
-
+Feel free to reach out via [email](mailto:cestarlich.dev@gmail.com).
