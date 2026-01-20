@@ -1,6 +1,43 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Custom theme configuration for Tailwind v4 - use 'inline' to extend defaults */
+@theme inline {
+	/* Custom screen breakpoints - limit to only sm and md */
+	--breakpoint-*: initial;
+	--breakpoint-sm: 640px;
+	--breakpoint-md: 768px;
+
+	/* Font families */
+	--font-sans: "Bookerly", "Georgia", serif;
+	--font-mono: "IBM Plex Mono", monospace;
+
+	/* Font sizes - override defaults */
+	--text-sm: 0.9375rem;
+	--text-sm--line-height: 1.6;
+	--text-base: 1.0625rem;
+	--text-base--line-height: 1.75;
+	--text-lg: 1.125rem;
+	--text-lg--line-height: 1.75;
+	--text-xl: 1.25rem;
+	--text-xl--line-height: 1.75;
+	--text-2xl: 1.5rem;
+	--text-2xl--line-height: 1.5;
+	--text-3xl: 1.875rem;
+	--text-3xl--line-height: 1.4;
+	--text-4xl: 2.25rem;
+	--text-4xl--line-height: 1.3;
+	--text-5xl: 3rem;
+	--text-5xl--line-height: 1.2;
+	--text-6xl: 3.75rem;
+	--text-6xl--line-height: 1.1;
+	--text-7xl: 4.5rem;
+	--text-7xl--line-height: 1.1;
+	--text-8xl: 6rem;
+	--text-8xl--line-height: 1;
+	--text-9xl: 8rem;
+	--text-9xl--line-height: 1;
+}
 
 @font-face {
 	font-family: "Bookerly";
@@ -42,6 +79,62 @@
 	font-display: swap;
 }
 
+/* Custom utilities for skin colors - maintaining backward compatibility */
+@utility bg-skin-fill {
+	background-color: rgb(var(--color-fill));
+}
+@utility bg-skin-accent {
+	background-color: rgb(var(--color-accent));
+}
+@utility bg-skin-inverted {
+	background-color: rgb(var(--color-text-base));
+}
+@utility bg-skin-card {
+	background-color: rgb(var(--color-card));
+}
+@utility bg-skin-card-muted {
+	background-color: rgb(var(--color-card-muted));
+}
+@utility text-skin-base {
+	color: rgb(var(--color-text-base));
+}
+@utility text-skin-base-90 {
+	color: rgba(var(--color-text-base), 0.9);
+}
+@utility text-skin-base-80 {
+	color: rgba(var(--color-text-base), 0.8);
+}
+@utility text-skin-base-70 {
+	color: rgba(var(--color-text-base), 0.7);
+}
+@utility text-skin-accent {
+	color: rgb(var(--color-accent));
+}
+@utility text-skin-accent-80 {
+	color: rgba(var(--color-accent), 0.8);
+}
+@utility text-skin-inverted {
+	color: rgb(var(--color-fill));
+}
+@utility border-skin-line {
+	border-color: rgb(var(--color-border));
+}
+@utility border-skin-fill {
+	border-color: rgb(var(--color-text-base));
+}
+@utility border-skin-accent {
+	border-color: rgb(var(--color-accent));
+}
+@utility fill-skin-base {
+	fill: rgb(var(--color-text-base));
+}
+@utility fill-skin-accent {
+	fill: rgb(var(--color-accent));
+}
+@utility outline-skin-fill {
+	outline-color: rgb(var(--color-accent));
+}
+
 @layer base {
 	:root,
 	html[data-theme="light"] {
@@ -80,26 +173,49 @@
 		color: #ffffff !important;
 	}
 	body {
-		@apply flex min-h-screen flex-col bg-skin-fill font-sans text-base font-light text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted;
+		@apply bg-skin-fill text-skin-base flex min-h-screen flex-col font-sans text-base font-light;
 		transition:
 			background-color 0.3s ease,
 			color 0.3s ease;
+	}
+	body ::selection {
+		background-color: rgba(var(--color-accent), 0.7);
+		color: rgb(var(--color-fill));
 	}
 	section,
 	footer {
 		@apply mx-auto max-w-5xl px-4;
 	}
 	a {
-		@apply outline-2 outline-offset-1 outline-skin-fill focus-visible:no-underline focus-visible:outline-dashed;
+		@apply focus-visible:no-underline focus-visible:outline-dashed;
 	}
 	svg {
-		@apply inline-block h-6 w-6 fill-skin-base group-hover:fill-skin-accent;
+		@apply fill-skin-base group-hover:fill-skin-accent inline-block h-6 w-6;
 	}
 	svg.icon-tabler {
 		@apply inline-block h-6 w-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110;
 	}
 	.prose {
-		@apply prose-headings:!mb-4 prose-headings:tracking-tight prose-headings:!text-skin-base prose-h1:mb-4 prose-h1:mt-8 prose-h1:!text-4xl prose-h1:font-bold prose-h2:mb-4 prose-h2:mt-8 prose-h2:border-b prose-h2:border-skin-line prose-h2:border-opacity-30 prose-h2:pb-2 prose-h2:!text-3xl prose-h2:font-semibold prose-h3:mb-3 prose-h3:mt-6 prose-h3:!text-2xl prose-h3:font-semibold prose-p:mb-4 prose-p:!text-lg prose-p:font-light prose-p:!leading-relaxed prose-p:!text-skin-base prose-a:!text-skin-base prose-a:!decoration-dashed prose-a:underline-offset-4 prose-a:transition-colors prose-a:duration-200 hover:prose-a:text-skin-accent prose-blockquote:!border-l-skin-accent prose-blockquote:border-opacity-50 prose-blockquote:pl-4 prose-blockquote:!text-lg prose-blockquote:font-light prose-blockquote:italic prose-blockquote:opacity-80 prose-figcaption:text-base prose-figcaption:!text-skin-base prose-figcaption:opacity-70 prose-strong:font-semibold prose-strong:!text-skin-base prose-code:rounded prose-code:bg-skin-card prose-code:bg-opacity-75 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-base prose-code:!text-skin-base prose-code:before:!content-[''] prose-code:after:!content-[''] prose-pre:rounded-lg prose-pre:border prose-pre:border-skin-line prose-pre:!text-base prose-pre:!text-skin-base prose-ol:space-y-2 prose-ol:!text-lg prose-ol:font-light prose-ol:!text-skin-base prose-ul:space-y-2 prose-ul:overflow-x-clip prose-ul:!text-lg prose-ul:font-light prose-ul:!text-skin-base prose-li:marker:font-semibold prose-li:marker:!text-skin-accent prose-table:text-lg prose-table:font-light prose-table:text-skin-base prose-th:border prose-th:border-skin-line prose-td:border prose-td:border-skin-line prose-td:border-opacity-50 prose-img:mx-auto prose-img:!mb-4 prose-img:!mt-4 prose-img:rounded-lg prose-img:border prose-img:border-skin-line prose-img:border-opacity-30 prose-img:shadow-sm prose-hr:!border-skin-line prose-hr:border-opacity-30 md:prose-h1:!text-5xl md:prose-h2:!text-4xl md:prose-h3:!text-3xl md:prose-p:!text-xl md:prose-blockquote:!text-xl md:prose-pre:!text-lg md:prose-ol:!text-xl md:prose-ul:!text-xl md:prose-table:text-xl;
+		@apply prose-headings:!mb-4 prose-headings:tracking-tight prose-headings:!text-skin-base prose-h1:mb-4 prose-h1:mt-8 prose-h1:!text-4xl prose-h1:font-bold prose-h2:mb-4 prose-h2:mt-8 prose-h2:border-b prose-h2:pb-2 prose-h2:!text-3xl prose-h2:font-semibold prose-h3:mb-3 prose-h3:mt-6 prose-h3:!text-2xl prose-h3:font-semibold prose-p:mb-4 prose-p:!text-lg prose-p:font-light prose-p:!leading-relaxed prose-p:!text-skin-base prose-a:!text-skin-base prose-a:!decoration-dashed prose-a:underline-offset-4 prose-a:transition-colors prose-a:duration-200 hover:prose-a:text-skin-accent prose-blockquote:pl-4 prose-blockquote:!text-lg prose-blockquote:font-light prose-blockquote:italic prose-blockquote:opacity-80 prose-figcaption:text-base prose-figcaption:!text-skin-base prose-figcaption:opacity-70 prose-strong:font-semibold prose-strong:!text-skin-base prose-code:rounded prose-code:px-1.5 prose-code:py-0.5 prose-code:text-base prose-code:!text-skin-base prose-code:before:!content-[''] prose-code:after:!content-[''] prose-pre:rounded-lg prose-pre:border prose-pre:border-skin-line prose-pre:!text-base prose-pre:!text-skin-base prose-ol:space-y-2 prose-ol:!text-lg prose-ol:font-light prose-ol:!text-skin-base prose-ul:space-y-2 prose-ul:overflow-x-clip prose-ul:!text-lg prose-ul:font-light prose-ul:!text-skin-base prose-li:marker:font-semibold prose-li:marker:!text-skin-accent prose-table:text-lg prose-table:font-light prose-table:text-skin-base prose-th:border prose-th:border-skin-line prose-td:border prose-td:border-skin-line prose-img:mx-auto prose-img:!mb-4 prose-img:!mt-4 prose-img:rounded-lg prose-img:border prose-img:shadow-sm md:prose-h1:!text-5xl md:prose-h2:!text-4xl md:prose-h3:!text-3xl md:prose-p:!text-xl md:prose-blockquote:!text-xl md:prose-pre:!text-lg md:prose-ol:!text-xl md:prose-ul:!text-xl md:prose-table:text-xl;
+	}
+	/* Prose element opacity styles - v4 compatible */
+	.prose h2 {
+		border-color: rgba(var(--color-border), 0.3);
+	}
+	.prose blockquote {
+		border-left-color: rgba(var(--color-accent), 0.5);
+	}
+	.prose code:not(pre code) {
+		background-color: rgba(var(--color-card), 0.75);
+	}
+	.prose td {
+		border-color: rgba(var(--color-border), 0.5);
+	}
+	.prose img {
+		border-color: rgba(var(--color-border), 0.3);
+	}
+	.prose hr {
+		border-color: rgba(var(--color-border), 0.3);
 	}
 	.prose a {
 		@apply hover:!text-skin-accent;
@@ -113,7 +229,7 @@
 		@apply mb-2;
 	}
 	.prose details {
-		@apply inline-block cursor-pointer select-none text-skin-base;
+		@apply text-skin-base inline-block cursor-pointer select-none;
 	}
 	.prose summary {
 		@apply focus-outline;
@@ -148,12 +264,17 @@
 	}
 }
 
-@layer components {
-	.display-none {
-		@apply hidden;
-	}
-	.focus-outline {
-		@apply outline-2 outline-offset-1 outline-skin-fill focus-visible:no-underline focus-visible:outline-dashed;
+/* Custom component utilities - converted to @utility for v4 */
+@utility display-none {
+	display: none;
+}
+@utility focus-outline {
+	outline-width: 2px;
+	outline-offset: 1px;
+	outline-color: rgb(var(--color-accent));
+	&:focus-visible {
+		text-decoration: none;
+		outline-style: dashed;
 	}
 }
 

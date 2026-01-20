@@ -27,7 +27,7 @@ const ogUrl = new URL(ogImage ? ogImage : `${title}.svg`, Astro.url.origin)
 	<Header />
 	<div class="mx-auto flex w-full max-w-5xl justify-start px-4">
 		<button
-			class="focus-outline mb-2 mt-8 flex hover:opacity-75"
+			class="focus-outline mt-8 mb-2 flex hover:opacity-75"
 			onclick="history.back()"
 		>
 			<svg xmlns="http://www.w3.org/2000/svg"
@@ -56,11 +56,12 @@ const ogUrl = new URL(ogImage ? ogImage : `${title}.svg`, Astro.url.origin)
 </Layout>
 
 <style>
+	@reference "../styles/base.css";
 	main {
 		@apply mx-auto w-full max-w-5xl px-4 pb-12;
 	}
 	.post-title {
-		@apply text-2xl font-semibold tracking-tight text-skin-accent;
+		@apply text-skin-accent text-2xl font-semibold tracking-tight;
 	}
 	.tags-container {
 		@apply my-10 flex flex-wrap gap-2;

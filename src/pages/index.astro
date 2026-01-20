@@ -57,14 +57,15 @@ const sortedPosts = getSortedPosts(posts);
 </Layout>
 
 <style>
+	@reference "../styles/base.css";
 	/* ===== Featured & Recent Posts Sections ===== */
 	#featured,
 	#recent-posts {
-		@apply pb-6 pt-12;
+		@apply pt-12 pb-6;
 	}
 	#featured h2,
 	#recent-posts h2 {
-		@apply mb-6 text-2xl font-semibold tracking-tight text-skin-base;
+		@apply text-skin-base mb-6 text-2xl font-semibold tracking-tight;
 	}
 	.all-posts-btn-wrapper {
 		@apply my-10 text-center;
