@@ -2,7 +2,7 @@
 
 ---
 
-<div class="terminal-window">
+<div class="terminal-window crt crt-sweep">
 	<!-- Chrome bar -->
 	<div class="terminal-chrome">
 		<div class="traffic-lights">
@@ -10,7 +10,10 @@
 			<span class="tl tl-yellow"></span>
 			<span class="tl tl-green"></span>
 		</div>
-		<span class="terminal-title">crisoncode ~ bash</span>
+		<span class="terminal-title hidden sm:inline"
+			>crisoncode@blog:~ — bash — 80×24</span
+		>
+		<span class="terminal-ssh">ssh crisoncode.dev</span>
 	</div>
 	<!-- Terminal body -->
 	<div class="terminal-body" id="terminal-body">
@@ -34,6 +37,12 @@
 		align-items: center;
 		gap: 10px;
 	}
+	.terminal-ssh {
+		margin-left: auto;
+		font-size: 12px;
+		color: rgba(var(--color-text-base), 0.3);
+		font-family: "IBM Plex Mono", monospace;
+	}
 	.traffic-lights {
 		display: flex;
 		gap: 7px;
@@ -54,39 +63,112 @@
 		background: #4ec994;
 	}
 	.terminal-title {
-		font-size: 11px;
+		font-size: 13px;
 		color: rgba(var(--color-text-base), 0.5);
 		font-family: "IBM Plex Mono", monospace;
 	}
+	/* Static elements (in template) — scoped styles work fine */
 	.terminal-body {
 		padding: 20px;
 		font-family: "IBM Plex Mono", monospace;
 		font-size: 14px;
 		line-height: 1.7;
 	}
-	.terminal-line {
+
+	/*
+	 * Everything below is :global because these classes are added to
+	 * DOM elements created at runtime by the typewriter JS — Astro's
+	 * scoped-style attribute is never added to those elements, so the
+	 * rules must be global to match.
+	 */
+	:global(.terminal-line) {
 		min-height: 1.5em;
 	}
-	.terminal-line.prompt {
+	:global(.terminal-line.prompt) {
 		color: rgb(var(--color-accent));
 	}
-	.terminal-line.comment {
+	:global(.terminal-line.comment) {
 		color: rgba(var(--color-text-base), 0.45);
 	}
-	.terminal-line.output {
+	:global(.terminal-line.output) {
 		color: rgb(var(--color-text-base));
 	}
-	.terminal-line.blank {
+	:global(.terminal-line.blank) {
 		height: 1.2em;
 	}
-	.cursor {
+	:global(.cursor) {
 		display: inline-block;
 		color: rgb(var(--color-accent));
 		animation: blink 1s infinite;
 	}
+
+	/* Inline syntax token colors */
+	:global(.tok-dollar) {
+		color: rgb(var(--color-accent));
+		font-weight: 600;
+	}
+	:global(.tok-cmd) {
+		color: rgba(var(--color-text-base), 0.9);
+	}
+	:global(.tok-flag) {
+		color: #f5af4b;
+	}
+	:global(.tok-at) {
+		color: rgb(var(--color-accent));
+	}
+	:global(.tok-punct) {
+		color: rgb(var(--color-accent));
+		opacity: 0.6;
+	}
+	:global(.tok-comment) {
+		color: rgba(var(--color-text-base), 0.38);
+	}
+	:global(.tok-key) {
+		color: #f5af4b;
+	}
+	:global(.tok-tech) {
+		color: #4ec994;
+	}
+	:global(.tok-ok) {
+		color: #4ec994;
+	}
 </style>
 
 <script>
+	// Returns an HTML string with inline syntax coloring for a finished line
+	function colorize(text: string, type: string): string {
+		if (type === "comment") {
+			// shebang or // comment: marker dim, content slightly brighter
+			if (text.startsWith("#!")) {
+				return `<span class="tok-punct">#!</span><span class="tok-comment">${text.slice(2)}</span>`;
+			}
+			if (text.startsWith("//")) {
+				return `<span class="tok-punct">//</span><span class="tok-comment">${text.slice(2)}</span>`;
+			}
+			return `<span class="tok-comment">${text}</span>`;
+		}
+		if (type === "prompt") {
+			// "$ command --flag arg"
+			const rest = text.slice(2); // after "$ "
+			const colored = rest
+				.replace(/(--[\w-]+)/g, '<span class="tok-flag">$1</span>')
+				.replace(/(@\w+)/g, '<span class="tok-at">$1</span>');
+			return `<span class="tok-dollar">$</span><span class="tok-space"> </span><span class="tok-cmd">${colored}</span>`;
+		}
+		if (type === "output") {
+			// highlight tech keywords, @ mentions, key: labels
+			return text
+				.replace(/^([\w\s]+:)/, '<span class="tok-key">$1</span>')
+				.replace(
+					/\b(TypeScript|NodeJS|Distributed Systems|AI|Artificial intelligence|Software development)\b/g,
+					'<span class="tok-tech">$1</span>'
+				)
+				.replace(/(@\w+)/g, '<span class="tok-at">$1</span>')
+				.replace(/(loading posts\.\.\.)/g, '<span class="tok-ok">$1</span>');
+		}
+		return text;
+	}
+
 	const lines = [
 		{ text: "#!/usr/bin/env blog", type: "comment" },
 		{
@@ -96,12 +178,15 @@
 		{ text: "", type: "blank" },
 		{ text: "$ whoami", type: "prompt" },
 		{
-			text: "crisoncode — building things on the web since age 19.",
+			text: "crisoncode — Building software since 2014",
 			type: "output",
 		},
-		{ text: "currently: Technical Lead @ TennisPoint", type: "output" },
 		{
-			text: "stack: TypeScript, NodeJS, Distributed Systems, AI..",
+			text: "Currently: working as a Technical Lead @ TennisPoint",
+			type: "output",
+		},
+		{
+			text: "Stack: TypeScript, NodeJS, Distributed Systems, AI..",
 			type: "output",
 		},
 		{ text: "", type: "blank" },
@@ -113,16 +198,15 @@
 		{ text: "loading posts...", type: "output" },
 	];
 
-	const container = document.getElementById("terminal-body");
+	const container = document.getElementById("terminal-body")!;
 	let lineIdx = 0;
 	let charIdx = 0;
-	const CHAR_SPEED = 35; // ms per character
-	const LINE_PAUSE = 60; // ms pause between lines
-	const LINE_START_PAUSE = 180; // ms pause before typing starts on a new line
+	const CHAR_SPEED = 35;
+	const LINE_PAUSE = 60;
+	const LINE_START_PAUSE = 180;
 
 	function tick() {
 		if (lineIdx >= lines.length) {
-			// All done — leave final blinking cursor
 			const cursor = document.createElement("span");
 			cursor.className = "cursor";
 			cursor.textContent = "▋";
@@ -142,13 +226,13 @@
 			return;
 		}
 
-		// Create or get the current line element
-		let el = container.querySelector(`[data-line="${lineIdx}"]`);
+		let el = container.querySelector<HTMLElement>(
+			`[data-line="${String(lineIdx)}"]`
+		);
 		if (!el) {
 			el = document.createElement("div");
 			el.className = `terminal-line ${line.type}`;
-			el.setAttribute("data-line", lineIdx);
-			// Add cursor to this new line
+			el.setAttribute("data-line", String(lineIdx));
 			const cursor = document.createElement("span");
 			cursor.className = "cursor";
 			cursor.textContent = "▋";
@@ -157,7 +241,6 @@
 		}
 
 		if (charIdx <= line.text.length) {
-			// Update text (before the cursor)
 			el.textContent = line.text.slice(0, charIdx);
 			const cursor = document.createElement("span");
 			cursor.className = "cursor";
@@ -166,14 +249,13 @@
 			charIdx++;
 			setTimeout(tick, charIdx === 1 ? LINE_START_PAUSE : CHAR_SPEED);
 		} else {
-			// Line done — remove cursor, move to next line
-			el.textContent = line.text;
+			// Line finished typing — swap in rich colorized HTML
+			el.innerHTML = colorize(line.text, line.type);
 			lineIdx++;
 			charIdx = 0;
 			setTimeout(tick, LINE_PAUSE);
 		}
 	}
 
-	// Start after a short initial delay
 	setTimeout(tick, 400);
 </script>

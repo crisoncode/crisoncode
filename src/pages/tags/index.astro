@@ -3,22 +3,204 @@ import { getCollection } from "astro:content";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Layout from "@layouts/Layout.astro";
-import Main from "@layouts/Main.astro";
-import Tag from "@components/Tag.astro";
+import Card from "@components/Card";
 import getUniqueTags from "@utils/getUniqueTags";
+import getSortedPosts from "@utils/getSortedPosts";
+import slugify from "@utils/slugify";
+import { getReadingTime } from "@utils/getReadingTime";
 import { SITE } from "@config";
 
-const posts = await getCollection("blog");
-
-let tags = getUniqueTags(posts);
+const allPosts = await getCollection("blog");
+const sortedPosts = getSortedPosts(allPosts);
+const tags = getUniqueTags(allPosts);
 ---
 
 <Layout title={`Tags | ${SITE.title}`}>
 	<Header activeNav="tags" />
-	<Main pageTitle="Tags" pageDesc="Browse posts by topic.">
-		<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
-			{tags.map(tag => <Tag tag={tag} />)}
+	<main id="main-content">
+		<div class="tags-cmd">$ cat tags/index | sort | uniq -c | sort -rn</div>
+
+		<div class="tags-cloud" id="tags-cloud">
+			{
+				tags.map(tag => {
+					const count = allPosts.filter(p =>
+						p.data.tags
+							.map((t: string) => t.toLowerCase().replace(/ /g, "-"))
+							.includes(tag)
+					).length;
+					return (
+						<button class="tag-filter-btn" data-tag={tag} aria-pressed="false">
+							<span class="tag-count">{count}</span>#{tag}
+						</button>
+					);
+				})
+			}
 		</div>
-	</Main>
+
+		<div id="filtered-section" style="display:none;">
+			<div id="tag-label" class="tag-filter-label"></div>
+			<div class="ls-col-headers">
+				<span>permissions</span>
+				<span class="right"></span>
+				<span class="right">size</span>
+				<span>modified</span>
+				<span>filename</span>
+			</div>
+			<div class="ls-divider"></div>
+			<ul class="ls-post-list" id="tag-posts-list">
+				{
+					sortedPosts.map(post => (
+						<Card
+							href={`/posts/${slugify(post.data)}`}
+							frontmatter={post.data}
+							readingTime={getReadingTime(post.body)}
+						/>
+					))
+				}
+			</ul>
+		</div>
+
+		<div id="tags-hint" class="tags-hint">
+			<span class="accent">←</span> click a tag to filter posts
+		</div>
+	</main>
 	<Footer />
 </Layout>
+
+<style>
+	main {
+		max-width: 900px;
+		margin: 0 auto;
+		padding: 36px 20px 60px;
+	}
+
+	.tags-cmd {
+		font-size: 14px;
+		color: rgb(var(--color-accent));
+		font-family: "IBM Plex Mono", monospace;
+		margin-bottom: 16px;
+	}
+
+	.tags-cloud {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-bottom: 32px;
+	}
+
+	.tag-filter-btn {
+		background: transparent;
+		border: 1px solid rgb(var(--color-border));
+		border-radius: 2px;
+		cursor: pointer;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 13px;
+		font-weight: 500;
+		color: rgba(var(--color-text-base), 0.5);
+		padding: 4px 10px;
+		transition: all 0.12s;
+		display: flex;
+		gap: 6px;
+		align-items: center;
+	}
+
+	.tag-filter-btn:hover,
+	.tag-filter-btn[aria-pressed="true"] {
+		color: rgb(var(--color-secondary));
+		border-color: rgb(var(--color-secondary));
+		background: rgba(var(--color-secondary), 0.1);
+	}
+
+	.tag-count {
+		color: rgba(var(--color-text-base), 0.4);
+		font-size: 12px;
+	}
+
+	.tag-filter-btn:hover .tag-count,
+	.tag-filter-btn[aria-pressed="true"] .tag-count {
+		color: rgba(var(--color-secondary), 0.7);
+	}
+
+	.tag-filter-label {
+		font-size: 14px;
+		color: rgb(var(--color-accent));
+		font-family: "IBM Plex Mono", monospace;
+		margin-bottom: 10px;
+		animation: fadeUp 0.3s both;
+	}
+
+	.ls-divider {
+		border-top: 1px solid rgb(var(--color-border));
+		margin-bottom: 4px;
+	}
+
+	#filtered-section {
+		animation: fadeUp 0.3s both;
+	}
+
+	.tags-hint {
+		font-size: 14px;
+		color: rgba(var(--color-text-base), 0.35);
+		font-family: "IBM Plex Mono", monospace;
+		padding: 16px 0;
+	}
+
+	.accent {
+		color: rgb(var(--color-accent));
+	}
+</style>
+
+<script>
+	const tagBtns =
+		document.querySelectorAll<HTMLButtonElement>(".tag-filter-btn");
+	const filteredSection = document.getElementById(
+		"filtered-section"
+	) as HTMLElement;
+	const tagLabel = document.getElementById("tag-label") as HTMLElement;
+	const postsList = document.getElementById(
+		"tag-posts-list"
+	) as HTMLUListElement;
+	const tagsHint = document.getElementById("tags-hint") as HTMLElement;
+
+	const allRows = Array.from(
+		postsList.querySelectorAll<HTMLLIElement>(".post-row")
+	);
+
+	let activeTag: string | null = null;
+
+	function filterByTag(tag: string | null) {
+		activeTag = tag;
+
+		if (!tag) {
+			filteredSection.style.display = "none";
+			tagsHint.style.display = "block";
+			tagBtns.forEach(b => b.setAttribute("aria-pressed", "false"));
+			return;
+		}
+
+		filteredSection.style.display = "block";
+		tagsHint.style.display = "none";
+		tagLabel.textContent = `$ ls -la posts/ | grep #${tag}`;
+
+		allRows.forEach(row => {
+			const rowTags = (row.dataset.tags ?? "").split(",");
+			(row as HTMLElement).style.display = rowTags.includes(tag) ? "" : "none";
+		});
+	}
+
+	tagBtns.forEach(btn => {
+		btn.addEventListener("click", () => {
+			const tag = btn.dataset.tag ?? "";
+			const isActive = btn.getAttribute("aria-pressed") === "true";
+
+			tagBtns.forEach(b => b.setAttribute("aria-pressed", "false"));
+
+			if (isActive) {
+				filterByTag(null);
+			} else {
+				btn.setAttribute("aria-pressed", "true");
+				filterByTag(tag);
+			}
+		});
+	});
+</script>

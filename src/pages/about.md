@@ -17,7 +17,7 @@ After years of gaming and learning, I started studying computer science at the i
 
 In my third year of study I discovered the art of coding. This was the biggest change of my whole life and I fell in love with it.
 
-Today, after 10+ years working as a developer, I'm a senior JavaScript developer working on Salesforce Commerce Cloud, a platform focused on digital commerce for large companies.
+Today, after 10+ years working as a developer, I'm a technical lead working on improving processes, helping my workmates on the process to unlock their best skills and helping huge commerce sites in growth as much as posible.
 
 If you've spent these two minutes of your life reading this, thanks a lot!
 

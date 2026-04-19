@@ -6,23 +6,50 @@ import Header from "@components/Header.astro";
 import Layout from "./Layout.astro";
 
 export interface Props {
-  frontmatter: {
-    title: string;
-    description?: string;
-  };
+	frontmatter: {
+		title: string;
+		description?: string;
+	};
 }
 
 const { frontmatter } = Astro.props;
 ---
 
 <Layout title={`${frontmatter.title} | ${SITE.title}`}>
-  <Header activeNav="about" />
-  <Breadcrumbs />
-  <main id="main-content">
-    <section id="about" class="prose mb-28 max-w-3xl prose-img:border-0">
-      <h1 class="text-2xl tracking-wider sm:text-3xl">{frontmatter.title}</h1>
-      <slot />
-    </section>
-  </main>
-  <Footer />
+	<Header activeNav="about" />
+	<Breadcrumbs />
+	<main id="main-content">
+		<section id="about" class="prose prose-img:border-0 mb-28 max-w-3xl">
+			<h1 class="text-2xl tracking-wider sm:text-3xl">{frontmatter.title}</h1>
+			<slot />
+		</section>
+	</main>
+	<Footer />
 </Layout>
+
+<style>
+	@reference "../styles/base.css";
+
+	#about :global(p),
+	#about :global(li),
+	#about :global(ol),
+	#about :global(ul) {
+		color: #ffffff;
+	}
+
+	#about :global(h1),
+	#about :global(h2),
+	#about :global(h3),
+	#about :global(h4) {
+		color: #ffffff;
+	}
+
+	#about :global(blockquote) {
+		color: #ffffff !important;
+		--tw-prose-quotes: #ffffff;
+	}
+
+	#about :global(blockquote p) {
+		color: #ffffff !important;
+	}
+</style>

@@ -6,7 +6,7 @@ export const SITE = {
 	desc: "A blog about software development, methodologies, Salesforce Commerce Cloud, and other topics I find interesting.",
 	title: "#CrisOnCode",
 	ogImage: "assets/profile.jpg",
-	lightAndDarkMode: true,
+	lightAndDarkMode: false,
 	postPerPage: 3,
 };
 

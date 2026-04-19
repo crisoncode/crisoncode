@@ -1,11 +1,9 @@
 ---
 import { SITE } from "@config";
 import Layout from "@layouts/Layout.astro";
-import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Card from "@components/Card";
-import LinkButton from "@components/LinkButton.astro";
 import slugify from "@utils/slugify";
 import { getReadingTime } from "@utils/getReadingTime";
 import type { CollectionEntry } from "astro:content";
@@ -24,8 +22,33 @@ const next = pageNum < totalPages ? "" : "disabled";
 
 <Layout title={`Posts | ${SITE.title}`}>
 	<Header activeNav="posts" />
-	<Main pageTitle="Posts" pageDesc="Everything I've written.">
-		<ul>
+	<main id="main-content">
+		<div class="posts-header">
+			<span id="posts-label" class="posts-cmd">$ ls -la posts/</span>
+		</div>
+
+		<div class="search-wrapper">
+			<span class="search-icon">❯</span>
+			<input
+				id="post-search"
+				type="text"
+				placeholder='grep -ri "" posts/'
+				autocomplete="off"
+				spellcheck="false"
+			/>
+			<span id="search-count" class="search-count"></span>
+		</div>
+
+		<div class="ls-col-headers">
+			<span>permissions</span>
+			<span class="right"></span>
+			<span class="right">size</span>
+			<span>modified</span>
+			<span>filename</span>
+		</div>
+		<div class="ls-divider"></div>
+
+		<ul class="ls-post-list" id="posts-list">
 			{
 				posts.map(post => (
 					<Card
@@ -36,48 +59,199 @@ const next = pageNum < totalPages ? "" : "disabled";
 				))
 			}
 		</ul>
-	</Main>
 
-	{
-		totalPages > 1 && (
-			<nav class="pagination-wrapper" aria-label="Pagination">
-				<LinkButton
-					disabled={prev === "disabled"}
-					href={`/posts${pageNum - 1 !== 1 ? "/" + (pageNum - 1) : ""}`}
-					className={`mr-4 select-none ${prev}`}
-					ariaLabel="Previous"
-				>
-					<svg xmlns="http://www.w3.org/2000/svg" class={`${prev}-svg`}>
-						<path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z" />
-					</svg>
-					Prev
-				</LinkButton>
-				<LinkButton
-					disabled={next === "disabled"}
-					href={`/posts/${pageNum + 1}`}
-					className={`ml-4 select-none ${next}`}
-					ariaLabel="Next"
-				>
-					Next
-					<svg xmlns="http://www.w3.org/2000/svg" class={`${next}-svg`}>
-						<path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z" />
-					</svg>
-				</LinkButton>
-			</nav>
-		)
-	}
+		<div id="no-results" class="no-results" style="display:none;">
+			grep: no matches found — <button id="clear-search">clear</button>
+		</div>
+
+		<div class="posts-total">total {posts.length} posts</div>
+
+		{
+			totalPages > 1 && (
+				<nav class="pagination-wrapper" aria-label="Pagination">
+					{prev !== "disabled" && (
+						<a
+							href={`/posts${pageNum - 1 !== 1 ? "/" + (pageNum - 1) : ""}`}
+							class="page-btn"
+						>
+							← prev
+						</a>
+					)}
+					{next !== "disabled" && (
+						<a href={`/posts/${pageNum + 1}`} class="page-btn">
+							next →
+						</a>
+					)}
+				</nav>
+			)
+		}
+	</main>
 	<Footer noMarginTop={totalPages > 1} />
 </Layout>
 
 <style>
-	@reference "../styles/base.css";
+	main {
+		max-width: 900px;
+		margin: 0 auto;
+		padding: 36px 20px 60px;
+	}
+
+	.posts-header {
+		margin-bottom: 12px;
+	}
+
+	.posts-cmd {
+		font-size: 14px;
+		color: rgb(var(--color-accent));
+		font-family: "IBM Plex Mono", monospace;
+	}
+
+	.search-wrapper {
+		position: relative;
+		margin-bottom: 20px;
+	}
+
+	.search-icon {
+		position: absolute;
+		left: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+		color: rgb(var(--color-accent));
+		font-size: 14px;
+		font-family: "IBM Plex Mono", monospace;
+		pointer-events: none;
+	}
+
+	#post-search {
+		width: 100%;
+		background: rgb(var(--color-card));
+		border: 1px solid rgb(var(--color-border));
+		border-radius: 4px;
+		padding: 11px 90px 11px 34px;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 15px;
+		color: rgb(var(--color-text-base));
+		outline: none;
+		transition: border-color 0.15s;
+	}
+
+	#post-search:focus {
+		border-color: rgb(var(--color-accent));
+	}
+
+	#post-search::placeholder {
+		color: rgba(var(--color-text-base), 0.35);
+	}
+
+	.search-count {
+		position: absolute;
+		right: 10px;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 10px;
+		color: rgba(var(--color-text-base), 0.4);
+		font-family: "IBM Plex Mono", monospace;
+	}
+
+	.ls-divider {
+		border-top: 1px solid rgb(var(--color-border));
+		margin-bottom: 4px;
+	}
+
+	.no-results {
+		padding: 20px 8px;
+		font-size: 15px;
+		color: rgba(var(--color-text-base), 0.45);
+		font-family: "IBM Plex Mono", monospace;
+	}
+
+	.no-results button {
+		background: none;
+		border: none;
+		cursor: pointer;
+		color: rgb(var(--color-accent));
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 15px;
+		padding: 0;
+	}
+
+	.posts-total {
+		font-size: 13px;
+		color: rgba(var(--color-text-base), 0.35);
+		font-family: "IBM Plex Mono", monospace;
+		margin-top: 12px;
+		padding: 0 8px;
+	}
+
 	.pagination-wrapper {
-		@apply mt-auto mb-8 flex justify-center;
+		display: flex;
+		justify-content: center;
+		gap: 12px;
+		margin-top: 24px;
 	}
-	.disabled {
-		@apply hover:text-skin-base group-hover:fill-skin-base pointer-events-none opacity-50 select-none;
+
+	.page-btn {
+		border: 1px solid rgb(var(--color-border));
+		border-radius: 3px;
+		padding: 6px 12px;
+		font-size: 11px;
+		font-family: "IBM Plex Mono", monospace;
+		color: rgba(var(--color-text-base), 0.45);
+		text-decoration: none;
+		transition: all 0.12s;
 	}
-	.disabled-svg {
-		@apply group-hover:!fill-skin-base;
+
+	.page-btn:hover {
+		border-color: rgb(var(--color-accent));
+		color: rgb(var(--color-accent));
 	}
 </style>
+
+<script>
+	const searchInput = document.getElementById(
+		"post-search"
+	) as HTMLInputElement;
+	const postsList = document.getElementById("posts-list") as HTMLUListElement;
+	const noResults = document.getElementById("no-results") as HTMLElement;
+	const searchCount = document.getElementById(
+		"search-count"
+	) as HTMLSpanElement;
+	const clearBtn = document.getElementById("clear-search") as HTMLButtonElement;
+	const postsLabel = document.getElementById("posts-label") as HTMLSpanElement;
+
+	const allRows = Array.from(
+		postsList.querySelectorAll<HTMLLIElement>(".post-row")
+	);
+	const total = allRows.length;
+
+	function filter(query: string) {
+		const q = query.trim().toLowerCase();
+		let visible = 0;
+
+		allRows.forEach(row => {
+			const searchData = row.dataset.search ?? "";
+			const matches = !q || searchData.includes(q);
+			(row as HTMLElement).style.display = matches ? "" : "none";
+			if (matches) visible++;
+		});
+
+		noResults.style.display = visible === 0 ? "block" : "none";
+		searchCount.textContent = q
+			? `${visible} match${visible !== 1 ? "es" : ""}`
+			: "";
+		postsLabel.textContent = q
+			? `$ ls -la posts/ | grep "${q}"`
+			: "$ ls -la posts/";
+	}
+
+	searchInput?.addEventListener("input", () => filter(searchInput.value));
+
+	clearBtn?.addEventListener("click", () => {
+		searchInput.value = "";
+		filter("");
+		searchInput.focus();
+	});
+
+	// Auto-focus search on page load
+	searchInput?.focus();
+</script>

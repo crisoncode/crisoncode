@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>#CrisOnCode</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --font:'IBM Plex Mono',monospace;
+  --bg:#0b0e14;
+  --bg2:#10141c;
+  --bg3:#161c28;
+  --bg4:#1c2330;
+  --border:#222d3d;
+  --border2:#2a3a50;
+  --text:#a8bcd4;
+  --text-dim:#4a5d72;
+  --text-mid:#7a90a8;
+  --text-bright:#dce8f8;
+  --accent:#37c3dc;
+  --accent-dim:rgba(55,195,220,0.12);
+  --accent-glow:rgba(55,195,220,0.06);
+  --amber:#f5af4b;
+  --amber-dim:rgba(245,175,75,0.1);
+  --green:#4ec994;
+  --red:#e05c5c;
+  --purple:#a78bfa;
+}
+[data-theme="light"] {
+  --bg:#f0f2f5;
+  --bg2:#e8ecf2;
+  --bg3:#dde3ec;
+  --bg4:#d4dbe6;
+  --border:#c0cad8;
+  --border2:#aab7c8;
+  --text:#3a4a5c;
+  --text-dim:#8898aa;
+  --text-mid:#5a6e82;
+  --text-bright:#19202d;
+  --accent:#0f8ca5;
+  --accent-dim:rgba(15,140,165,0.1);
+  --accent-glow:rgba(15,140,165,0.04);
+  --amber:#b87030;
+  --amber-dim:rgba(184,112,48,0.1);
+  --green:#2a9e6a;
+  --red:#c04040;
+  --purple:#7c5cbf;
+}
+
+html,body{height:100%;overflow-x:hidden}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--text);
+  font-size:13px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Noise texture overlay */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.025;
+  pointer-events:none;
+  z-index:9999;
+}
+
+/* Dot grid */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:radial-gradient(circle,var(--border) 1px,transparent 1px);
+  background-size:24px 24px;
+  opacity:0.5;
+  pointer-events:none;
+  z-index:0;
+}
+[data-theme="light"] body::before{opacity:0.3}
+
+#root{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+::selection{background:var(--accent-dim);color:var(--accent)}
+
+/* Boot screen */
+#boot{
+  position:fixed;inset:0;
+  background:#000;
+  z-index:10000;
+  display:flex;flex-direction:column;justify-content:flex-start;
+  padding:32px;
+  font-family:var(--font);font-size:13px;color:#33ff33;
+  overflow:hidden;
+}
+#boot.hidden{display:none}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes scanline{0%{transform:translateY(-100%)}100%{transform:translateY(100vh)}}
+@keyframes glitch1{
+  0%,94%,100%{clip-path:inset(0 0 100% 0);transform:translateX(0)}
+  95%{clip-path:inset(15% 0 40% 0);transform:translateX(-4px)}
+  96%{clip-path:inset(60% 0 5% 0);transform:translateX(4px)}
+  97%{clip-path:inset(30% 0 50% 0);transform:translateX(-2px)}
+  98%{clip-path:inset(0 0 100% 0);transform:translateX(0)}
+}
+@keyframes glitch2{
+  0%,94%,100%{clip-path:inset(0 0 100% 0);transform:translateX(0)}
+  95%{clip-path:inset(40% 0 20% 0);transform:translateX(3px);color:var(--red)}
+  96%{clip-path:inset(5% 0 65% 0);transform:translateX(-3px);color:var(--purple)}
+  97%{clip-path:inset(0 0 100% 0);transform:translateX(0)}
+}
+@keyframes pulse{0%,100%{opacity:0.4}50%{opacity:0.7}}
+@keyframes slideIn{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes cmdFade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* CRT scanline on terminal */
+.crt::after{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,transparent 2px,
+    rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px
+  );
+  pointer-events:none;
+  border-radius:inherit;
+}
+.crt-sweep::before{
+  content:'';
+  position:absolute;left:0;right:0;height:60px;
+  background:linear-gradient(transparent,rgba(55,195,220,0.04),transparent);
+  animation:scanline 4s linear infinite;
+  pointer-events:none;
+  z-index:2;
+}
+
+/* Command palette */
+.cmd-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);
+  z-index:500;display:flex;align-items:flex-start;justify-content:center;
+  padding-top:120px;
+  backdrop-filter:blur(4px);
+}
+.cmd-box{
+  width:100%;max-width:560px;
+  background:var(--bg3);border:1px solid var(--accent);
+  border-radius:6px;overflow:hidden;
+  animation:cmdFade 0.15s ease both;
+  box-shadow:0 0 40px rgba(55,195,220,0.15);
+}
+</style>
+</head>
+<body>
+
+<!-- Boot screen (rendered by JS) -->
+<div id="boot" class="hidden"></div>
+
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback, useMemo } = React;
+
+// ── Data ──────────────────────────────────────────────────────────────
+const POSTS = [
+  {
+    slug:"comunicacion-efectiva-remoto",
+    title:"comunicacion-efectiva-remoto.md",
+    displayTitle:"Comunicación efectiva trabajando en remoto",
+    date:"2025-12-14",readTime:14,size:"12K",
+    tags:["remote-work","communication","productivity"],
+    perms:"-rw-r--r--",
+    description:"Consejos y estrategias para mejorar la comunicación cuando trabajas en remoto. Async first, sync when necessary.",
+    body:`Working remotely removes ambient awareness. You have to be intentional about everything that used to happen by accident.
+
+## over-communicate your state
+
+Write it down. "Blocked on X." "Deep focus until 3pm." "Back in 30." Your team shouldn't wonder where you are. A quick async message saves three pings.
+
+## async first, sync when necessary
+
+The default should always be async. Reserve live calls for decisions that genuinely need real-time discussion — set an agenda even then.
+
+\`\`\`bash
+# the async message template
+SUBJECT: what this is about
+CONTEXT: why it matters right now
+ASK:     what you need, specifically
+\`\`\`
+
+## structure your messages
+
+Most communication problems come from unclear asks. Be explicit. Every message should have a subject, context, and a specific ask.
+
+## create rituals
+
+Daily standups written in a shared doc. Weekly team coffee. End-of-week summary. Rituals create predictability, and predictability lowers anxiety in distributed teams.
+
+> Async is a skill. It rewards the deliberate and punishes the reactive.`
+  },
+  {
+    slug:"consejos-busqueda-trabajo",
+    title:"consejos-busqueda-trabajo.md",
+    displayTitle:"Consejos para la búsqueda de trabajo tech",
+    date:"2025-12-08",readTime:12,size:"9.4K",
+    tags:["career","job-search","interviews"],
+    perms:"-rw-r--r--",
+    description:"Consejos prácticos sobre cómo afrontar los procesos de búsqueda de trabajo en el sector tech en España.",
+    body:`Job hunting is a project. Treat it like one.
+
+## the cv problem
+
+Most CVs are too long, too generic, focused on responsibilities not outcomes. Every bullet should answer: *what did I build, and what was the result?*
+
+\`\`\`diff
+- Responsible for maintaining frontend codebase
++ Reduced bundle size 40% by migrating to tree-shaken imports
+- Worked on API integrations
++ Built payment integration handling €2M/month in transactions
+\`\`\`
+
+## warm intros > cold applications
+
+A referral from someone inside gets your CV read. A cold LinkedIn application might not. Invest in your network before you need it.
+
+## negotiate everything
+
+Salary, remote days, equipment budget, conference budget. The worst they say is no. Most companies expect negotiation and have room.
+
+> Treat job hunting like a sales pipeline. Track everything, follow up consistently, close decisively.`
+  },
+  {
+    slug:"hype-ia-junior",
+    title:"el-hype-ia-junior.md",
+    displayTitle:"El hype de la IA y el junior con 5 años de experiencia",
+    date:"2024-11-20",readTime:9,size:"7.1K",
+    tags:["AI","industry","opinion"],
+    perms:"-rw-r--r--",
+    description:"Reflexiones sobre el caos actual: IA, bootcamps y expectativas irreales en el mercado laboral tech.",
+    body:`The tech hiring market right now is genuinely strange.
+
+## the AI displacement narrative
+
+AI is replacing *tasks* within development, not developers — at least not the ones who adapt. Developers who treat AI as a collaborator ship faster than ever.
+
+## the junior paradox
+
+Job postings want junior devs with 3–5 years experience. Companies overcorrected after the 2021 boom. The entry-level path is brutal right now.
+
+## what actually matters
+
+Problem-solving instinct. Communication. The ability to sit with a confusing codebase and make sense of it. No course gives you this directly — only practice does.
+
+\`\`\`js
+// what AI amplifies
+const output = developer.skills * aiTools;
+
+// what AI can't replace
+const value = problemSolving + judgment + communication;
+\`\`\``
+  },
+  {
+    slug:"pair-programming",
+    title:"pair-programming.md",
+    displayTitle:"What means pair programming",
+    date:"2023-02-11",readTime:8,size:"8.4K",
+    tags:["software-dev","pair-programming","practices"],
+    perms:"-rw-r--r--",
+    description:"Two devs, one machine, all production code. Why it works and how to do it well.",
+    body:`Pair programming means writing all production code with two developers, one machine.
+
+## why we default to working alone
+
+It's a habit. You learned to code alone. The deep flow state has real pleasures. But the habit is worth breaking.
+
+## what pairing actually gives you
+
+**Focus** — harder to get distracted when you're both in it together.
+
+**Better ideas** — talking through a problem forces articulation. Articulation produces solutions.
+
+**Live code review** — issues caught in the moment, not three days later in a PR.
+
+## patterns
+
+\`\`\`
+driver/navigator   → one types, one guides. rotate every 15-20min
+ping-pong          → one writes test, one writes impl. rotate
+strong-style       → navigator controls direction entirely
+\`\`\`
+
+## common failure modes
+
+- Navigator micromanaging keystroke-by-keystroke
+- Not rotating often enough  
+- Forgetting to take breaks
+- Coding in silence (explain what you're doing)
+
+> Pair programming is a social activity. Empathy is a prerequisite.`
+  },
+  {
+    slug:"remote-work",
+    title:"remote-work-part-i.md",
+    displayTitle:"How to work in remote? — Part I",
+    date:"2023-06-11",readTime:8,size:"6.2K",
+    tags:["remote-work","productivity","habits"],
+    perms:"-rw-r--r--",
+    description:"Methodologies and habits built across four years of working from home. Starts with mindset.",
+    body:`I started working from home in March 2020. I decided to treat it as a discipline problem, not a convenience.
+
+## your home is now your office
+
+Step one and most people skip it. Designate a space. Use visual/ritual cues to switch modes — a specific playlist, a specific lamp, a startup sequence.
+
+## routine as infrastructure
+
+Morning routine → work session → lunch away from screen → afternoon session → explicit end-of-day ritual.
+
+This installs the on/off switches that open-office environments provide for free.
+
+## the energy problem
+
+Commuting was bad, but it forced a state transition. Design your own: a walk before work, a workout at lunch, anything that marks the boundary.
+
+\`\`\`bash
+# daily structure
+08:00  morning_routine.sh
+09:00  deep_work --no-slack --duration=3h
+12:00  lunch --away-from-screen
+13:00  meetings --async-first
+17:00  end_of_day.sh  # actually run this
+\`\`\`
+
+## tools matter less than you think
+
+The problem is almost always norms, not software. What does "urgent" mean? What's the expected response time? Nail the norms first.`
+  },
+  {
+    slug:"sfcc",
+    title:"how-i-started-sfcc.md",
+    displayTitle:"How I started to work in SFCC",
+    date:"2023-03-02",readTime:5,size:"4.8K",
+    tags:["sfcc","ecommerce","salesforce"],
+    perms:"-rw-r--r--",
+    description:"What is Salesforce Commerce Cloud? My experience as a SFCC developer for 4.5 years.",
+    body:`Salesforce Commerce Cloud powers some of the largest online retailers. I've been working with it for over four years.
+
+## how I got here
+
+A client project required SFCC knowledge. I had two weeks to get up to speed. Steep learning curve. Smaller community than you'd expect for an enterprise platform.
+
+## what makes it different
+
+SFCC uses its own templating (ISML) and proprietary server-side JS. The mental model is closer to Java than modern React. Coming from React, it felt like time travel.
+
+\`\`\`javascript
+// SFCC server-side script example
+var OrderMgr = require('dw/order/OrderMgr');
+var order = OrderMgr.getOrder(orderNo);
+if (order) {
+  Logger.info('Order: {0}', order.orderNo);
+}
+\`\`\`
+
+## honest assessment
+
+**Pros**: Rich data model, battle-tested at scale, interesting problems, good pay.
+
+**Cons**: Painful local dev, slow deploys, upgrade surprises.
+
+Four years in, still learning.`
+  }
+];
+
+const ALL_TAGS = [...new Set(POSTS.flatMap(p=>p.tags))].sort();
+
+function fmtDate(iso){
+  const d=new Date(iso);
+  const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+  return `${mo} ${String(d.getDate()).padStart(2,' ')} ${d.getFullYear()}`;
+}
+function fmtDateShort(iso){
+  const d=new Date(iso);
+  const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+  return `${String(d.getDate()).padStart(2,'0')} ${mo} ${d.getFullYear()}`;
+}
+
+// ── Boot Sequence ─────────────────────────────────────────────────────
+const BOOT_LINES = [
+  {t:0,   text:'CrisOnCode BIOS v2.6.1 (c) 2026 Cristian Estarlich', color:'#33ff33'},
+  {t:120, text:'CPU: Technical Lead @ TennisPoint [Barcelona]', color:'#33ff33'},
+  {t:240, text:'RAM Check: 32768K OK', color:'#33ff33'},
+  {t:360, text:'', color:''},
+  {t:420, text:'Detecting storage devices...', color:'#33ff33'},
+  {t:600, text:'  /dev/blog/posts       6 articles    [OK]', color:'#5eff5e'},
+  {t:720, text:'  /dev/blog/tags        12 categories [OK]', color:'#5eff5e'},
+  {t:840, text:'  /dev/blog/about       1 human       [OK]', color:'#5eff5e'},
+  {t:960, text:'', color:''},
+  {t:1020,text:'Loading kernel modules...', color:'#33ff33'},
+  {t:1100,text:'  [################] typescript.ko', color:'#aaffaa'},
+  {t:1160,text:'  [################] nodejs.ko', color:'#aaffaa'},
+  {t:1220,text:'  [################] distributed-systems.ko', color:'#aaffaa'},
+  {t:1280,text:'  [################] caffeine.ko', color:'#aaffaa'},
+  {t:1400,text:'', color:''},
+  {t:1460,text:'Starting blog service... ', color:'#33ff33'},
+  {t:1700,text:'  crisoncode.service started [OK]', color:'#33ff33'},
+  {t:1900,text:'', color:''},
+  {t:1960,text:'Press any key to continue or wait...', color:'#ffff33', blink:true},
+];
+
+function BootScreen({onDone}){
+  const [lines, setLines] = useState([]);
+  const doneRef = useRef(false);
+  useEffect(()=>{
+    const timers = BOOT_LINES.map(({t,text,color,blink})=>
+      setTimeout(()=>setLines(l=>[...l,{text,color,blink}]),t)
+    );
+    const autoTimer = setTimeout(()=>{ if(!doneRef.current){ doneRef.current=true; onDone(); }}, 2600);
+    return ()=>{ timers.forEach(clearTimeout); clearTimeout(autoTimer); };
+  },[]);
+  const handleKey = useCallback(()=>{ if(!doneRef.current){ doneRef.current=true; onDone(); }},[]);
+  useEffect(()=>{
+    window.addEventListener('keydown',handleKey);
+    window.addEventListener('click',handleKey);
+    return()=>{ window.removeEventListener('keydown',handleKey); window.removeEventListener('click',handleKey); };
+  },[]);
+  return(
+    <div style={{fontFamily:'var(--font)',fontSize:13,lineHeight:1.6,cursor:'default'}}>
+      {lines.map((l,i)=>(
+        <div key={i} style={{color:l.color||'#33ff33',animation:l.blink?'blink 1s infinite':undefined}}>
+          {l.text||'\u00a0'}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── Typewriter ────────────────────────────────────────────────────────
+function TypeWriter({lines, speed=30, onDone}){
+  const [displayed,setDisplayed]=useState([]);
+  const [lineIdx,setLineIdx]=useState(0);
+  const [charIdx,setCharIdx]=useState(0);
+  const [finished,setFinished]=useState(false);
+  useEffect(()=>{
+    if(lineIdx>=lines.length){setFinished(true);onDone&&onDone();return;}
+    const line=lines[lineIdx];
+    if(charIdx<=line.length){
+      const t=setTimeout(()=>{
+        setDisplayed(prev=>{const n=[...prev];n[lineIdx]=line.slice(0,charIdx);return n;});
+        setCharIdx(c=>c+1);
+      },charIdx===0?150:speed);
+      return()=>clearTimeout(t);
+    } else {
+      const t=setTimeout(()=>{setLineIdx(l=>l+1);setCharIdx(0);},50);
+      return()=>clearTimeout(t);
+    }
+  },[lineIdx,charIdx,lines,speed]);
+
+  return(
+    <div>
+      {lines.map((line,i)=>{
+        const txt=displayed[i]??'';
+        const isCurrent=i===lineIdx;
+        if(i>lineIdx)return null;
+        if(line==='')return<div key={i} style={{height:'1.4em'}}/>;
+        const isPrompt=line.startsWith('$');
+        const isComment=line.startsWith('//')||line.startsWith('#');
+        const isOut=!isPrompt&&!isComment;
+        return(
+          <div key={i} style={{color:isComment?'var(--text-dim)':isPrompt?'var(--accent)':'var(--text)',minHeight:'1.5em',fontFamily:'var(--font)',fontSize:13,lineHeight:1.7}}>
+            {txt}{isCurrent&&!finished&&<span style={{animation:'blink 1s infinite',color:'var(--accent)'}}>▋</span>}
+          </div>
+        );
+      })}
+      {finished&&<span style={{animation:'blink 1s infinite',color:'var(--accent)'}}>▋</span>}
+    </div>
+  );
+}
+
+// ── Glitch Logo ───────────────────────────────────────────────────────
+function GlitchLogo({onClick}){
+  const [hov,setHov]=useState(false);
+  const base={fontFamily:'var(--font)',fontSize:15,fontWeight:700,letterSpacing:'-0.02em',color:'var(--accent)',background:'none',border:'none',cursor:'pointer',position:'relative',padding:0};
+  return(
+    <button onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)} style={base}>
+      <span style={{color:'var(--text-dim)'}}>❯ </span>#CrisOnCode
+      {hov&&<>
+        <span style={{position:'absolute',inset:0,color:'var(--red)',animation:'glitch1 0.5s infinite',fontWeight:700,paddingLeft:20}}>
+          #CrisOnCode
+        </span>
+        <span style={{position:'absolute',inset:0,color:'var(--purple)',animation:'glitch2 0.5s infinite',fontWeight:700,paddingLeft:20}}>
+          #CrisOnCode
+        </span>
+      </>}
+    </button>
+  );
+}
+
+// ── Vim Statusbar ─────────────────────────────────────────────────────
+function StatusBar({page,postTitle,cmdMode}){
+  const [time,setTime]=useState(()=>new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}));
+  useEffect(()=>{
+    const t=setInterval(()=>setTime(new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})),10000);
+    return()=>clearInterval(t);
+  },[]);
+  const mode = cmdMode ? 'COMMAND' : 'NORMAL';
+  const modeColor = cmdMode ? 'var(--amber)' : 'var(--accent)';
+  const path = page==='post' ? `/posts/${postTitle?.slug}` : `/${page==='home'?'':page}`;
+  return(
+    <div style={{
+      position:'fixed',bottom:0,left:0,right:0,height:22,zIndex:200,
+      background:'var(--bg3)',borderTop:'1px solid var(--border)',
+      display:'flex',alignItems:'center',fontFamily:'var(--font)',fontSize:11,
+    }}>
+      <div style={{background:modeColor,color:'var(--bg)',padding:'0 10px',height:'100%',display:'flex',alignItems:'center',fontWeight:700,letterSpacing:'0.05em',transition:'background 0.2s'}}>
+        -- {mode} --
+      </div>
+      <div style={{flex:1,padding:'0 12px',color:'var(--text-dim)'}}>
+        {path}
+      </div>
+      <div style={{padding:'0 12px',color:'var(--text-dim)',display:'flex',gap:16}}>
+        <span>{POSTS.length} posts</span>
+        <span style={{color:'var(--accent)'}}>{time}</span>
+        <span>crisoncode.dev</span>
+      </div>
+      <div style={{background:'var(--border)',color:'var(--accent)',padding:'0 10px',height:'100%',display:'flex',alignItems:'center',fontWeight:600}}>
+        UTF-8
+      </div>
+    </div>
+  );
+}
+
+// ── Command Palette ───────────────────────────────────────────────────
+const CMD_OPTIONS = [
+  {cmd:'home',     desc:'go to homepage',      key:'h'},
+  {cmd:'posts',    desc:'list all posts',       key:'p'},
+  {cmd:'tags',     desc:'browse by tag',        key:'t'},
+  {cmd:'about',    desc:'about the author',     key:'a'},
+  {cmd:'dark',     desc:'toggle dark/light',    key:'d'},
+  {cmd:'search',   desc:'search posts',         key:'/'},
+];
+
+function CommandPalette({onCmd,onClose,setPage,setDark}){
+  const [val,setVal]=useState('');
+  const [sel,setSel]=useState(0);
+  const inputRef=useRef();
+  useEffect(()=>{ inputRef.current?.focus(); },[]);
+  const filtered=CMD_OPTIONS.filter(o=>o.cmd.includes(val)||o.desc.includes(val)||o.key===val);
+  const items=val?filtered:CMD_OPTIONS;
+
+  const execute=(cmd)=>{
+    if(cmd==='dark'){ setDark(d=>!d); onClose(); return; }
+    if(cmd==='search'){ setPage('posts'); onClose(); return; }
+    setPage(cmd==='home'?'home':cmd); onClose();
+  };
+
+  return(
+    <div className="cmd-overlay" onClick={onClose}>
+      <div className="cmd-box" onClick={e=>e.stopPropagation()}>
+        <div style={{display:'flex',alignItems:'center',borderBottom:'1px solid var(--border)',padding:'0 14px'}}>
+          <span style={{color:'var(--accent)',marginRight:8,fontSize:13}}>❯</span>
+          <input ref={inputRef} value={val} onChange={e=>setVal(e.target.value)}
+            onKeyDown={e=>{
+              if(e.key==='Escape')onClose();
+              if(e.key==='ArrowDown'){setSel(s=>Math.min(s+1,items.length-1));}
+              if(e.key==='ArrowUp'){setSel(s=>Math.max(s-1,0));}
+              if(e.key==='Enter'&&items[sel]){execute(items[sel].cmd);}
+            }}
+            placeholder="type a command..."
+            style={{flex:1,background:'none',border:'none',outline:'none',fontFamily:'var(--font)',fontSize:14,color:'var(--text-bright)',padding:'12px 0'}}
+          />
+          <span style={{fontSize:11,color:'var(--text-dim)'}}>esc</span>
+        </div>
+        <div style={{maxHeight:260,overflowY:'auto'}}>
+          {items.map((o,i)=>(
+            <div key={o.cmd} onClick={()=>execute(o.cmd)}
+              style={{display:'flex',alignItems:'center',padding:'10px 14px',cursor:'pointer',
+                background:i===sel?'var(--accent-dim)':'transparent',
+                borderLeft:i===sel?'2px solid var(--accent)':'2px solid transparent',
+                transition:'all 0.1s'}}
+              onMouseEnter={()=>setSel(i)}>
+              <span style={{fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)',width:24}}>{o.key}</span>
+              <span style={{fontFamily:'var(--font)',fontSize:13,color:i===sel?'var(--accent)':'var(--text-bright)',flex:1}}>{o.cmd}</span>
+              <span style={{fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)'}}>{o.desc}</span>
+            </div>
+          ))}
+        </div>
+        <div style={{padding:'8px 14px',borderTop:'1px solid var(--border)',display:'flex',gap:16}}>
+          <span style={{fontFamily:'var(--font)',fontSize:10,color:'var(--text-dim)'}}>↑↓ navigate</span>
+          <span style={{fontFamily:'var(--font)',fontSize:10,color:'var(--text-dim)'}}>↵ select</span>
+          <span style={{fontFamily:'var(--font)',fontSize:10,color:'var(--text-dim)'}}>esc close</span>
+          <span style={{fontFamily:'var(--font)',fontSize:10,color:'var(--text-dim)',marginLeft:'auto'}}>press <span style={{color:'var(--accent)'}}>:</span> anytime to open</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Header ────────────────────────────────────────────────────────────
+function Header({page,setPage,dark,setDark,onCmd}){
+  const navItems=['home','posts','tags','about'];
+  return(
+    <header style={{borderBottom:'1px solid var(--border)',background:'rgba(11,14,20,0.92)',position:'sticky',top:0,zIndex:100,backdropFilter:'blur(12px)'}}>
+      <div style={{maxWidth:900,margin:'0 auto',padding:'0 20px',display:'flex',alignItems:'center',justifyContent:'space-between',height:48}}>
+        <GlitchLogo onClick={()=>setPage('home')}/>
+        <nav style={{display:'flex',gap:2,alignItems:'center'}}>
+          {navItems.map(n=>(
+            <button key={n} onClick={()=>setPage(n)} style={{
+              background:page===n?'var(--accent-dim)':'none',
+              border:`1px solid ${page===n?'var(--accent)':'transparent'}`,
+              borderRadius:3,cursor:'pointer',
+              fontFamily:'var(--font)',fontSize:11,fontWeight:500,
+              color:page===n?'var(--accent)':'var(--text-dim)',
+              padding:'3px 10px',transition:'all 0.12s',
+            }}
+            onMouseEnter={e=>{if(page!==n){e.currentTarget.style.color='var(--text)';e.currentTarget.style.borderColor='var(--border2)';}}}
+            onMouseLeave={e=>{if(page!==n){e.currentTarget.style.color='var(--text-dim)';e.currentTarget.style.borderColor='transparent';}}}
+            >{n}</button>
+          ))}
+          <button onClick={onCmd} style={{
+            background:'none',border:'1px solid var(--border2)',borderRadius:3,
+            cursor:'pointer',padding:'3px 10px',fontFamily:'var(--font)',fontSize:11,
+            color:'var(--text-dim)',marginLeft:4,display:'flex',alignItems:'center',gap:5,transition:'all 0.12s',
+          }}
+          onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--accent)';e.currentTarget.style.color='var(--accent)';}}
+          onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--border2)';e.currentTarget.style.color='var(--text-dim)';}}
+          >
+            <span>❯_</span>
+            <span style={{fontSize:10,opacity:0.6}}>:</span>
+          </button>
+          <button onClick={()=>setDark(d=>!d)} style={{
+            background:'none',border:'1px solid var(--border)',borderRadius:3,
+            cursor:'pointer',padding:'3px 8px',fontFamily:'var(--font)',fontSize:13,
+            color:'var(--text-dim)',marginLeft:2,transition:'all 0.12s',
+          }}
+          onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--accent)';e.currentTarget.style.color='var(--accent)';}}
+          onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--border)';e.currentTarget.style.color='var(--text-dim)';}}
+          >{dark?'◑':'○'}</button>
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+// ── Tag ───────────────────────────────────────────────────────────────
+function Tag({label,onClick,active}){
+  const [hov,setHov]=useState(false);
+  return(
+    <button onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)} style={{
+      background:active||hov?'var(--amber-dim)':'transparent',
+      border:`1px solid ${active?'var(--amber)':hov?'var(--amber)':'var(--border)'}`,
+      borderRadius:2,cursor:onClick?'pointer':'default',
+      fontFamily:'var(--font)',fontSize:10,fontWeight:500,
+      color:active||hov?'var(--amber)':'var(--text-dim)',
+      padding:'1px 6px',transition:'all 0.12s',whiteSpace:'nowrap',
+    }}>#{label}</button>
+  );
+}
+
+// ── ls -la Post Row ───────────────────────────────────────────────────
+function PostRow({post,onClick,idx}){
+  const [hov,setHov]=useState(false);
+  return(
+    <li onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)} onClick={onClick}
+      style={{cursor:'pointer',padding:'5px 0',display:'grid',
+        gridTemplateColumns:'110px 32px 5ch 10ch 1fr',
+        gap:'0 12px',alignItems:'baseline',
+        background:hov?'var(--accent-glow)':'transparent',
+        marginLeft:-8,marginRight:-8,padding:'5px 8px',
+        borderRadius:3,transition:'background 0.12s',
+        animation:`fadeUp 0.3s ${idx*0.05}s both`,
+      }}>
+      <span style={{fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)',letterSpacing:'0.02em'}}>
+        {post.perms}
+      </span>
+      <span style={{fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)',textAlign:'right'}}>
+        {post.readTime}m
+      </span>
+      <span style={{fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)',textAlign:'right'}}>
+        {post.size}
+      </span>
+      <span style={{fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)'}}>
+        {fmtDate(post.date)}
+      </span>
+      <div>
+        <span style={{fontFamily:'var(--font)',fontSize:13,color:hov?'var(--accent)':'var(--text-bright)',fontWeight:hov?600:400,transition:'color 0.12s'}}>
+          {post.title}
+        </span>
+        {hov&&<div style={{fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)',marginTop:2,lineHeight:1.5}}>{post.description}</div>}
+        {hov&&<div style={{display:'flex',gap:4,marginTop:4,flexWrap:'wrap'}}>{post.tags.map(t=><Tag key={t} label={t}/>)}</div>}
+      </div>
+    </li>
+  );
+}
+
+// ── Home ──────────────────────────────────────────────────────────────
+function HomePage({setPage,setCurrentPost}){
+  const heroLines=[
+    '#!/usr/bin/env blog',
+    '// Cristian Estarlich — Technical Lead, Barcelona',
+    '',
+    '$ whoami',
+    'crisoncode. building on the web since age 19.',
+    'currently: Technical Lead @ TennisPoint',
+    'stack: TypeScript, NodeJS, Distributed Systems, Architecture',
+    '',
+    '$ cat interests.txt',
+    'Software development, Artificial intelligence, team dynamics.',
+    'Learning by practice, technical books, barista.',
+    '',
+    '$ ./start --blog',
+    'mounting /dev/blog... done',
+    'starting crisoncode.service...',
+  ];
+  return(
+    <div style={{maxWidth:900,margin:'0 auto',padding:'36px 20px 60px',animation:'fadeUp 0.4s both'}}>
+      {/* Terminal hero */}
+      <div style={{position:'relative',background:'var(--bg2)',border:'1px solid var(--border)',borderRadius:6,overflow:'hidden',marginBottom:40}} className="crt crt-sweep">
+        <div style={{background:'var(--bg4)',padding:'9px 12px',display:'flex',alignItems:'center',gap:6,borderBottom:'1px solid var(--border)'}}>
+          <span style={{width:10,height:10,borderRadius:'50%',background:'var(--red)',display:'inline-block',boxShadow:'0 0 4px var(--red)'}}/>
+          <span style={{width:10,height:10,borderRadius:'50%',background:'var(--amber)',display:'inline-block',boxShadow:'0 0 4px var(--amber)'}}/>
+          <span style={{width:10,height:10,borderRadius:'50%',background:'var(--green)',display:'inline-block',boxShadow:'0 0 4px var(--green)'}}/>
+          <span style={{marginLeft:10,fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)'}}>crisoncode@blog:~ — bash — 80×24</span>
+          <span style={{marginLeft:'auto',fontFamily:'var(--font)',fontSize:10,color:'var(--text-dim)',opacity:0.5}}>ssh crisoncode.dev</span>
+        </div>
+        <div style={{padding:'18px 20px 22px'}}>
+          <TypeWriter lines={heroLines} speed={25}/>
+        </div>
+      </div>
+
+      {/* ls -la header */}
+      <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:6}}>
+        <span style={{fontFamily:'var(--font)',fontSize:11,color:'var(--accent)'}}>$ ls -la posts/ | head -4</span>
+        <button onClick={()=>setPage('posts')} style={{background:'none',border:'none',cursor:'pointer',fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)',padding:0,transition:'color 0.12s'}}
+          onMouseEnter={e=>e.target.style.color='var(--accent)'}
+          onMouseLeave={e=>e.target.style.color='var(--text-dim)'}
+        >ls -la posts/ →</button>
+      </div>
+      {/* column headers */}
+      <div style={{display:'grid',gridTemplateColumns:'110px 32px 5ch 10ch 1fr',gap:'0 12px',padding:'2px 8px',marginBottom:2}}>
+        {['permissions','','size','modified','filename'].map(h=>(
+          <span key={h} style={{fontFamily:'var(--font)',fontSize:10,color:'var(--text-dim)',textDecoration:'underline',textUnderlineOffset:3,textAlign:h==='size'||h===''?'right':undefined}}>{h}</span>
+        ))}
+      </div>
+      <div style={{borderTop:'1px solid var(--border)',paddingTop:4}}>
+        <ul style={{listStyle:'none'}}>
+          {POSTS.slice(0,4).map((post,i)=>(
+            <PostRow key={post.slug} post={post} idx={i} onClick={()=>{setCurrentPost(post);setPage('post');}}/>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+// ── Posts Page ────────────────────────────────────────────────────────
+function PostsPage({setPage,setCurrentPost}){
+  const [filter,setFilter]=useState('');
+  const inputRef=useRef();
+  useEffect(()=>inputRef.current?.focus(),[]);
+  const filtered=POSTS.filter(p=>!filter||p.title.includes(filter.toLowerCase())||p.description.toLowerCase().includes(filter.toLowerCase())||p.tags.some(t=>t.includes(filter.toLowerCase())));
+  return(
+    <div style={{maxWidth:900,margin:'0 auto',padding:'36px 20px 60px',animation:'fadeUp 0.4s both'}}>
+      <div style={{fontFamily:'var(--font)',fontSize:11,color:'var(--accent)',marginBottom:10}}>
+        $ ls -la posts/{filter&&` | grep "${filter}"`}
+      </div>
+      <div style={{position:'relative',marginBottom:20}}>
+        <span style={{position:'absolute',left:10,top:'50%',transform:'translateY(-50%)',color:'var(--accent)',fontFamily:'var(--font)',fontSize:12,pointerEvents:'none'}}>❯</span>
+        <input ref={inputRef} value={filter} onChange={e=>setFilter(e.target.value)}
+          placeholder='grep -ri "" posts/'
+          style={{width:'100%',background:'var(--bg2)',border:'1px solid var(--border)',borderRadius:4,padding:'8px 10px 8px 28px',fontFamily:'var(--font)',fontSize:12,color:'var(--text)',outline:'none',transition:'border-color 0.15s'}}
+          onFocus={e=>e.target.style.borderColor='var(--accent)'}
+          onBlur={e=>e.target.style.borderColor='var(--border)'}
+        />
+        {filter&&<span style={{position:'absolute',right:10,top:'50%',transform:'translateY(-50%)',fontFamily:'var(--font)',fontSize:10,color:'var(--text-dim)'}}>{filtered.length} match{filtered.length!==1?'es':''}</span>}
+      </div>
+      {/* column headers */}
+      <div style={{display:'grid',gridTemplateColumns:'110px 32px 5ch 10ch 1fr',gap:'0 12px',padding:'2px 8px',marginBottom:2}}>
+        {['permissions','','size','modified','filename'].map(h=>(
+          <span key={h} style={{fontFamily:'var(--font)',fontSize:10,color:'var(--text-dim)',textDecoration:'underline',textUnderlineOffset:3,textAlign:h==='size'||h===''?'right':undefined}}>{h}</span>
+        ))}
+      </div>
+      <div style={{borderTop:'1px solid var(--border)',paddingTop:4}}>
+        <ul style={{listStyle:'none'}}>
+          {filtered.map((post,i)=>(
+            <PostRow key={post.slug} post={post} idx={i} onClick={()=>{setCurrentPost(post);setPage('post');}}/>
+          ))}
+          {filtered.length===0&&(
+            <li style={{padding:'24px 8px',fontFamily:'var(--font)',fontSize:12,color:'var(--text-dim)'}}>
+              grep: no matches found — <button onClick={()=>setFilter('')} style={{background:'none',border:'none',cursor:'pointer',color:'var(--accent)',fontFamily:'var(--font)',fontSize:12}}>clear</button>
+            </li>
+          )}
+        </ul>
+      </div>
+      <div style={{fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)',marginTop:12}}>
+        total {filtered.length} / {POSTS.length}
+      </div>
+    </div>
+  );
+}
+
+// ── Tags Page ─────────────────────────────────────────────────────────
+function TagsPage({setPage,setCurrentPost}){
+  const [active,setActive]=useState(null);
+  const filtered=active?POSTS.filter(p=>p.tags.includes(active)):[];
+  return(
+    <div style={{maxWidth:900,margin:'0 auto',padding:'36px 20px 60px',animation:'fadeUp 0.4s both'}}>
+      <div style={{fontFamily:'var(--font)',fontSize:11,color:'var(--accent)',marginBottom:14}}>
+        $ cat tags/index | sort | uniq -c | sort -rn
+      </div>
+      <div style={{display:'flex',flexWrap:'wrap',gap:6,marginBottom:28}}>
+        {ALL_TAGS.map(t=>{
+          const count=POSTS.filter(p=>p.tags.includes(t)).length;
+          return(
+            <button key={t} onClick={()=>setActive(active===t?null:t)}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--amber)';e.currentTarget.style.color='var(--amber)';e.currentTarget.style.background='var(--amber-dim)';}}
+              onMouseLeave={e=>{ if(active!==t){e.currentTarget.style.borderColor='var(--border)';e.currentTarget.style.color='var(--text-dim)';e.currentTarget.style.background='transparent';}}}
+              style={{
+                background:active===t?'var(--amber-dim)':'transparent',
+                border:`1px solid ${active===t?'var(--amber)':'var(--border)'}`,
+                borderRadius:2,cursor:'pointer',fontFamily:'var(--font)',
+                fontSize:11,color:active===t?'var(--amber)':'var(--text-dim)',
+                padding:'3px 9px',transition:'all 0.12s',
+              }}>
+              <span style={{color:'var(--text-dim)',marginRight:6}}>{count}</span>#{t}
+            </button>
+          );
+        })}
+      </div>
+      {active&&(
+        <div style={{animation:'fadeUp 0.3s both'}}>
+          <div style={{fontFamily:'var(--font)',fontSize:11,color:'var(--accent)',marginBottom:10}}>
+            $ ls -la posts/ | grep #{active}
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'110px 32px 5ch 10ch 1fr',gap:'0 12px',padding:'2px 8px',marginBottom:2}}>
+            {['permissions','','size','modified','filename'].map(h=>(
+              <span key={h} style={{fontFamily:'var(--font)',fontSize:10,color:'var(--text-dim)',textDecoration:'underline',textUnderlineOffset:3,textAlign:h==='size'||h===''?'right':undefined}}>{h}</span>
+            ))}
+          </div>
+          <div style={{borderTop:'1px solid var(--border)',paddingTop:4}}>
+            <ul style={{listStyle:'none'}}>
+              {filtered.map((p,i)=><PostRow key={p.slug} post={p} idx={i} onClick={()=>{setCurrentPost(p);setPage('post');}}/>)}
+            </ul>
+          </div>
+        </div>
+      )}
+      {!active&&<div style={{fontFamily:'var(--font)',fontSize:12,color:'var(--text-dim)',padding:'16px 0'}}><span style={{color:'var(--accent)'}}>←</span> click a tag to filter</div>}
+    </div>
+  );
+}
+
+// ── About Page ────────────────────────────────────────────────────────
+function AboutPage(){
+  const ascii=[
+    '  ╔════════════════════════╗',
+    '  ║  ██████╗██████╗       ║',
+    '  ║ ██╔════╝██╔═══╝       ║',
+    '  ║ ██║     █████╗        ║',
+    '  ║ ██║     ██╔══╝        ║',
+    '  ║ ╚██████╗███████╗      ║',
+    '  ║  ╚═════╝╚══════╝      ║',
+    '  ╚════════════════════════╝',
+  ];
+  return(
+    <div style={{maxWidth:900,margin:'0 auto',padding:'36px 20px 60px',animation:'fadeUp 0.4s both'}}>
+      <div style={{fontFamily:'var(--font)',fontSize:11,color:'var(--accent)',marginBottom:20}}>$ cat /etc/crisoncode/about.conf</div>
+      <div style={{display:'grid',gridTemplateColumns:'auto 1fr',gap:32,marginBottom:36,alignItems:'start'}}>
+        <div>
+          {ascii.map((l,i)=><div key={i} style={{fontFamily:'var(--font)',fontSize:12,color:'var(--accent)',lineHeight:1.4,opacity:0.7}}>{l}</div>)}
+          <div style={{fontFamily:'var(--font)',fontSize:10,color:'var(--text-dim)',marginTop:6,textAlign:'center'}}>profile_v2.ascii</div>
+        </div>
+        <div>
+          <div style={{fontFamily:'var(--font)',marginBottom:20}}>
+            {[
+              {k:'name',v:'Cristian Estarlich'},
+              {k:'role',v:'Technical Lead'},
+              {k:'location',v:'Barcelona, Spain'},
+              {k:'company',v:'TennisPoint'},
+              {k:'exp',v:'13+ years'},
+              {k:'stack',v:'TypeScript / NodeJS / SFCC'},
+              {k:'started',v:'19 years old, first paid gig'},
+            ].map(({k,v})=>(
+              <div key={k} style={{display:'flex',gap:0,marginBottom:6,fontFamily:'var(--font)',fontSize:13}}>
+                <span style={{color:'var(--text-dim)',minWidth:100}}>{k}</span>
+                <span style={{color:'var(--text-dim)',marginRight:8}}>=</span>
+                <span style={{color:'var(--text-bright)'}}>&quot;{v}&quot;</span>
+              </div>
+            ))}
+          </div>
+          <div style={{fontFamily:'var(--font)',fontSize:13,color:'var(--text)',lineHeight:1.75,borderLeft:'2px solid var(--border)',paddingLeft:14}}>
+            This blog is my space to share what's on my mind — technical deep-dives, productivity, team culture, and the occasional hot take. Expect chaos.
+          </div>
+        </div>
+      </div>
+      <div style={{borderTop:'1px solid var(--border)',paddingTop:20}}>
+        <div style={{fontFamily:'var(--font)',fontSize:11,color:'var(--accent)',marginBottom:12}}>$ cat ~/.ssh/known_hosts  # social</div>
+        {[
+          {k:'github',v:'github.com/crisoncode',href:'https://github.com/crisoncode'},
+          {k:'linkedin',v:'linkedin.com/in/cristian-estarlich',href:'#'},
+          {k:'twitter',v:'@CEstarlich',href:'#'},
+          {k:'email',v:'cestarlich.dev@gmail.com',href:'mailto:cestarlich.dev@gmail.com'},
+        ].map(({k,v,href})=>(
+          <div key={k} style={{display:'flex',gap:0,marginBottom:8,fontFamily:'var(--font)',fontSize:13,alignItems:'baseline'}}>
+            <span style={{color:'var(--text-dim)',minWidth:100}}>{k}</span>
+            <span style={{color:'var(--text-dim)',marginRight:8}}>=</span>
+            <a href={href} style={{color:'var(--accent)',textDecoration:'none'}}
+              onMouseEnter={e=>e.target.style.textDecoration='underline'}
+              onMouseLeave={e=>e.target.style.textDecoration='none'}
+            >{v}</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Post Page ─────────────────────────────────────────────────────────
+function PostPage({post,setPage,setCurrentPost}){
+  const [progress,setProgress]=useState(0);
+  const bodyRef=useRef();
+  useEffect(()=>{
+    window.scrollTo(0,0);
+    const onScroll=()=>{
+      const el=bodyRef.current; if(!el)return;
+      const top=el.getBoundingClientRect().top;
+      const h=el.offsetHeight;
+      setProgress(Math.min(100,Math.max(0,(-top/(h-window.innerHeight))*100)));
+    };
+    window.addEventListener('scroll',onScroll);
+    return()=>window.removeEventListener('scroll',onScroll);
+  },[post]);
+
+  function renderInline(text){
+    // bold + code
+    const result=[];
+    let remaining=text;
+    const re=/(\*\*(.+?)\*\*|`(.+?)`)/g;
+    let last=0; let m;
+    while((m=re.exec(text))!==null){
+      if(m.index>last)result.push(text.slice(last,m.index));
+      if(m[0].startsWith('**'))result.push(<strong key={m.index} style={{color:'var(--text-bright)',fontWeight:600}}>{m[2]}</strong>);
+      else result.push(<code key={m.index} style={{fontFamily:'var(--font)',fontSize:11,background:'var(--accent-dim)',border:'1px solid rgba(55,195,220,0.2)',borderRadius:3,padding:'1px 5px',color:'var(--accent)'}}>{m[3]}</code>);
+      last=m.index+m[0].length;
+    }
+    result.push(text.slice(last));
+    return result;
+  }
+
+  function renderBody(text){
+    const lines=text.split('\n');
+    const els=[]; let i=0;
+    while(i<lines.length){
+      const line=lines[i];
+      if(line.startsWith('## ')){
+        els.push(<h2 key={i} style={{fontFamily:'var(--font)',fontSize:15,fontWeight:600,color:'var(--accent)',marginTop:36,marginBottom:10,letterSpacing:'-0.01em',display:'flex',alignItems:'center',gap:10}}>
+          <span style={{color:'var(--border2)'}}>##</span>{line.slice(3)}
+        </h2>);
+      } else if(line.startsWith('### ')){
+        els.push(<h3 key={i} style={{fontFamily:'var(--font)',fontSize:13,fontWeight:600,color:'var(--amber)',marginTop:24,marginBottom:8}}>
+          <span style={{color:'var(--border2)'}}>### </span>{line.slice(4)}
+        </h3>);
+      } else if(line.startsWith('> ')){
+        els.push(<blockquote key={i} style={{borderLeft:'2px solid var(--amber)',padding:'10px 14px',margin:'14px 0',background:'var(--amber-dim)',borderRadius:'0 3px 3px 0',fontStyle:'italic',fontFamily:'var(--font)',fontSize:13,color:'var(--text)',lineHeight:1.7}}>{line.slice(2)}</blockquote>);
+      } else if(line.startsWith('```')){
+        const lang=line.slice(3);
+        const codeLines=[]; i++;
+        while(i<lines.length&&!lines[i].startsWith('```')){codeLines.push(lines[i]);i++;}
+        els.push(
+          <div key={i} style={{margin:'14px 0',border:'1px solid var(--border)',borderRadius:4,overflow:'hidden'}}>
+            {lang&&<div style={{background:'var(--bg4)',padding:'5px 12px',borderBottom:'1px solid var(--border)',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+              <span style={{fontFamily:'var(--font)',fontSize:10,color:'var(--text-dim)'}}>{lang}</span>
+              <span style={{fontFamily:'var(--font)',fontSize:10,color:'var(--text-dim)',opacity:0.5}}>{codeLines.length} lines</span>
+            </div>}
+            <pre style={{background:'#070a0f',padding:'14px 16px',overflowX:'auto',margin:0}}>
+              <code style={{fontFamily:'var(--font)',fontSize:12,color:'#a8c8e8',lineHeight:1.7}}>{codeLines.join('\n')}</code>
+            </pre>
+          </div>
+        );
+      } else if(line.startsWith('- ')||line.startsWith('* ')){
+        const items=[];
+        while(i<lines.length&&(lines[i].startsWith('- ')||lines[i].startsWith('* '))){items.push(lines[i].slice(2));i++;}
+        els.push(<ul key={i} style={{margin:'10px 0',padding:0,listStyle:'none'}}>
+          {items.map((item,j)=>(
+            <li key={j} style={{fontFamily:'var(--font)',fontSize:13,color:'var(--text)',lineHeight:1.75,marginBottom:4,paddingLeft:20,position:'relative'}}>
+              <span style={{position:'absolute',left:0,color:'var(--accent)'}}>›</span>
+              {renderInline(item)}
+            </li>
+          ))}
+        </ul>);
+        continue;
+      } else if(line.trim()===''){
+        els.push(<div key={i} style={{height:6}}/>);
+      } else {
+        els.push(<p key={i} style={{fontFamily:'var(--font)',fontSize:13,color:'var(--text)',lineHeight:1.8,marginBottom:12}}>{renderInline(line)}</p>);
+      }
+      i++;
+    }
+    return els;
+  }
+
+  const idx=POSTS.findIndex(p=>p.slug===post.slug);
+  const prev=POSTS[idx-1], next=POSTS[idx+1];
+
+  return(
+    <div style={{animation:'fadeUp 0.4s both'}}>
+      <div style={{position:'fixed',top:48,left:0,height:2,width:`${progress}%`,background:'var(--accent)',zIndex:99,transition:'width 0.1s linear',boxShadow:'0 0 8px var(--accent)'}}/>
+      <div style={{maxWidth:740,margin:'0 auto',padding:'32px 20px 80px'}}>
+        {/* breadcrumb */}
+        <div style={{fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)',marginBottom:24,display:'flex',gap:6,alignItems:'center'}}>
+          <button onClick={()=>setPage('posts')} style={{background:'none',border:'none',cursor:'pointer',fontFamily:'var(--font)',fontSize:11,color:'var(--accent)',padding:0}}>posts/</button>
+          <span>›</span><span>{post.title}</span>
+        </div>
+        {/* header */}
+        <div style={{marginBottom:28,paddingBottom:20,borderBottom:'1px solid var(--border)'}}>
+          <h1 style={{fontFamily:'var(--font)',fontSize:22,fontWeight:700,color:'var(--text-bright)',letterSpacing:'-0.03em',lineHeight:1.3,marginBottom:12}}>{post.displayTitle}</h1>
+          <div style={{display:'flex',gap:14,alignItems:'center',flexWrap:'wrap'}}>
+            <span style={{fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)'}}>{fmtDateShort(post.date)}</span>
+            <span style={{fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)'}}>~{post.readTime} min</span>
+            <span style={{fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)'}}>{post.size}</span>
+            <div style={{display:'flex',gap:4,flexWrap:'wrap'}}>{post.tags.map(t=><Tag key={t} label={t}/>)}</div>
+          </div>
+        </div>
+        {/* body */}
+        <div ref={bodyRef}>{renderBody(post.body)}</div>
+        {/* nav */}
+        <div style={{marginTop:40,paddingTop:20,borderTop:'1px solid var(--border)',display:'flex',justifyContent:'space-between',gap:12,flexWrap:'wrap'}}>
+          {[
+            {post:prev,label:'←',dir:'prev'},
+            {post:next,label:'→',dir:'next'},
+          ].map(({post:p,label,dir})=>p?(
+            <button key={dir} onClick={()=>{setCurrentPost(p);window.scrollTo(0,0);}}
+              style={{background:'none',border:'1px solid var(--border)',borderRadius:3,cursor:'pointer',fontFamily:'var(--font)',fontSize:11,color:'var(--text-dim)',padding:'6px 12px',transition:'all 0.12s',textAlign:dir==='next'?'right':'left',flex:'0 1 300px'}}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--accent)';e.currentTarget.style.color='var(--accent)';}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--border)';e.currentTarget.style.color='var(--text-dim)';}}
+            >
+              <div style={{fontSize:10,marginBottom:2,opacity:0.6}}>{dir} {label}</div>
+              {p.title}
+            </button>
+          ):<div key={dir}/>)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Tweaks ────────────────────────────────────────────────────────────
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "fontSize": 13,
+  "crtEffect": true,
+  "dotGrid": true,
+  "accentColor": "#37c3dc",
+  "bootScreen": true
+}/*EDITMODE-END*/;
+
+function TweaksPanel({tweaks,setTweaks}){
+  return(
+    <div style={{position:'fixed',bottom:42,right:20,zIndex:300,background:'var(--bg3)',border:'1px solid var(--accent)',borderRadius:5,padding:14,width:220,fontFamily:'var(--font)',fontSize:12,boxShadow:'0 0 30px rgba(55,195,220,0.15)'}}>
+      <div style={{color:'var(--accent)',fontWeight:700,marginBottom:12,fontSize:11,letterSpacing:'0.06em'}}>// TWEAKS</div>
+      <label style={{display:'block',marginBottom:10}}>
+        <div style={{color:'var(--text-dim)',marginBottom:3}}>font_size: {tweaks.fontSize}px</div>
+        <input type="range" min={11} max={16} value={tweaks.fontSize} onChange={e=>{const v={...tweaks,fontSize:+e.target.value};setTweaks(v);window.parent.postMessage({type:'__edit_mode_set_keys',edits:v},'*');}} style={{width:'100%',accentColor:'var(--accent)'}}/>
+      </label>
+      {[
+        {key:'crtEffect',label:'crt_scanlines'},
+        {key:'dotGrid',label:'dot_grid'},
+        {key:'bootScreen',label:'boot_sequence'},
+      ].map(({key,label})=>(
+        <label key={key} style={{display:'flex',alignItems:'center',gap:8,marginBottom:8,cursor:'pointer'}}>
+          <input type="checkbox" checked={tweaks[key]} onChange={e=>{const v={...tweaks,[key]:e.target.checked};setTweaks(v);window.parent.postMessage({type:'__edit_mode_set_keys',edits:v},'*');}} style={{accentColor:'var(--accent)'}}/>
+          <span style={{color:'var(--text-dim)'}}>{label}</span>
+        </label>
+      ))}
+      <div style={{marginTop:8}}>
+        <div style={{color:'var(--text-dim)',marginBottom:6,fontSize:11}}>accent_color</div>
+        <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>
+          {['#37c3dc','#4ec994','#f5af4b','#e05c5c','#a78bfa','#ff6eb4'].map(c=>(
+            <button key={c} onClick={()=>{const v={...tweaks,accentColor:c};setTweaks(v);document.documentElement.style.setProperty('--accent',c);document.documentElement.style.setProperty('--accent-dim',c+'20');window.parent.postMessage({type:'__edit_mode_set_keys',edits:v},'*');}} style={{width:20,height:20,borderRadius:'50%',background:c,border:tweaks.accentColor===c?'2px solid white':'2px solid transparent',cursor:'pointer',boxShadow:tweaks.accentColor===c?`0 0 6px ${c}`:'none'}}/>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Theme hook ────────────────────────────────────────────────────────
+function useTheme(){
+  const [dark,setDark]=useState(()=>localStorage.getItem('theme')!=='light');
+  useEffect(()=>{
+    document.documentElement.setAttribute('data-theme',dark?'dark':'light');
+    localStorage.setItem('theme',dark?'dark':'light');
+  },[dark]);
+  return [dark,setDark];
+}
+
+// ── App ───────────────────────────────────────────────────────────────
+function App(){
+  const [page,setPage]=useState(()=>localStorage.getItem('coc-page')||'home');
+  const [currentPost,setCurrentPost]=useState(null);
+  const [dark,setDark]=useTheme();
+  const [tweaks,setTweaks]=useState(TWEAK_DEFAULTS);
+  const [showTweaks,setShowTweaks]=useState(false);
+  const [showCmd,setShowCmd]=useState(false);
+  const [booted,setBooted]=useState(()=>!!localStorage.getItem('coc-booted'));
+  const [cmdMode,setCmdMode]=useState(false);
+
+  useEffect(()=>{ localStorage.setItem('coc-page',page); },[page]);
+
+  // CRT toggle
+  useEffect(()=>{
+    document.querySelectorAll('.crt').forEach(el=>{
+      el.classList.toggle('crt',tweaks.crtEffect);
+    });
+    document.body.style.fontSize=tweaks.fontSize+'px';
+    document.body.classList.toggle('no-grid',!tweaks.dotGrid);
+  },[tweaks]);
+
+  // Tweaks protocol
+  useEffect(()=>{
+    const h=(e)=>{
+      if(e.data?.type==='__activate_edit_mode')setShowTweaks(true);
+      if(e.data?.type==='__deactivate_edit_mode')setShowTweaks(false);
+    };
+    window.addEventListener('message',h);
+    window.parent.postMessage({type:'__edit_mode_available'},'*');
+    return()=>window.removeEventListener('message',h);
+  },[]);
+
+  // Global keybindings
+  useEffect(()=>{
+    const h=(e)=>{
+      if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+      if(e.key===':'||e.key==='/'){ e.preventDefault(); setShowCmd(true); setCmdMode(true); }
+      if(e.key==='Escape'){ setShowCmd(false); setCmdMode(false); }
+    };
+    window.addEventListener('keydown',h);
+    return()=>window.removeEventListener('keydown',h);
+  },[]);
+
+  const handleSetPage=(p)=>{ setPage(p); window.scrollTo(0,0); };
+  const handleSetPost=(p)=>{ setCurrentPost(p); setPage('post'); window.scrollTo(0,0); };
+  const handleBoot=()=>{ setBooted(true); localStorage.setItem('coc-booted','1'); };
+  const handleCmd=()=>{ setShowCmd(true); setCmdMode(true); };
+  const handleCloseCmd=()=>{ setShowCmd(false); setCmdMode(false); };
+
+  // Boot screen
+  useEffect(()=>{
+    const bootEl=document.getElementById('boot');
+    if(!bootEl)return;
+    bootEl.classList.add('hidden');
+  },[]);
+
+  if(!booted&&tweaks.bootScreen){
+    return(
+      <div style={{position:'fixed',inset:0,background:'#000',zIndex:10000,display:'flex',flexDirection:'column',justifyContent:'flex-start',padding:32,fontFamily:'var(--font)',fontSize:13,color:'#33ff33',overflow:'hidden'}}>
+        <BootScreen onDone={handleBoot}/>
+      </div>
+    );
+  }
+
+  return(
+    <>
+      <style>{`
+        .no-grid::before{display:none!important}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+        @keyframes glitch1{0%,94%,100%{clip-path:inset(0 0 100% 0);transform:translateX(0)}95%{clip-path:inset(15% 0 40% 0);transform:translateX(-4px)}96%{clip-path:inset(60% 0 5% 0);transform:translateX(4px)}97%{clip-path:inset(30% 0 50% 0);transform:translateX(-2px)}98%{clip-path:inset(0 0 100% 0);transform:translateX(0)}}
+        @keyframes glitch2{0%,94%,100%{clip-path:inset(0 0 100% 0);transform:translateX(0)}95%{clip-path:inset(40% 0 20% 0);transform:translateX(3px);color:var(--red)}96%{clip-path:inset(5% 0 65% 0);transform:translateX(-3px);color:var(--purple)}97%{clip-path:inset(0 0 100% 0);transform:translateX(0)}}
+        @keyframes scanline{0%{transform:translateY(-100%)}100%{transform:translateY(100vh)}}
+        @keyframes cmdFade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+      `}</style>
+      {showCmd&&<CommandPalette onCmd={()=>{}} onClose={handleCloseCmd} setPage={handleSetPage} setDark={setDark}/>}
+      <Header page={page} setPage={handleSetPage} dark={dark} setDark={setDark} onCmd={handleCmd}/>
+      <main style={{flex:1,paddingBottom:22}}>
+        {page==='home'&&<HomePage setPage={handleSetPage} setCurrentPost={handleSetPost}/>}
+        {page==='posts'&&<PostsPage setPage={handleSetPage} setCurrentPost={handleSetPost}/>}
+        {page==='tags'&&<TagsPage setPage={handleSetPage} setCurrentPost={handleSetPost}/>}
+        {page==='about'&&<AboutPage/>}
+        {page==='post'&&currentPost&&<PostPage post={currentPost} setPage={handleSetPage} setCurrentPost={handleSetPost}/>}
+      </main>
+      <StatusBar page={page} postTitle={currentPost} cmdMode={cmdMode}/>
+      {showTweaks&&<TweaksPanel tweaks={tweaks} setTweaks={setTweaks}/>}
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

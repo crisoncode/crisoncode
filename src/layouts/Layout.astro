@@ -64,7 +64,10 @@ const fallbackImageURL = new URL(SITE.ogImage, Astro.url.origin).href;
 		<!-- Google Font -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"
+			rel="stylesheet"
+		/>
 
 		{
 			// If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,
@@ -94,6 +97,16 @@ const fallbackImageURL = new URL(SITE.ogImage, Astro.url.origin).href;
 	</head>
 	<body>
 		<slot />
+		<div id="statusbar">
+			<div class="statusbar-mode" id="statusbar-mode">-- NORMAL --</div>
+			<div class="statusbar-path" id="statusbar-path"></div>
+			<div class="statusbar-right">
+				<span id="statusbar-posts">-- posts</span>
+				<span class="statusbar-time" id="statusbar-time">--:--</span>
+				<span>crisoncode.dev</span>
+			</div>
+			<div class="statusbar-utf">UTF-8</div>
+		</div>
 		<script is:inline>
 			// Easter egg for fellow developers
 			console.log(
@@ -108,6 +121,23 @@ const fallbackImageURL = new URL(SITE.ogImage, Astro.url.origin).href;
 				"%cFeel free to reach out: cestarlich.dev@gmail.com",
 				"font-size: 12px; color: #666;"
 			);
+		</script>
+		<script is:inline>
+			// Statusbar: path + time
+			(function () {
+				var pathEl = document.getElementById("statusbar-path");
+				var timeEl = document.getElementById("statusbar-time");
+				if (pathEl) pathEl.textContent = window.location.pathname;
+				function tick() {
+					if (!timeEl) return;
+					var now = new Date();
+					var h = String(now.getHours()).padStart(2, "0");
+					var m = String(now.getMinutes()).padStart(2, "0");
+					timeEl.textContent = h + ":" + m;
+				}
+				tick();
+				setInterval(tick, 30000);
+			})();
 		</script>
 	</body>
 </html>

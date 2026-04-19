@@ -4,114 +4,77 @@ export interface Props {
 	href?: string;
 	frontmatter: BlogFrontmatter;
 	secHeading?: boolean;
-	readingTime?: string;
+	readingTime?: number;
 }
 
-export default function Card({
-	href,
-	frontmatter,
-	secHeading = true,
-	readingTime,
-}: Props) {
+export default function Card({ href, frontmatter, readingTime }: Props) {
 	const { title, pubDatetime, description, tags = [] } = frontmatter;
 
-	// Format date as "14 Dec 2025"
-	const formattedDate = new Date(pubDatetime).toLocaleDateString("en-GB", {
-		day: "2-digit",
-		month: "short",
-		year: "numeric",
-	});
+	// ls -la date format: "Jun 11 2023"
+	const d = new Date(pubDatetime);
+	const mo = [
+		"Jan",
+		"Feb",
+		"Mar",
+		"Apr",
+		"May",
+		"Jun",
+		"Jul",
+		"Aug",
+		"Sep",
+		"Oct",
+		"Nov",
+		"Dec",
+	][d.getMonth()];
+	const formattedDate = `${mo} ${String(d.getDate()).padStart(2, " ")} ${d.getFullYear()}`;
 
-	const handleClick = () => {
-		if (href) {
-			window.location.href = href;
-		}
-	};
+	// File size derived from reading time (~1000 chars/min)
+	const mins = readingTime ?? 5;
+	const chars = mins * 1000;
+	const sizeStr = chars >= 1024 ? `${(chars / 1024).toFixed(1)}K` : `${chars}`;
+
+	// Derive filename from title (normalize accents, slugify)
+	const filename =
+		title
+			.toLowerCase()
+			.normalize("NFD")
+			.replace(/[\u0300-\u036f]/g, "")
+			.replace(/[^a-z0-9]+/g, "-")
+			.replace(/^-|-$/g, "") + ".md";
+
+	// Search data attribute for JS filtering
+	const searchData =
+		`${title} ${description ?? ""} ${tags.join(" ")}`.toLowerCase();
 
 	return (
 		<li
-			className="border-skin-line animate-fadeUp cursor-pointer list-none border-t py-5 transition-all duration-150"
-			onClick={handleClick}
-			role="button"
-			tabIndex={0}
-			onKeyDown={e => {
-				if (e.key === "Enter" || e.key === " ") {
-					handleClick();
-				}
-			}}
+			className="post-row"
+			data-search={searchData}
+			data-tags={tags.map(t => t.toLowerCase().replace(/ /g, "-")).join(",")}
 		>
-			{/* Meta line: date + reading time */}
-			<div className="text-skin-base mb-1.5 flex flex-wrap gap-3 text-xs opacity-45">
-				<span>{formattedDate}</span>
-				{readingTime && <span>~{readingTime}</span>}
-			</div>
-
-			{/* Title */}
-			{secHeading ? (
-				<h2
-					className="text-skin-base hover:text-skin-accent mb-1.5 text-base font-semibold transition-colors duration-150"
-					style={{ letterSpacing: "-0.02em", lineHeight: 1.4 }}
-				>
-					{title}
-				</h2>
-			) : (
-				<h3
-					className="text-skin-base hover:text-skin-accent mb-1.5 text-base font-semibold transition-colors duration-150"
-					style={{ letterSpacing: "-0.02em", lineHeight: 1.4 }}
-				>
-					{title}
-				</h3>
-			)}
-
-			{/* Description */}
-			{description && (
-				<p
-					className="text-skin-base mb-2 text-sm opacity-45"
-					style={{ lineHeight: 1.6 }}
-				>
-					{description}
-				</p>
-			)}
-
-			{/* Tags */}
-			{tags.length > 0 && (
-				<div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-					{tags.map(tag => (
-						<a
-							key={tag}
-							href={`/tags/${tag.toLowerCase().replace(/ /g, "-")}`}
-							style={{
-								display: "inline-block",
-								border: "1px solid rgb(var(--color-border))",
-								borderRadius: "2px",
-								padding: "2px 7px",
-								fontSize: "11px",
-								fontWeight: 500,
-								fontFamily: "'IBM Plex Mono', monospace",
-								color: "rgba(var(--color-text-base), 0.5)",
-								background: "transparent",
-								textDecoration: "none",
-								transition: "all 0.15s",
-							}}
-							onMouseEnter={e => {
-								const el = e.currentTarget;
-								el.style.color = "rgb(var(--color-secondary))";
-								el.style.borderColor = "rgb(var(--color-secondary))";
-								el.style.background = "rgba(var(--color-secondary), 0.12)";
-							}}
-							onMouseLeave={e => {
-								const el = e.currentTarget;
-								el.style.color = "rgba(var(--color-text-base), 0.5)";
-								el.style.borderColor = "rgb(var(--color-border))";
-								el.style.background = "transparent";
-							}}
-							onClick={e => e.stopPropagation()}
-						>
-							#{tag.toLowerCase().replace(/ /g, "-")}
-						</a>
-					))}
+			<a href={href} className="post-grid-link">
+				<div className="post-grid">
+					<span className="post-perms">-rw-r--r--</span>
+					<span className="post-readtime">{mins}m</span>
+					<span className="post-size">{sizeStr}</span>
+					<span className="post-date">{formattedDate}</span>
+					<div className="post-file">
+						<span className="post-filename">{filename}</span>
+						<div className="post-details">
+							{description && <p className="post-desc">{description}</p>}
+							{tags.length > 0 && (
+								<div className="post-tags-row">
+									{tags.map(tag => (
+										<span key={tag} className="tag-badge">
+											#{tag.toLowerCase().replace(/ /g, "-")}
+										</span>
+									))}
+								</div>
+							)}
+						</div>
+					</div>
 				</div>
-			)}
+			</a>
 		</li>
 	);
 }

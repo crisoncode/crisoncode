@@ -19,12 +19,23 @@ const sortedPosts = getSortedPosts(posts);
 	<main id="main-content">
 		<Hero />
 
-		<section id="recent-posts">
+		<div id="recent-posts">
 			<div class="section-header">
-				<span class="section-label">// recent_posts</span>
-				<a href="/posts" class="all-posts-link">all posts →</a>
+				<span class="section-label">$ ls -la posts/ | head -4</span>
+				<a href="/posts" class="all-posts-link">ls -la posts/ →</a>
 			</div>
-			<ul>
+
+			<div class="ls-col-headers">
+				<span>permissions</span>
+				<span class="right"></span>
+				<span class="right">size</span>
+				<span>modified</span>
+				<span>filename</span>
+			</div>
+
+			<div class="ls-divider"></div>
+
+			<ul class="ls-post-list">
 				{
 					sortedPosts.map(
 						(post, index) =>
@@ -39,7 +50,7 @@ const sortedPosts = getSortedPosts(posts);
 					)
 				}
 			</ul>
-		</section>
+		</div>
 	</main>
 
 	<Footer />
@@ -47,29 +58,44 @@ const sortedPosts = getSortedPosts(posts);
 
 <style>
 	@reference "../styles/base.css";
-	#recent-posts {
-		@apply pb-6;
+
+	main {
+		max-width: 900px;
+		margin: 0 auto;
+		padding: 36px 20px 60px;
 	}
+
+	#recent-posts {
+		margin-top: 0;
+	}
+
 	.section-header {
 		display: flex;
 		align-items: baseline;
 		justify-content: space-between;
-		margin-bottom: 4px;
+		margin-bottom: 6px;
 	}
+
 	.section-label {
-		font-size: 11px;
-		color: rgba(var(--color-text-base), 0.5);
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
+		font-size: 14px;
+		color: rgb(var(--color-accent));
 		font-family: "IBM Plex Mono", monospace;
 	}
+
 	.all-posts-link {
-		font-size: 11px;
-		color: rgb(var(--color-accent));
+		font-size: 14px;
+		color: rgba(var(--color-text-base), 0.45);
 		text-decoration: none;
 		font-family: "IBM Plex Mono", monospace;
+		transition: color 0.12s;
 	}
+
 	.all-posts-link:hover {
-		text-decoration: underline;
+		color: rgb(var(--color-accent));
+	}
+
+	.ls-divider {
+		border-top: 1px solid rgb(var(--color-border));
+		margin-bottom: 4px;
 	}
 </style>

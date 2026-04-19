@@ -1,6 +1,12 @@
 ---
 import { SITE } from "@config";
 
+export interface Props {
+	activeNav?: "home" | "posts" | "tags" | "about";
+}
+
+const { activeNav } = Astro.props;
+
 const currentPath = new URL(Astro.request.url).pathname;
 
 const navItems = [
@@ -9,6 +15,12 @@ const navItems = [
 	{ label: "tags", href: "/tags" },
 	{ label: "about", href: "/about" },
 ];
+
+function isActive(href: string, label: string) {
+	if (activeNav) return activeNav === label;
+	if (href === "/") return currentPath === "/";
+	return currentPath.startsWith(href);
+}
 ---
 
 <a id="skip-to-content" href="#main-content">Skip to content</a>
@@ -16,8 +28,11 @@ const navItems = [
 <header>
 	<div class="header-inner">
 		<a href="/" class="logo">
-			<span class="prefix">> </span>
-			<span class="brand">#CrisOnCode</span>
+			<span class="logo-glitch">
+				<span class="brand">#CrisOnCode</span>
+				<span class="glitch-layer r">#CrisOnCode</span>
+				<span class="glitch-layer p">#CrisOnCode</span>
+			</span>
 		</a>
 
 		<nav>
@@ -27,13 +42,23 @@ const navItems = [
 						<li>
 							<a
 								href={item.href}
-								class={`nav-link ${currentPath === item.href ? "active" : ""}`}
+								class={`nav-link ${isActive(item.href, item.label) ? "active" : ""}`}
 							>
 								{item.label}
 							</a>
 						</li>
 					))
 				}
+				<li>
+					<button
+						id="cmd-btn"
+						class="nav-link cmd-btn"
+						title="Command palette (:)"
+						aria-label="Open command palette"
+					>
+						<span>❯_</span><span class="cmd-hint">:</span>
+					</button>
+				</li>
 				{
 					SITE.lightAndDarkMode && (
 						<li>
@@ -53,6 +78,37 @@ const navItems = [
 		</nav>
 	</div>
 </header>
+
+<!-- Command palette overlay -->
+<div
+	id="cmd-overlay"
+	class="cmd-overlay"
+	style="display:none;"
+	role="dialog"
+	aria-modal="true"
+	aria-label="Command palette"
+>
+	<div class="cmd-box">
+		<div class="cmd-input-row">
+			<span class="cmd-prompt">❯</span>
+			<input
+				id="cmd-input"
+				type="text"
+				placeholder="type a command..."
+				autocomplete="off"
+				spellcheck="false"
+			/>
+			<span class="cmd-esc">esc</span>
+		</div>
+		<div id="cmd-results"></div>
+		<div class="cmd-footer">
+			<span>↑↓ navigate</span>
+			<span>↵ select</span>
+			<span>esc close</span>
+			<span class="cmd-footer-hint">press <strong>:</strong> anytime</span>
+		</div>
+	</div>
+</div>
 
 <style>
 	#skip-to-content {
@@ -76,13 +132,13 @@ const navItems = [
 		top: 0;
 		z-index: 100;
 		height: 52px;
-		background: rgb(var(--color-fill));
-		backdrop-filter: blur(10px);
+		background: rgba(var(--color-fill), 0.92);
+		backdrop-filter: blur(12px);
 		border-bottom: 1px solid rgb(var(--color-border));
 	}
 
 	.header-inner {
-		max-width: 860px;
+		max-width: 900px;
 		margin: 0 auto;
 		padding: 0 20px;
 		display: flex;
@@ -97,19 +153,14 @@ const navItems = [
 		gap: 0;
 		text-decoration: none;
 		border: none;
-		font-size: 15px;
-		font-weight: 600;
+		font-size: 17px;
+		font-weight: 700;
 		font-family: "IBM Plex Mono", monospace;
-		transition: opacity 0.15s;
-	}
-
-	.logo:hover {
-		opacity: 0.8;
+		letter-spacing: -0.02em;
 	}
 
 	.logo .prefix {
-		color: rgb(var(--color-text-base));
-		opacity: 0.5;
+		color: rgba(var(--color-text-base), 0.5);
 	}
 
 	.logo .brand {
@@ -131,43 +182,141 @@ const navItems = [
 	}
 
 	.nav-link {
-		font-size: 12px;
+		font-size: 13px;
 		font-weight: 500;
-		padding: 4px 10px;
+		padding: 3px 10px;
 		border-radius: 3px;
-		color: rgba(var(--color-text-base), 0.6);
+		color: rgba(var(--color-text-base), 0.55);
 		border: 1px solid transparent;
 		background: transparent;
 		cursor: pointer;
 		font-family: inherit;
-		transition: all 0.15s;
+		transition: all 0.12s;
 		text-decoration: none;
 		display: block;
 	}
 
 	.nav-link:hover {
 		color: rgb(var(--color-text-base));
-		border: 1px solid rgb(var(--color-border));
+		border-color: rgb(var(--color-border));
 	}
 
 	.nav-link.active {
 		color: rgb(var(--color-accent));
-		border: 1px solid rgb(var(--color-accent));
+		border-color: rgb(var(--color-accent));
 		background: rgba(var(--color-accent), 0.15);
 	}
 
 	.theme-btn {
-		margin-left: 4px;
+		margin-left: 2px;
 	}
 
 	.theme-btn:hover {
 		color: rgb(var(--color-accent));
-		border: 1px solid rgb(var(--color-accent));
+		border-color: rgb(var(--color-accent));
+	}
+
+	.cmd-btn {
+		margin-left: 4px;
+		border-color: rgb(var(--color-border));
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+
+	.cmd-btn:hover {
+		color: rgb(var(--color-accent));
+		border-color: rgb(var(--color-accent));
+	}
+
+	.cmd-hint {
+		font-size: 10px;
+		opacity: 0.5;
+	}
+
+	/* Command palette */
+	.cmd-input-row {
+		display: flex;
+		align-items: center;
+		border-bottom: 1px solid rgb(var(--color-border));
+		padding: 0 14px;
+		gap: 8px;
+	}
+
+	.cmd-prompt {
+		color: rgb(var(--color-accent));
+		font-size: 13px;
+		font-family: "IBM Plex Mono", monospace;
+	}
+
+	#cmd-input {
+		flex: 1;
+		background: none;
+		border: none;
+		outline: none;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 13px;
+		color: rgb(var(--color-text-base));
+		padding: 12px 0;
+	}
+
+	#cmd-input::placeholder {
+		color: rgba(var(--color-text-base), 0.3);
+	}
+
+	.cmd-esc {
+		font-size: 10px;
+		color: rgba(var(--color-text-base), 0.35);
+		font-family: "IBM Plex Mono", monospace;
+	}
+
+	#cmd-results {
+		max-height: 260px;
+		overflow-y: auto;
+	}
+
+	.cmd-item-key {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 10px;
+		color: rgba(var(--color-text-base), 0.4);
+		width: 20px;
+	}
+
+	.cmd-name {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 13px;
+		color: rgb(var(--color-text-base));
+		flex: 1;
+	}
+
+	.cmd-desc {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 11px;
+		color: rgba(var(--color-text-base), 0.4);
+	}
+
+	.cmd-footer {
+		padding: 8px 14px;
+		border-top: 1px solid rgb(var(--color-border));
+		display: flex;
+		gap: 16px;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 10px;
+		color: rgba(var(--color-text-base), 0.35);
+	}
+
+	.cmd-footer-hint {
+		margin-left: auto;
+	}
+
+	.cmd-footer strong {
+		color: rgb(var(--color-accent));
+		font-weight: 400;
 	}
 </style>
 
 <script>
-	// Sync icon with current theme — toggle-theme.js handles the click
+	// ── Theme icon sync ──────────────────────────────────────────────
 	const themeIcon = document.getElementById("theme-icon");
 
 	function updateThemeIcon() {
@@ -182,9 +331,184 @@ const navItems = [
 
 	updateThemeIcon();
 
-	// Watch for data-theme attribute changes driven by toggle-theme.js
 	new MutationObserver(updateThemeIcon).observe(document.documentElement, {
 		attributes: true,
 		attributeFilter: ["data-theme"],
+	});
+
+	// ── Scramble-text animation ──────────────────────────────────────
+	const GLYPHS =
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*<>/\\|";
+
+	function scramble(
+		el: HTMLElement,
+		finalText: string,
+		duration = 320,
+		delay = 0
+	) {
+		let raf: number;
+		let startTime: number | null = null;
+
+		setTimeout(() => {
+			function frame(now: number) {
+				if (!startTime) startTime = now;
+				const progress = Math.min((now - startTime) / duration, 1);
+				const revealed = Math.floor(progress * finalText.length);
+
+				let out = "";
+				for (let i = 0; i < finalText.length; i++) {
+					if (i < revealed || finalText[i] === " ") {
+						out += finalText[i];
+					} else {
+						out += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+					}
+				}
+				el.textContent = out;
+
+				if (progress < 1) {
+					raf = requestAnimationFrame(frame);
+				} else {
+					el.textContent = finalText;
+				}
+			}
+			raf = requestAnimationFrame(frame);
+		}, delay);
+
+		return () => cancelAnimationFrame(raf);
+	}
+
+	// ── Command palette ──────────────────────────────────────────────
+	const CMD_OPTIONS = [
+		{ cmd: "home", desc: "go to homepage", key: "h", href: "/" },
+		{ cmd: "posts", desc: "list all posts", key: "p", href: "/posts" },
+		{ cmd: "tags", desc: "browse by tag", key: "t", href: "/tags" },
+		{ cmd: "about", desc: "about the author", key: "a", href: "/about" },
+		{ cmd: "dark", desc: "toggle dark/light", key: "d", href: null },
+	];
+
+	const overlay = document.getElementById("cmd-overlay") as HTMLElement;
+	const input = document.getElementById("cmd-input") as HTMLInputElement;
+	const results = document.getElementById("cmd-results") as HTMLElement;
+	const cmdBtn = document.getElementById("cmd-btn") as HTMLButtonElement;
+
+	let selIdx = 0;
+
+	function openCmd() {
+		overlay.style.display = "flex";
+		input.value = "";
+		selIdx = 0;
+		renderResults("");
+		setTimeout(() => input.focus(), 10);
+
+		// Scramble each visible cmd-name and cmd-desc on open
+		results.querySelectorAll<HTMLElement>(".cmd-item").forEach((item, i) => {
+			const nameEl = item.querySelector<HTMLElement>(".cmd-name");
+			const descEl = item.querySelector<HTMLElement>(".cmd-desc");
+			const stagger = i * 40;
+			if (nameEl) scramble(nameEl, nameEl.textContent ?? "", 280, stagger);
+			if (descEl) scramble(descEl, descEl.textContent ?? "", 320, stagger + 20);
+		});
+	}
+
+	function closeCmd() {
+		overlay.style.display = "none";
+	}
+
+	function execute(option: (typeof CMD_OPTIONS)[0]) {
+		closeCmd();
+		if (option.cmd === "dark") {
+			const btn = document.getElementById("theme-btn");
+			btn?.click();
+			return;
+		}
+		if (option.href) window.location.href = option.href;
+	}
+
+	function renderResults(filter: string) {
+		const filtered = filter
+			? CMD_OPTIONS.filter(
+					o =>
+						o.cmd.includes(filter.toLowerCase()) ||
+						o.desc.includes(filter.toLowerCase()) ||
+						o.key === filter.toLowerCase()
+				)
+			: CMD_OPTIONS;
+
+		results.innerHTML = filtered
+			.map(
+				(o, i) => `
+			<div class="cmd-item${i === selIdx ? " active" : ""}"
+				data-idx="${i}" data-cmd="${o.cmd}"
+				role="option" aria-selected="${i === selIdx}">
+				<span class="cmd-item-key">${o.key}</span>
+				<span class="cmd-name">${o.cmd}</span>
+				<span class="cmd-desc">${o.desc}</span>
+			</div>`
+			)
+			.join("");
+
+		// Re-attach click listeners
+		results.querySelectorAll(".cmd-item").forEach(el => {
+			el.addEventListener("mouseenter", () => {
+				selIdx = parseInt((el as HTMLElement).dataset.idx ?? "0");
+				renderResults(input.value);
+			});
+			el.addEventListener("click", () => {
+				const cmd = (el as HTMLElement).dataset.cmd ?? "";
+				const opt = filtered.find(o => o.cmd === cmd);
+				if (opt) execute(opt);
+			});
+		});
+	}
+
+	cmdBtn?.addEventListener("click", openCmd);
+
+	overlay?.addEventListener("click", e => {
+		if (e.target === overlay) closeCmd();
+	});
+
+	input?.addEventListener("input", () => {
+		selIdx = 0;
+		renderResults(input.value);
+	});
+
+	input?.addEventListener("keydown", e => {
+		const filtered = input.value
+			? CMD_OPTIONS.filter(
+					o =>
+						o.cmd.includes(input.value.toLowerCase()) ||
+						o.desc.includes(input.value.toLowerCase())
+				)
+			: CMD_OPTIONS;
+
+		if (e.key === "Escape") {
+			closeCmd();
+			return;
+		}
+		if (e.key === "ArrowDown") {
+			selIdx = Math.min(selIdx + 1, filtered.length - 1);
+			renderResults(input.value);
+		}
+		if (e.key === "ArrowUp") {
+			selIdx = Math.max(selIdx - 1, 0);
+			renderResults(input.value);
+		}
+		if (e.key === "Enter" && filtered[selIdx]) {
+			execute(filtered[selIdx]);
+		}
+	});
+
+	// Global keybinding: press ":" or "/" to open command palette
+	document.addEventListener("keydown", e => {
+		if (
+			e.target instanceof HTMLInputElement ||
+			e.target instanceof HTMLTextAreaElement
+		)
+			return;
+		if (e.key === ":" || e.key === "/") {
+			e.preventDefault();
+			openCmd();
+		}
+		if (e.key === "Escape") closeCmd();
 	});
 </script>

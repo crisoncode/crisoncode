@@ -12,25 +12,3 @@ const tagDisplay = `#${tag.toLowerCase().replace(/ /g, "-")}`;
 <a href={tagHref} class="tag-badge">
 	{tagDisplay}
 </a>
-
-<style>
-	.tag-badge {
-		display: inline-block;
-		border: 1px solid rgb(var(--color-border));
-		border-radius: 2px;
-		padding: 2px 7px;
-		font-size: 11px;
-		font-weight: 500;
-		font-family: "IBM Plex Mono", monospace;
-		color: rgba(var(--color-text-base), 0.5);
-		background: transparent;
-		transition: all 0.15s;
-		text-decoration: none;
-	}
-
-	.tag-badge:hover {
-		color: rgb(var(--color-secondary));
-		border-color: rgb(var(--color-secondary));
-		background: rgba(var(--color-secondary), 0.12);
-	}
-</style>

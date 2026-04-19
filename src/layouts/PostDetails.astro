@@ -93,16 +93,18 @@ const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
 <style>
 	@reference "../styles/base.css";
 	main {
-		@apply mx-auto w-full max-w-5xl px-4 pb-12;
+		max-width: 900px;
+		margin: 0 auto;
+		padding: 36px 20px 60px;
 	}
 
 	.article-container {
-		max-width: 720px;
+		max-width: 680px;
 		margin: 0 auto;
 	}
 
 	.breadcrumb {
-		font-size: 11px;
+		font-size: 14px;
 		color: rgb(var(--color-text-base));
 		opacity: 0.45;
 		margin-bottom: 16px;
@@ -118,16 +120,16 @@ const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
 	}
 
 	.post-title {
-		font-size: 26px;
+		font-size: 34px;
 		font-weight: 700;
 		letter-spacing: -0.03em;
-		line-height: 1.3;
+		line-height: 1.25;
 		color: rgb(var(--color-text-base));
 		margin: 0;
 	}
 
 	.post-meta {
-		font-size: 11px;
+		font-size: 14px;
 		color: rgb(var(--color-text-base));
 		opacity: 0.45;
 		margin-top: 12px;
@@ -141,39 +143,61 @@ const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
 
 	.prose {
 		margin-top: 0;
+		color: #ffffff;
 	}
 
 	.prose p {
-		font-size: 14px;
+		font-size: 20px;
 		line-height: 1.8;
-		color: rgb(var(--color-text-base));
-		margin-bottom: 14px;
+		color: #ffffff;
+		margin-bottom: 18px;
+		font-weight: 400;
 	}
 
 	.prose h2 {
-		font-size: 18px;
+		font-size: 26px;
 		font-weight: 600;
 		letter-spacing: -0.02em;
 		border-bottom: 1px solid rgb(var(--color-border));
-		margin-top: 40px;
+		margin-top: 48px;
 		padding-bottom: 8px;
-		color: rgb(var(--color-text-base));
+		color: #ffffff;
 	}
 
 	.prose h3 {
-		font-size: 15px;
+		font-size: 22px;
 		font-weight: 600;
 		color: rgb(var(--color-accent));
-		margin-top: 28px;
+		margin-top: 36px;
+	}
+
+	.prose h1 {
+		font-size: 34px;
+		font-weight: 700;
+		color: #ffffff;
+	}
+
+	.prose ol,
+	.prose ul {
+		font-size: 20px;
+		font-weight: 400;
+		color: #ffffff;
 	}
 
 	.prose blockquote {
 		border-left: 3px solid rgb(var(--color-secondary));
 		background: rgba(var(--color-secondary), 0.05);
 		border-radius: 0 4px 4px 0;
-		padding: 12px 16px;
+		padding: 14px 18px;
 		font-style: italic;
 		margin: 0;
+		font-size: 18px;
+		color: #ffffff !important;
+		--tw-prose-quotes: #ffffff;
+	}
+
+	.prose blockquote p {
+		color: #ffffff !important;
 	}
 
 	.prose ul {
@@ -183,9 +207,9 @@ const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
 
 	.prose ul li {
 		list-style: none;
-		padding-left: 18px;
+		padding-left: 22px;
 		position: relative;
-		margin-bottom: 8px;
+		margin-bottom: 10px;
 	}
 
 	.prose ul li::before {
@@ -200,19 +224,19 @@ const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
 		background: #0d1117;
 		border: 1px solid rgb(var(--color-border));
 		border-radius: 5px;
-		padding: 16px 18px;
-		font-size: 12px;
+		padding: 18px 20px;
+		font-size: 15px;
 		overflow-x: auto;
-		margin-bottom: 14px;
+		margin-bottom: 18px;
 	}
 
 	.prose :not(pre) > code {
 		background: rgba(var(--color-accent), 0.1);
 		border: 1px solid rgba(var(--color-accent), 0.2);
 		border-radius: 3px;
-		padding: 1px 5px;
+		padding: 2px 6px;
 		color: rgb(var(--color-accent));
-		font-size: 0.9em;
+		font-size: 17px;
 	}
 
 	.post-nav {
@@ -229,8 +253,8 @@ const nextPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
 	.post-nav-btn {
 		border: 1px solid rgb(var(--color-border));
 		border-radius: 3px;
-		padding: 6px 12px;
-		font-size: 12px;
+		padding: 8px 14px;
+		font-size: 14px;
 		font-family: "IBM Plex Mono", monospace;
 		color: rgb(var(--color-text-base));
 		opacity: 0.45;
