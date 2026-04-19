@@ -1,99 +1,147 @@
 ---
-import Socials from "@components/Socials.astro";
-import { SOCIALS } from "@config";
-
-const socialCount = SOCIALS.filter(social => social.active).length;
 ---
 
-<section
-	id="hero"
-	class="mb-16 grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:items-start"
->
-	<div class="profile-picture">
-		<img
-			src="/assets/profile.jpg"
-			alt="Cristian Estarlich"
-			class="rounded-2xl object-cover shadow-lg transition-all duration-300 hover:shadow-xl"
-		/>
-	</div>
-	<div class="profile-text">
-		<h2 class="text-skin-accent mb-8 text-4xl font-bold tracking-tight">
-			Cristian Estarlich
-		</h2>
-
-		<p class="leading-relaxed">
-			Hi there, I'm Cristian! A 32-year-old developer based in Barcelona.
-		</p>
-
-		<p class="leading-relaxed">This is my space to share what's on my mind.</p>
-
-		<p class="leading-relaxed">
-			Expect a bit of chaos, technical deep-dives, productivity tips, and my
-			thoughts in general.
-		</p>
-
-		<p class="leading-relaxed">
-			Currently I'm working at TennisPoint as a technical lead, an ecommerce
-			that sells tennis material and tennis clothes worldwide.
-		</p>
-
-		<p class="leading-relaxed">
-			Coding is my passion. I started earning money as a programmer when I was
-			just 19. My main tech stack is JavaScript and TypeScript, but I've worked
-			with many other technologies, and I'm definitely not someone who's rigid
-			about trying new things.
-		</p>
-
-		<p class="leading-relaxed">
-			Feel free to reach out via <a
-				href="mailto:cestarlich.dev@gmail.com"
-				class="text-skin-accent transition-colors hover:underline"
-				>cestarlich.dev@gmail.com</a
-			> to grab a virtual coffee and chat!
-		</p>
-
-		{
-			// only display if at least one social link is enabled
-			socialCount > 0 && (
-				<div class="social-wrapper">
-					<div class="social-links">Find me online:</div>
-					<Socials />
-				</div>
-			)
-		}
-	</div>
-</section>
+<div class="terminal-window">
+  <!-- Chrome bar -->
+  <div class="terminal-chrome">
+    <div class="traffic-lights">
+      <span class="tl tl-red"></span>
+      <span class="tl tl-yellow"></span>
+      <span class="tl tl-green"></span>
+    </div>
+    <span class="terminal-title">crisoncode ~ bash</span>
+  </div>
+  <!-- Terminal body -->
+  <div class="terminal-body" id="terminal-body">
+    <!-- Lines injected by JS -->
+  </div>
+</div>
 
 <style>
-	@reference "../styles/base.css";
-	/* ===== Hero Section ===== */
-	#hero {
-		@apply pt-8 pb-6;
-	}
-	#hero h1 {
-		@apply my-4 inline-block text-3xl font-bold sm:my-8 sm:text-5xl;
-	}
-	#hero .rss-link {
-		@apply mb-6;
-	}
-	#hero .rss-icon {
-		@apply fill-skin-accent mb-2 h-6 w-6 scale-110 sm:mb-3 sm:scale-125;
-	}
-	#hero p {
-		@apply text-skin-base-90 my-3 text-lg md:text-xl;
-	}
-	#hero h2 {
-		@apply text-3xl md:text-4xl;
-	}
-	.profile-picture img {
-		@apply w-full ring-2 ring-offset-4;
-		ring-color: rgba(var(--color-accent), 0.3);
-		ring-offset-color: rgb(var(--color-fill));
-	}
-	.social-wrapper {
-		@apply mt-6 flex flex-col sm:flex-row sm:items-center;
-	}
-	.social-links {
-		@apply text-skin-secondary mr-2 mb-1 text-sm font-medium whitespace-nowrap sm:mb-0;
-	}
+  .terminal-window {
+    background: rgb(var(--color-card));
+    border: 1px solid rgb(var(--color-border));
+    border-radius: 6px;
+    margin-bottom: 48px;
+    overflow: hidden;
+  }
+  .terminal-chrome {
+    background: rgb(var(--color-card-muted));
+    border-bottom: 1px solid rgb(var(--color-border));
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .traffic-lights { display: flex; gap: 7px; }
+  .tl {
+    width: 11px; height: 11px; border-radius: 50%; display: inline-block;
+  }
+  .tl-red    { background: #e05c5c; }
+  .tl-yellow { background: #f5af4b; }
+  .tl-green  { background: #4ec994; }
+  .terminal-title {
+    font-size: 11px;
+    color: rgb(var(--color-text-base), 0.5);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .terminal-body {
+    padding: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .terminal-line { min-height: 1.5em; }
+  .terminal-line.prompt  { color: rgb(var(--color-accent)); }
+  .terminal-line.comment { color: rgb(var(--color-text-base), 0.45); }
+  .terminal-line.output  { color: rgb(var(--color-text-base)); }
+  .terminal-line.blank   { height: 1.2em; }
+  .cursor {
+    display: inline-block;
+    color: rgb(var(--color-accent));
+    animation: blink 1s infinite;
+  }
 </style>
+
+<script>
+  const lines = [
+    { text: '#!/usr/bin/env blog',                           type: 'comment' },
+    { text: '// Cristian Estarlich — Technical Lead, Barcelona', type: 'comment' },
+    { text: '',                                              type: 'blank' },
+    { text: '$ whoami',                                      type: 'prompt' },
+    { text: 'crisoncode — building things on the web since age 19.', type: 'output' },
+    { text: 'currently: Technical Lead @ TennisPoint',       type: 'output' },
+    { text: 'stack: TypeScript, NodeJS, Distributed Systems, AI..', type: 'output' },
+    { text: '',                                              type: 'blank' },
+    { text: '$ cat interests.txt',                           type: 'prompt' },
+    { text: 'Software development, Artificial intelligence,', type: 'output' },
+    { text: 'Learning by practice, technical books, barista.', type: 'output' },
+    { text: '',                                              type: 'blank' },
+    { text: '$ ./start --blog',                              type: 'prompt' },
+    { text: 'loading posts...',                              type: 'output' },
+  ];
+
+  const container = document.getElementById('terminal-body');
+  let lineIdx = 0;
+  let charIdx = 0;
+  const CHAR_SPEED = 35;  // ms per character
+  const LINE_PAUSE = 60;  // ms pause between lines
+  const LINE_START_PAUSE = 180; // ms pause before typing starts on a new line
+
+  function tick() {
+    if (lineIdx >= lines.length) {
+      // All done — leave final blinking cursor
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      cursor.textContent = '▋';
+      container.appendChild(cursor);
+      return;
+    }
+
+    const line = lines[lineIdx];
+
+    if (line.type === 'blank') {
+      const el = document.createElement('div');
+      el.className = 'terminal-line blank';
+      container.appendChild(el);
+      lineIdx++;
+      charIdx = 0;
+      setTimeout(tick, LINE_PAUSE);
+      return;
+    }
+
+    // Create or get the current line element
+    let el = container.querySelector(`[data-line="${lineIdx}"]`);
+    if (!el) {
+      el = document.createElement('div');
+      el.className = `terminal-line ${line.type}`;
+      el.setAttribute('data-line', lineIdx);
+      // Add cursor to this new line
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      cursor.textContent = '▋';
+      el.appendChild(cursor);
+      container.appendChild(el);
+    }
+
+    if (charIdx <= line.text.length) {
+      // Update text (before the cursor)
+      el.textContent = line.text.slice(0, charIdx);
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      cursor.textContent = '▋';
+      el.appendChild(cursor);
+      charIdx++;
+      setTimeout(tick, charIdx === 1 ? LINE_START_PAUSE : CHAR_SPEED);
+    } else {
+      // Line done — remove cursor, move to next line
+      el.textContent = line.text;
+      lineIdx++;
+      charIdx = 0;
+      setTimeout(tick, LINE_PAUSE);
+    }
+  }
+
+  // Start after a short initial delay
+  setTimeout(tick, 400);
+</script>
