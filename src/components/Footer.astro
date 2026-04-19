@@ -10,7 +10,9 @@ const { noMarginTop = false } = Astro.props;
 
 <footer class={`${noMarginTop ? "" : "mt-auto"}`}>
 	<p>
-		<span class="dim">// © {currentYear} Cristian Estarlich · </span><span class="accent">#CrisOnCode</span>
+		<span class="dim">// © {currentYear} Cristian Estarlich · </span><span
+			class="accent">#CrisOnCode</span
+		>
 	</p>
 </footer>
 
@@ -22,10 +24,10 @@ const { noMarginTop = false } = Astro.props;
 	}
 	footer p {
 		font-size: 11px;
-		font-family: 'IBM Plex Mono', monospace;
+		font-family: "IBM Plex Mono", monospace;
 	}
 	.dim {
-		color: rgb(var(--color-text-base), 0.45);
+		color: rgba(var(--color-text-base), 0.45);
 	}
 	.accent {
 		color: rgb(var(--color-accent));

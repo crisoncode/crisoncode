@@ -5,8 +5,8 @@ export interface Props {
 }
 
 const { tag } = Astro.props;
-const tagHref = `/tags/${tag.toLowerCase().replace(/ /g, '-')}`;
-const tagDisplay = `#${tag.toLowerCase().replace(/ /g, '-')}`;
+const tagHref = `/tags/${tag.toLowerCase().replace(/ /g, "-")}`;
+const tagDisplay = `#${tag.toLowerCase().replace(/ /g, "-")}`;
 ---
 
 <a href={tagHref} class="tag-badge">
@@ -21,9 +21,8 @@ const tagDisplay = `#${tag.toLowerCase().replace(/ /g, '-')}`;
 		padding: 2px 7px;
 		font-size: 11px;
 		font-weight: 500;
-		font-family: 'IBM Plex Mono', monospace;
-		color: rgb(var(--color-text-base));
-		opacity: 0.45;
+		font-family: "IBM Plex Mono", monospace;
+		color: rgba(var(--color-text-base), 0.5);
 		background: transparent;
 		transition: all 0.15s;
 		text-decoration: none;

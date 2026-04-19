@@ -30,52 +30,85 @@ export default function Card({
 
 	return (
 		<li
-			className="border-t border-skin-line cursor-pointer py-5 transition-all duration-150 list-none animate-fadeUp"
+			className="border-skin-line animate-fadeUp cursor-pointer list-none border-t py-5 transition-all duration-150"
 			onClick={handleClick}
 			role="button"
 			tabIndex={0}
-			onKeyDown={(e) => {
+			onKeyDown={e => {
 				if (e.key === "Enter" || e.key === " ") {
 					handleClick();
 				}
 			}}
 		>
 			{/* Meta line: date + reading time */}
-			<div className="flex flex-wrap gap-3 mb-1.5 text-xs opacity-45 text-skin-base">
+			<div className="text-skin-base mb-1.5 flex flex-wrap gap-3 text-xs opacity-45">
 				<span>{formattedDate}</span>
 				{readingTime && <span>~{readingTime}</span>}
 			</div>
 
 			{/* Title */}
 			{secHeading ? (
-				<h2 className="text-base font-semibold mb-1.5 text-skin-base transition-colors duration-150 hover:text-skin-accent"
-					style={{ letterSpacing: "-0.02em", lineHeight: 1.4 }}>
+				<h2
+					className="text-skin-base hover:text-skin-accent mb-1.5 text-base font-semibold transition-colors duration-150"
+					style={{ letterSpacing: "-0.02em", lineHeight: 1.4 }}
+				>
 					{title}
 				</h2>
 			) : (
-				<h3 className="text-base font-semibold mb-1.5 text-skin-base transition-colors duration-150 hover:text-skin-accent"
-					style={{ letterSpacing: "-0.02em", lineHeight: 1.4 }}>
+				<h3
+					className="text-skin-base hover:text-skin-accent mb-1.5 text-base font-semibold transition-colors duration-150"
+					style={{ letterSpacing: "-0.02em", lineHeight: 1.4 }}
+				>
 					{title}
 				</h3>
 			)}
 
 			{/* Description */}
 			{description && (
-				<p className="text-sm mb-2 text-skin-base opacity-45" style={{ lineHeight: 1.6 }}>
+				<p
+					className="text-skin-base mb-2 text-sm opacity-45"
+					style={{ lineHeight: 1.6 }}
+				>
 					{description}
 				</p>
 			)}
 
 			{/* Tags */}
 			{tags.length > 0 && (
-				<div className="flex flex-wrap gap-1.5">
-					{tags.map((tag) => (
-						<span
+				<div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+					{tags.map(tag => (
+						<a
 							key={tag}
-							className="inline-block text-xs text-skin-secondary hover:text-skin-accent transition-colors duration-150"
+							href={`/tags/${tag.toLowerCase().replace(/ /g, "-")}`}
+							style={{
+								display: "inline-block",
+								border: "1px solid rgb(var(--color-border))",
+								borderRadius: "2px",
+								padding: "2px 7px",
+								fontSize: "11px",
+								fontWeight: 500,
+								fontFamily: "'IBM Plex Mono', monospace",
+								color: "rgba(var(--color-text-base), 0.5)",
+								background: "transparent",
+								textDecoration: "none",
+								transition: "all 0.15s",
+							}}
+							onMouseEnter={e => {
+								const el = e.currentTarget;
+								el.style.color = "rgb(var(--color-secondary))";
+								el.style.borderColor = "rgb(var(--color-secondary))";
+								el.style.background = "rgba(var(--color-secondary), 0.12)";
+							}}
+							onMouseLeave={e => {
+								const el = e.currentTarget;
+								el.style.color = "rgba(var(--color-text-base), 0.5)";
+								el.style.borderColor = "rgb(var(--color-border))";
+								el.style.background = "transparent";
+							}}
+							onClick={e => e.stopPropagation()}
 						>
-							#{tag}
-						</span>
+							#{tag.toLowerCase().replace(/ /g, "-")}
+						</a>
 					))}
 				</div>
 			)}

@@ -1,147 +1,179 @@
 ---
+
 ---
 
 <div class="terminal-window">
-  <!-- Chrome bar -->
-  <div class="terminal-chrome">
-    <div class="traffic-lights">
-      <span class="tl tl-red"></span>
-      <span class="tl tl-yellow"></span>
-      <span class="tl tl-green"></span>
-    </div>
-    <span class="terminal-title">crisoncode ~ bash</span>
-  </div>
-  <!-- Terminal body -->
-  <div class="terminal-body" id="terminal-body">
-    <!-- Lines injected by JS -->
-  </div>
+	<!-- Chrome bar -->
+	<div class="terminal-chrome">
+		<div class="traffic-lights">
+			<span class="tl tl-red"></span>
+			<span class="tl tl-yellow"></span>
+			<span class="tl tl-green"></span>
+		</div>
+		<span class="terminal-title">crisoncode ~ bash</span>
+	</div>
+	<!-- Terminal body -->
+	<div class="terminal-body" id="terminal-body">
+		<!-- Lines injected by JS -->
+	</div>
 </div>
 
 <style>
-  .terminal-window {
-    background: rgb(var(--color-card));
-    border: 1px solid rgb(var(--color-border));
-    border-radius: 6px;
-    margin-bottom: 48px;
-    overflow: hidden;
-  }
-  .terminal-chrome {
-    background: rgb(var(--color-card-muted));
-    border-bottom: 1px solid rgb(var(--color-border));
-    padding: 10px 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .traffic-lights { display: flex; gap: 7px; }
-  .tl {
-    width: 11px; height: 11px; border-radius: 50%; display: inline-block;
-  }
-  .tl-red    { background: #e05c5c; }
-  .tl-yellow { background: #f5af4b; }
-  .tl-green  { background: #4ec994; }
-  .terminal-title {
-    font-size: 11px;
-    color: rgb(var(--color-text-base), 0.5);
-    font-family: 'IBM Plex Mono', monospace;
-  }
-  .terminal-body {
-    padding: 20px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
-    line-height: 1.7;
-  }
-  .terminal-line { min-height: 1.5em; }
-  .terminal-line.prompt  { color: rgb(var(--color-accent)); }
-  .terminal-line.comment { color: rgb(var(--color-text-base), 0.45); }
-  .terminal-line.output  { color: rgb(var(--color-text-base)); }
-  .terminal-line.blank   { height: 1.2em; }
-  .cursor {
-    display: inline-block;
-    color: rgb(var(--color-accent));
-    animation: blink 1s infinite;
-  }
+	.terminal-window {
+		background: rgb(var(--color-card));
+		border: 1px solid rgb(var(--color-border));
+		border-radius: 6px;
+		margin-bottom: 48px;
+		overflow: hidden;
+	}
+	.terminal-chrome {
+		background: rgb(var(--color-card-muted));
+		border-bottom: 1px solid rgb(var(--color-border));
+		padding: 10px 14px;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+	.traffic-lights {
+		display: flex;
+		gap: 7px;
+	}
+	.tl {
+		width: 11px;
+		height: 11px;
+		border-radius: 50%;
+		display: inline-block;
+	}
+	.tl-red {
+		background: #e05c5c;
+	}
+	.tl-yellow {
+		background: #f5af4b;
+	}
+	.tl-green {
+		background: #4ec994;
+	}
+	.terminal-title {
+		font-size: 11px;
+		color: rgba(var(--color-text-base), 0.5);
+		font-family: "IBM Plex Mono", monospace;
+	}
+	.terminal-body {
+		padding: 20px;
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 14px;
+		line-height: 1.7;
+	}
+	.terminal-line {
+		min-height: 1.5em;
+	}
+	.terminal-line.prompt {
+		color: rgb(var(--color-accent));
+	}
+	.terminal-line.comment {
+		color: rgba(var(--color-text-base), 0.45);
+	}
+	.terminal-line.output {
+		color: rgb(var(--color-text-base));
+	}
+	.terminal-line.blank {
+		height: 1.2em;
+	}
+	.cursor {
+		display: inline-block;
+		color: rgb(var(--color-accent));
+		animation: blink 1s infinite;
+	}
 </style>
 
 <script>
-  const lines = [
-    { text: '#!/usr/bin/env blog',                           type: 'comment' },
-    { text: '// Cristian Estarlich — Technical Lead, Barcelona', type: 'comment' },
-    { text: '',                                              type: 'blank' },
-    { text: '$ whoami',                                      type: 'prompt' },
-    { text: 'crisoncode — building things on the web since age 19.', type: 'output' },
-    { text: 'currently: Technical Lead @ TennisPoint',       type: 'output' },
-    { text: 'stack: TypeScript, NodeJS, Distributed Systems, AI..', type: 'output' },
-    { text: '',                                              type: 'blank' },
-    { text: '$ cat interests.txt',                           type: 'prompt' },
-    { text: 'Software development, Artificial intelligence,', type: 'output' },
-    { text: 'Learning by practice, technical books, barista.', type: 'output' },
-    { text: '',                                              type: 'blank' },
-    { text: '$ ./start --blog',                              type: 'prompt' },
-    { text: 'loading posts...',                              type: 'output' },
-  ];
+	const lines = [
+		{ text: "#!/usr/bin/env blog", type: "comment" },
+		{
+			text: "// Cristian Estarlich — Technical Lead, Barcelona",
+			type: "comment",
+		},
+		{ text: "", type: "blank" },
+		{ text: "$ whoami", type: "prompt" },
+		{
+			text: "crisoncode — building things on the web since age 19.",
+			type: "output",
+		},
+		{ text: "currently: Technical Lead @ TennisPoint", type: "output" },
+		{
+			text: "stack: TypeScript, NodeJS, Distributed Systems, AI..",
+			type: "output",
+		},
+		{ text: "", type: "blank" },
+		{ text: "$ cat interests.txt", type: "prompt" },
+		{ text: "Software development, Artificial intelligence,", type: "output" },
+		{ text: "Learning by practice, technical books, barista.", type: "output" },
+		{ text: "", type: "blank" },
+		{ text: "$ ./start --blog", type: "prompt" },
+		{ text: "loading posts...", type: "output" },
+	];
 
-  const container = document.getElementById('terminal-body');
-  let lineIdx = 0;
-  let charIdx = 0;
-  const CHAR_SPEED = 35;  // ms per character
-  const LINE_PAUSE = 60;  // ms pause between lines
-  const LINE_START_PAUSE = 180; // ms pause before typing starts on a new line
+	const container = document.getElementById("terminal-body");
+	let lineIdx = 0;
+	let charIdx = 0;
+	const CHAR_SPEED = 35; // ms per character
+	const LINE_PAUSE = 60; // ms pause between lines
+	const LINE_START_PAUSE = 180; // ms pause before typing starts on a new line
 
-  function tick() {
-    if (lineIdx >= lines.length) {
-      // All done — leave final blinking cursor
-      const cursor = document.createElement('span');
-      cursor.className = 'cursor';
-      cursor.textContent = '▋';
-      container.appendChild(cursor);
-      return;
-    }
+	function tick() {
+		if (lineIdx >= lines.length) {
+			// All done — leave final blinking cursor
+			const cursor = document.createElement("span");
+			cursor.className = "cursor";
+			cursor.textContent = "▋";
+			container.appendChild(cursor);
+			return;
+		}
 
-    const line = lines[lineIdx];
+		const line = lines[lineIdx];
 
-    if (line.type === 'blank') {
-      const el = document.createElement('div');
-      el.className = 'terminal-line blank';
-      container.appendChild(el);
-      lineIdx++;
-      charIdx = 0;
-      setTimeout(tick, LINE_PAUSE);
-      return;
-    }
+		if (line.type === "blank") {
+			const el = document.createElement("div");
+			el.className = "terminal-line blank";
+			container.appendChild(el);
+			lineIdx++;
+			charIdx = 0;
+			setTimeout(tick, LINE_PAUSE);
+			return;
+		}
 
-    // Create or get the current line element
-    let el = container.querySelector(`[data-line="${lineIdx}"]`);
-    if (!el) {
-      el = document.createElement('div');
-      el.className = `terminal-line ${line.type}`;
-      el.setAttribute('data-line', lineIdx);
-      // Add cursor to this new line
-      const cursor = document.createElement('span');
-      cursor.className = 'cursor';
-      cursor.textContent = '▋';
-      el.appendChild(cursor);
-      container.appendChild(el);
-    }
+		// Create or get the current line element
+		let el = container.querySelector(`[data-line="${lineIdx}"]`);
+		if (!el) {
+			el = document.createElement("div");
+			el.className = `terminal-line ${line.type}`;
+			el.setAttribute("data-line", lineIdx);
+			// Add cursor to this new line
+			const cursor = document.createElement("span");
+			cursor.className = "cursor";
+			cursor.textContent = "▋";
+			el.appendChild(cursor);
+			container.appendChild(el);
+		}
 
-    if (charIdx <= line.text.length) {
-      // Update text (before the cursor)
-      el.textContent = line.text.slice(0, charIdx);
-      const cursor = document.createElement('span');
-      cursor.className = 'cursor';
-      cursor.textContent = '▋';
-      el.appendChild(cursor);
-      charIdx++;
-      setTimeout(tick, charIdx === 1 ? LINE_START_PAUSE : CHAR_SPEED);
-    } else {
-      // Line done — remove cursor, move to next line
-      el.textContent = line.text;
-      lineIdx++;
-      charIdx = 0;
-      setTimeout(tick, LINE_PAUSE);
-    }
-  }
+		if (charIdx <= line.text.length) {
+			// Update text (before the cursor)
+			el.textContent = line.text.slice(0, charIdx);
+			const cursor = document.createElement("span");
+			cursor.className = "cursor";
+			cursor.textContent = "▋";
+			el.appendChild(cursor);
+			charIdx++;
+			setTimeout(tick, charIdx === 1 ? LINE_START_PAUSE : CHAR_SPEED);
+		} else {
+			// Line done — remove cursor, move to next line
+			el.textContent = line.text;
+			lineIdx++;
+			charIdx = 0;
+			setTimeout(tick, LINE_PAUSE);
+		}
+	}
 
-  // Start after a short initial delay
-  setTimeout(tick, 400);
+	// Start after a short initial delay
+	setTimeout(tick, 400);
 </script>

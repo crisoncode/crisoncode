@@ -22,29 +22,33 @@ const navItems = [
 
 		<nav>
 			<ul>
-				{navItems.map(item => (
-					<li>
-						<a
-							href={item.href}
-							class={`nav-link ${currentPath === item.href ? "active" : ""}`}
-						>
-							{item.label}
-						</a>
-					</li>
-				))}
-				{SITE.lightAndDarkMode && (
-					<li>
-						<button
-							id="theme-btn"
-							class="nav-link theme-btn"
-							title="Toggle theme"
-							aria-label="Toggle theme"
-							aria-live="polite"
-						>
-							<span id="theme-icon">◑</span>
-						</button>
-					</li>
-				)}
+				{
+					navItems.map(item => (
+						<li>
+							<a
+								href={item.href}
+								class={`nav-link ${currentPath === item.href ? "active" : ""}`}
+							>
+								{item.label}
+							</a>
+						</li>
+					))
+				}
+				{
+					SITE.lightAndDarkMode && (
+						<li>
+							<button
+								id="theme-btn"
+								class="nav-link theme-btn"
+								title="Toggle theme"
+								aria-label="Toggle theme"
+								aria-live="polite"
+							>
+								<span id="theme-icon">◑</span>
+							</button>
+						</li>
+					)
+				}
 			</ul>
 		</nav>
 	</div>
@@ -131,7 +135,7 @@ const navItems = [
 		font-weight: 500;
 		padding: 4px 10px;
 		border-radius: 3px;
-		color: rgb(var(--color-text-base), 0.6);
+		color: rgba(var(--color-text-base), 0.6);
 		border: 1px solid transparent;
 		background: transparent;
 		cursor: pointer;
@@ -163,34 +167,24 @@ const navItems = [
 </style>
 
 <script>
-	// Handle theme toggle button
-	const themeBtn = document.getElementById("theme-btn");
+	// Sync icon with current theme — toggle-theme.js handles the click
 	const themeIcon = document.getElementById("theme-icon");
 
 	function updateThemeIcon() {
-		const theme = localStorage.getItem("theme") || "light";
+		const theme =
+			document.documentElement.getAttribute("data-theme") ||
+			localStorage.getItem("theme") ||
+			"light";
 		if (themeIcon) {
-			themeIcon.textContent = theme === "dark" ? "○" : "◑";
+			themeIcon.textContent = theme === "dark" ? "◑" : "○";
 		}
 	}
 
-	// Set initial icon
 	updateThemeIcon();
 
-	// Listen for storage changes (when theme is changed from another tab)
-	window.addEventListener("storage", updateThemeIcon);
-
-	// Click handler for theme toggle
-	if (themeBtn) {
-		themeBtn.addEventListener("click", () => {
-			const currentTheme = localStorage.getItem("theme") || "light";
-			const newTheme = currentTheme === "dark" ? "light" : "dark";
-			localStorage.setItem("theme", newTheme);
-			document.documentElement.setAttribute("data-theme", newTheme);
-			updateThemeIcon();
-
-			// Dispatch custom event for other scripts that might listen
-			window.dispatchEvent(new Event("theme-changed"));
-		});
-	}
+	// Watch for data-theme attribute changes driven by toggle-theme.js
+	new MutationObserver(updateThemeIcon).observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ["data-theme"],
+	});
 </script>
