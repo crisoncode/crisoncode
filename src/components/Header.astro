@@ -1,203 +1,196 @@
 ---
 import { SITE } from "@config";
-import LinkButton from "./LinkButton.astro";
 
-export interface Props {
-	activeNav?: "posts" | "tags" | "about" | "search";
-}
+const currentPath = new URL(Astro.request.url).pathname;
 
-const { activeNav } = Astro.props;
+const navItems = [
+	{ label: "home", href: "/" },
+	{ label: "posts", href: "/posts" },
+	{ label: "tags", href: "/tags" },
+	{ label: "about", href: "/about" },
+];
 ---
 
+<a id="skip-to-content" href="#main-content">Skip to content</a>
+
 <header>
-	<a id="skip-to-content" href="#main-content">Skip to content</a>
-	<div class="nav-container">
-		<div class="top-nav-wrap">
-			<a href="/" class="logo"> #CrisOnCode </a>
-			<nav id="nav-menu">
-				<button
-					class="hamburger-menu focus-outline"
-					aria-label="Open Menu"
-					aria-expanded="false"
-					aria-controls="menu-items"
-				>
-					<div class="icon-container flex">
-						<div id="first-line"></div>
-						<div id="second-line"></div>
-						<div id="third-line"></div>
-					</div>
-				</button>
-				<ul id="menu-items" class="display-none sm:flex">
+	<div class="header-inner">
+		<a href="/" class="logo">
+			<span class="prefix">> </span>
+			<span class="brand">#CrisOnCode</span>
+		</a>
+
+		<nav>
+			<ul>
+				{navItems.map(item => (
 					<li>
-						<a href="/posts" class={activeNav === "posts" ? "active" : ""}>
-							Posts
-						</a>
-					</li>
-					<li>
-						<a href="/tags" class={activeNav === "tags" ? "active" : ""}>
-							Tags
-						</a>
-					</li>
-					<li>
-						<a href="/about" class={activeNav === "about" ? "active" : ""}>
-							About
-						</a>
-					</li>
-					<li>
-						<LinkButton
-							href="/search"
-							className={`focus-outline p-3 sm:p-1 ${
-								activeNav === "search" ? "active" : ""
-							}`}
-							ariaLabel="Search posts"
-							title="Search"
+						<a
+							href={item.href}
+							class={`nav-link ${currentPath === item.href ? "active" : ""}`}
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								class="scale-125 sm:scale-100"
-								><path
-									d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"
-								></path>
-							</svg>
-						</LinkButton>
+							{item.label}
+						</a>
 					</li>
+				))}
+				{SITE.lightAndDarkMode && (
 					<li>
-						{
-							SITE.lightAndDarkMode && (
-								<button
-									id="theme-btn"
-									class="focus-outline"
-									title="Switch theme"
-									aria-label="auto"
-									aria-live="polite"
-								>
-									<svg xmlns="http://www.w3.org/2000/svg" id="moon-svg">
-										<path d="M20.742 13.045a8.088 8.088 0 0 1-2.077.271c-2.135 0-4.14-.83-5.646-2.336a8.025 8.025 0 0 1-2.064-7.723A1 1 0 0 0 9.73 2.034a10.014 10.014 0 0 0-4.489 2.582c-3.898 3.898-3.898 10.243 0 14.143a9.937 9.937 0 0 0 7.072 2.93 9.93 9.93 0 0 0 7.07-2.929 10.007 10.007 0 0 0 2.583-4.491 1.001 1.001 0 0 0-1.224-1.224zm-2.772 4.301a7.947 7.947 0 0 1-5.656 2.343 7.953 7.953 0 0 1-5.658-2.344c-3.118-3.119-3.118-8.195 0-11.314a7.923 7.923 0 0 1 2.06-1.483 10.027 10.027 0 0 0 2.89 7.848 9.972 9.972 0 0 0 7.848 2.891 8.036 8.036 0 0 1-1.484 2.059z" />
-									</svg>
-									<svg xmlns="http://www.w3.org/2000/svg" id="sun-svg">
-										<path d="M6.993 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007S14.761 6.993 12 6.993 6.993 9.239 6.993 12zM12 8.993c1.658 0 3.007 1.349 3.007 3.007S13.658 15.007 12 15.007 8.993 13.658 8.993 12 10.342 8.993 12 8.993zM10.998 19h2v3h-2zm0-17h2v3h-2zm-9 9h3v2h-3zm17 0h3v2h-3zM4.219 18.363l2.12-2.122 1.415 1.414-2.12 2.122zM16.24 6.344l2.122-2.122 1.414 1.414-2.122 2.122zM6.342 7.759 4.22 5.637l1.415-1.414 2.12 2.122zm13.434 10.605-1.414 1.414-2.122-2.122 1.414-1.414z" />
-									</svg>
-								</button>
-							)
-						}
+						<button
+							id="theme-btn"
+							class="nav-link theme-btn"
+							title="Toggle theme"
+							aria-label="Toggle theme"
+							aria-live="polite"
+						>
+							<span id="theme-icon">◑</span>
+						</button>
 					</li>
-				</ul>
-			</nav>
-		</div>
+				)}
+			</ul>
+		</nav>
 	</div>
 </header>
 
 <style>
-	@reference "../styles/base.css";
 	#skip-to-content {
-		@apply bg-skin-accent text-skin-inverted absolute -top-full left-16 z-50 px-3 py-2 transition-all focus:top-4;
+		position: absolute;
+		top: -9999px;
+		left: 0;
+		z-index: 999;
+		padding: 0.5rem 1rem;
+		background: rgb(var(--color-accent));
+		color: rgb(var(--color-fill));
+		border-radius: 3px;
 	}
-	.nav-container {
-		@apply mx-auto flex max-w-6xl flex-col items-center justify-between sm:flex-row;
+
+	#skip-to-content:focus {
+		top: 1rem;
+		left: 1rem;
 	}
-	.top-nav-wrap {
-		@apply relative flex w-full items-start justify-between p-4 sm:items-center sm:py-8;
+
+	header {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		height: 52px;
+		background: rgb(var(--color-fill));
+		backdrop-filter: blur(10px);
+		border-bottom: 1px solid rgb(var(--color-border));
 	}
+
+	.header-inner {
+		max-width: 860px;
+		margin: 0 auto;
+		padding: 0 20px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 52px;
+	}
+
 	.logo {
-		@apply absolute py-1 text-xl font-semibold sm:static sm:text-2xl;
-	}
-	.hamburger-menu {
-		@apply self-end p-2 sm:hidden;
-	}
-	.hamburger-menu svg {
-		@apply fill-skin-base h-6 w-6 scale-125;
+		display: flex;
+		align-items: center;
+		gap: 0;
+		text-decoration: none;
+		border: none;
+		font-size: 15px;
+		font-weight: 600;
+		font-family: "IBM Plex Mono", monospace;
+		transition: opacity 0.15s;
 	}
 
-	nav {
-		@apply bg-skin-fill flex w-full flex-col items-center sm:ml-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0;
+	.logo:hover {
+		opacity: 0.8;
 	}
+
+	.logo .prefix {
+		color: rgb(var(--color-text-base));
+		opacity: 0.5;
+	}
+
+	.logo .brand {
+		color: rgb(var(--color-accent));
+	}
+
 	nav ul {
-		@apply mt-4 flex w-full flex-wrap items-center justify-center gap-x-2 gap-y-2 sm:mt-0 sm:ml-0 sm:w-auto sm:flex-nowrap sm:gap-x-5 sm:gap-y-0;
+		display: flex;
+		align-items: center;
+		gap: 0;
+		list-style: none;
+		margin: 0;
+		padding: 0;
 	}
+
 	nav ul li {
-		@apply flex flex-1 items-center justify-center;
-	}
-	nav ul li a {
-		@apply hover:text-skin-accent w-full px-4 py-3 text-center font-medium transition-colors duration-200 sm:my-0 sm:px-2 sm:py-1;
-	}
-	nav ul li:nth-child(4) a {
-		@apply w-auto;
-	}
-	nav ul li:nth-child(4),
-	nav ul li:nth-child(5) {
-		@apply flex-none;
-	}
-	nav a.active {
-		@apply text-skin-accent underline decoration-wavy decoration-2 underline-offset-4;
-	}
-	nav a.active svg {
-		@apply fill-skin-accent;
+		display: flex;
+		align-items: center;
 	}
 
-	nav button {
-		@apply p-1;
-	}
-	nav button svg {
-		@apply fill-skin-base hover:fill-skin-accent h-6 w-6;
-	}
-	#theme-btn {
-		@apply p-3 sm:p-1;
-	}
-	#theme-btn svg {
-		@apply scale-125 hover:rotate-12 sm:scale-100;
+	.nav-link {
+		font-size: 12px;
+		font-weight: 500;
+		padding: 4px 10px;
+		border-radius: 3px;
+		color: rgb(var(--color-text-base), 0.6);
+		border: 1px solid transparent;
+		background: transparent;
+		cursor: pointer;
+		font-family: inherit;
+		transition: all 0.15s;
+		text-decoration: none;
+		display: block;
 	}
 
-	.icon-container {
-		@apply h-5 w-6 flex-col items-end justify-between;
+	.nav-link:hover {
+		color: rgb(var(--color-text-base));
+		border: 1px solid rgb(var(--color-border));
 	}
-	.icon-container div {
-		@apply bg-skin-inverted h-0.5 transition-all;
+
+	.nav-link.active {
+		color: rgb(var(--color-accent));
+		border: 1px solid rgb(var(--color-accent));
+		background: rgba(var(--color-accent), 0.15);
 	}
-	#first-line {
-		@apply w-full;
+
+	.theme-btn {
+		margin-left: 4px;
 	}
-	#second-line {
-		@apply w-3/4;
-	}
-	#third-line {
-		@apply w-1/2;
+
+	.theme-btn:hover {
+		color: rgb(var(--color-accent));
+		border: 1px solid rgb(var(--color-accent));
 	}
 </style>
 
 <script>
-	// Toggle menu
-	const menuBtn = document.querySelector(".hamburger-menu");
-	const menuItems = document.querySelector("#menu-items")?.classList;
+	// Handle theme toggle button
+	const themeBtn = document.getElementById("theme-btn");
+	const themeIcon = document.getElementById("theme-icon");
 
-	const iconContainer = document.querySelector(".icon-container")?.classList;
-	const firstLine = document.querySelector("#first-line")?.classList;
-	const secondLine = document.querySelector("#second-line ")?.classList;
-	const thirdLine = document.querySelector("#third-line")?.classList;
-
-	menuBtn?.addEventListener("click", function () {
-		const menuExpanded = menuBtn?.getAttribute("aria-expanded");
-		if (menuExpanded === "false") {
-			menuBtn?.setAttribute("aria-expanded", "true");
-			menuBtn?.setAttribute("aria-label", "Close Menu");
-			menuItems?.remove("display-none");
-
-			// icon animation
-			iconContainer?.remove("flex");
-			iconContainer?.add("relative");
-			firstLine?.add("rotate-45", "absolute", "bottom-1/2");
-			thirdLine?.add("display-none");
-			secondLine?.add("!w-full", "-rotate-45", "absolute", "bottom-1/2");
-		} else {
-			menuBtn?.setAttribute("aria-expanded", "false");
-			menuBtn?.setAttribute("aria-label", "Open Menu");
-			menuItems?.add("display-none");
-
-			// icon animation
-			iconContainer?.add("flex");
-			iconContainer?.remove("relative");
-			firstLine?.remove("rotate-45", "absolute", "bottom-1/2");
-			thirdLine?.remove("display-none");
-			secondLine?.remove("!w-full", "-rotate-45", "absolute", "bottom-1/2");
+	function updateThemeIcon() {
+		const theme = localStorage.getItem("theme") || "light";
+		if (themeIcon) {
+			themeIcon.textContent = theme === "dark" ? "○" : "◑";
 		}
-	});
+	}
+
+	// Set initial icon
+	updateThemeIcon();
+
+	// Listen for storage changes (when theme is changed from another tab)
+	window.addEventListener("storage", updateThemeIcon);
+
+	// Click handler for theme toggle
+	if (themeBtn) {
+		themeBtn.addEventListener("click", () => {
+			const currentTheme = localStorage.getItem("theme") || "light";
+			const newTheme = currentTheme === "dark" ? "light" : "dark";
+			localStorage.setItem("theme", newTheme);
+			document.documentElement.setAttribute("data-theme", newTheme);
+			updateThemeIcon();
+
+			// Dispatch custom event for other scripts that might listen
+			window.dispatchEvent(new Event("theme-changed"));
+		});
+	}
 </script>
