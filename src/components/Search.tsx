@@ -72,15 +72,40 @@ export default function SearchBar({ searchList }: Props) {
 
 	return (
 		<>
+			<p
+				style={{
+					fontSize: "11px",
+					color: `rgb(var(--color-text-base) / 0.45)`,
+					fontFamily: "'IBM Plex Mono', monospace",
+					marginBottom: "8px",
+				}}
+			>
+				$ ls posts/
+			</p>
 			<label className="relative block">
-				<span className="absolute inset-y-0 left-0 flex items-center pl-2 opacity-75">
-					<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-						<path d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"></path>
-					</svg>
+				<span
+					className="absolute inset-y-0 left-0 flex items-center pl-3"
+					style={{
+						color: `rgb(var(--color-text-base) / 0.45)`,
+						fontFamily: "'IBM Plex Mono', monospace",
+						fontSize: "13px",
+					}}
+				>
+					$
 				</span>
 				<input
-					className="border-skin-line bg-skin-fill placeholder:text-opacity-75 focus:border-skin-accent focus:ring-skin-accent/20 block w-full rounded-lg border py-3 pr-3 pl-10 transition-all placeholder:italic focus:ring-2 focus:outline-none"
-					placeholder="Search for anything..."
+					className="block w-full border transition-all focus:outline-none"
+					style={{
+						background: "rgb(var(--color-card))",
+						border: "1px solid rgb(var(--color-border))",
+						borderRadius: "4px",
+						padding: "9px 12px 9px 34px",
+						fontFamily: "'IBM Plex Mono', monospace",
+						fontSize: "13px",
+						color: "rgb(var(--color-text-base))",
+						width: "100%",
+					}}
+					placeholder="grep -i 'query' posts/"
 					type="text"
 					name="search"
 					value={inputVal}
@@ -88,7 +113,23 @@ export default function SearchBar({ searchList }: Props) {
 					autoComplete="off"
 					autoFocus
 					ref={inputRef}
+					onFocus={(e) => {
+						e.currentTarget.style.borderColor = "rgb(var(--color-accent))";
+					}}
+					onBlur={(e) => {
+						e.currentTarget.style.borderColor = "rgb(var(--color-border))";
+					}}
 				/>
+				<style>{`
+					input[name="search"]::placeholder {
+						color: rgb(var(--color-text-base) / 0.45);
+						opacity: 1;
+					}
+					input[name="search"]:focus {
+						border-color: rgb(var(--color-accent));
+						outline: none;
+					}
+				`}</style>
 			</label>
 
 			{inputVal.length > 1 && (
