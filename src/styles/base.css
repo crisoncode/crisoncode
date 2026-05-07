@@ -800,3 +800,7 @@ body {
 	font-size: 11px;
 	color: rgba(var(--color-text-base), 0.4);
 }
+
+blockquote {
+	color: white !important;
+}
